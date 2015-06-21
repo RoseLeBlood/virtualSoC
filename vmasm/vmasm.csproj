@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProjectGuid>{1BB1BA4C-D91C-4A92-9B97-3578A76DC40F}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>vmasm</RootNamespace>
+    <AssemblyName>vmasm</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+    <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>true</Externalconsole>
+    <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Assembler.cs" />
+    <Compile Include="Utils.cs" />
+    <Compile Include="Exception.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\vminst\vminst.csproj">
+      <Project>{912FFE4A-12B8-48BE-B9CF-B86BB5BB13D2}</Project>
+      <Name>vminst</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="test.asm">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <StandardHeader Text=" &#xA; ${FileName}&#xA; &#xA; Author:&#xA;      ${AuthorName} &lt;${AuthorEmail}&gt;&#xA;&#xA; Copyright (c) ${Year} ${CopyrightHolder}&#xA;&#xA; This program is free software: you can redistribute it and/or modify&#xA; it under the terms of the GNU General Public License as published by&#xA; the Free Software Foundation, either version 3 of the License, or&#xA; (at your option) any later version.&#xA;&#xA; This program is distributed in the hope that it will be useful,&#xA; but WITHOUT ANY WARRANTY; without even the implied warranty of&#xA; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the&#xA; GNU General Public License for more details.&#xA;&#xA; You should have received a copy of the GNU General Public License&#xA; along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;." IncludeInNewFiles="True" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>
