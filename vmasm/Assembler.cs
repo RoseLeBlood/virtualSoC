@@ -95,9 +95,10 @@ namespace vmasm
 			else if (l.Length == 2 && l [1].Contains (",")) {
 				string[] k = l [1].Split (',');
 				return CompOpp ((OpID (l [0])), k [0], k [1], stream);
-			}
-			else if (l.Length == 2)
+			} else if (l.Length == 2)
 				return CompOpp ((OpID (l [0])), l [1], stream);
+			else if (l.Length == 3)
+				return true;//CompOpp
 			
 			return false;
 		}

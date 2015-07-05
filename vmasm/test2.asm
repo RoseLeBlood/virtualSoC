@@ -1,0 +1,4 @@
+﻿ORG 0x100
+NOP
+NOP
+END

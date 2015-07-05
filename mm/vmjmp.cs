@@ -1,5 +1,5 @@
 ﻿//
-//  Program.cs
+//  vmjmp.cs
 //
 //  Author:
 //       anna-sophia <${AuthorEmail}>
@@ -18,36 +18,24 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 using System;
 
-namespace vmasm
+namespace Vcsos.mm
 {
-	class MainClass
+	public class vmjmp : vmoperator
 	{
-		public static void Main (string[] args)
+		public string Name {
+			get { return "JMP"; }
+		}
+		public bool ParseAndRun (ParserFactory factory)
 		{
-			string input = "";
-			string output = "";
+			//InstructionParam2 param1 = factory.getParam(4);
+			int param1V = VM.Instance.Ram.Read32 (VM.Instance.CPU.Register.ip + 5);
 
-			if (args.Length == 1) {
-				input = args [0];
-				output = System.IO.Path.GetFileNameWithoutExtension (args [0]) + ".bin";
-			} else if (args.Length == 2) {
-				input = args [0];
-				output = args [1];
-			} else {
+			VM.Instance.CPU.Register.Set ("IP", param1V);
 
-				Console.WriteLine ("Using:\n\tvmasm.exe input.asm : output write to input.bin");
-				Console.WriteLine ("\tor vmasm.exe input.asm output.bin");
-
-				return;
-			}
-			Console.WriteLine ("Input File: {0} output: {1}", input, output);
-
-			Assembler asm = new Assembler ();
-			asm.l  = System.IO.File.ReadAllLines (input);
-			asm.Comp (output);
+			return true;
 		}
 	}
 }
+

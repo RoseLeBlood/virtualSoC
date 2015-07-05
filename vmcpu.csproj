@@ -49,10 +49,24 @@
     <Compile Include="Komponent\Framebuffer.cs" />
     <Compile Include="Assembler.cs" />
     <Compile Include="VM.cs" />
+    <Compile Include="mm\vmoperator.cs" />
+    <Compile Include="mm\vmend.cs" />
+    <Compile Include="mm\vmnop.cs" />
+    <Compile Include="mm\vmpush.cs" />
+    <Compile Include="mm\vmpop.cs" />
+    <Compile Include="mm\vmclr.cs" />
+    <Compile Include="mm\vmpeek.cs" />
+    <Compile Include="mm\vmadd.cs" />
+    <Compile Include="mm\vmsub.cs" />
+    <Compile Include="mm\vmmul.cs" />
+    <Compile Include="mm\vmdiv.cs" />
+    <Compile Include="mm\vmjmp.cs" />
+    <Compile Include="mm\vmmov.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Komponent\" />
+    <Folder Include="mm\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

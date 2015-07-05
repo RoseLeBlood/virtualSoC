@@ -54,12 +54,22 @@ namespace vminst
 			Add (new Instruction (  "END",  4,   0));
 			Add (new Instruction ( 	"JMP", 	0,   1)); 
 			Add (new Instruction (	"LCK",  9,   1));
+			Add (new Instruction (  "UCK",  9,   1));  
 			Add (new Instruction (  "ADD",  9,   1)); 
 			Add (new Instruction (  "SUB",  9,   1));
 			Add (new Instruction (  "MUL",  9,   1));
 			Add (new Instruction (  "DIV",  9,   1));
 			Add (new Instruction (  "MOV", 14,   2)); // MOV(4) T(1)V(4) T(1)V(4) 
 			Add (new Instruction ( 	"CLR",	9,   1));
+			//
+			Add (new Instruction (  "OR",  19, 	 3)); // OP(4) T(1)V(4)  T(1)V(4) T(1)V(4)
+			Add (new Instruction (  "XOR", 19, 	 3)); // OP(4) T(1)V(4)  T(1)V(4) T(1)V(4)
+			Add (new Instruction (  "AND", 19, 	 3)); // OP(4) T(1)V(4)  T(1)V(4) T(1)V(4)
+			Add (new Instruction (  "NAND",19, 	 3)); // OP(4) T(1)V(4)  T(1)V(4) T(1)V(4)
+			Add (new Instruction (  "NOR", 19, 	 3)); // OP(4) T(1)V(4)  T(1)V(4) T(1)V(4)
+			Add (new Instruction (  "NOT", 14, 	 2)); // OP(4) T(1)V(4)  T(1)V(4) 
+			Add (new Instruction (  "TIK",  9,   1)); // OP(4) T(1)V(4)
+
 
 		}
 	}

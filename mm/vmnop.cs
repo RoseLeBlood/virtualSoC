@@ -1,5 +1,5 @@
 ﻿//
-//  Program.cs
+//  vmnop.cs
 //
 //  Author:
 //       anna-sophia <${AuthorEmail}>
@@ -18,36 +18,19 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 using System;
 
-namespace vmasm
+namespace Vcsos.mm
 {
-	class MainClass
+	public class vmnop :vmoperator
 	{
-		public static void Main (string[] args)
+		public string Name {
+			get { return "NOP"; }
+		}
+		public bool ParseAndRun (ParserFactory factory)
 		{
-			string input = "";
-			string output = "";
-
-			if (args.Length == 1) {
-				input = args [0];
-				output = System.IO.Path.GetFileNameWithoutExtension (args [0]) + ".bin";
-			} else if (args.Length == 2) {
-				input = args [0];
-				output = args [1];
-			} else {
-
-				Console.WriteLine ("Using:\n\tvmasm.exe input.asm : output write to input.bin");
-				Console.WriteLine ("\tor vmasm.exe input.asm output.bin");
-
-				return;
-			}
-			Console.WriteLine ("Input File: {0} output: {1}", input, output);
-
-			Assembler asm = new Assembler ();
-			asm.l  = System.IO.File.ReadAllLines (input);
-			asm.Comp (output);
+			return true;
 		}
 	}
 }
+

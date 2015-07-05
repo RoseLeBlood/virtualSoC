@@ -71,7 +71,7 @@ namespace Vcsos
 		{
 			VM VirtualMaschine = VM.Instance;
 
-			VirtualMaschine.CreateVM (256);
+			VirtualMaschine.CreateVM (512);
 			VirtualMaschine.Start ();
 			while (VirtualMaschine.IsAlive) {
 			}
