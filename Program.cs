@@ -26,34 +26,6 @@ namespace Vcsos
 {
 	class MainClass
 	{
-		public static void AkkuTest(int a, int b, int t)
-		{
-			switch (t) {
-			case 0: // add
-				VM.Instance.CPU.Akku.MoveAX (a);
-				VM.Instance.CPU.Akku.Add  (b);
-				Console.WriteLine (a + " + " + b + " = " + VM.Instance.CPU.Akku.MoveFromAX ().ToString ());
-				break;
-			case 1: // sub
-				VM.Instance.CPU.Akku.MoveAX (a);
-				VM.Instance.CPU.Akku.Sub  (b);
-				Console.WriteLine (a + " - " + b + " = " + VM.Instance.CPU.Akku.MoveFromAX ().ToString ());
-
-				break;
-			case 2: // mul
-				VM.Instance.CPU.Akku.MoveAX (a);
-				VM.Instance.CPU.Akku.Mul  (b);
-				Console.WriteLine (a + " * " + b + " = " + VM.Instance.CPU.Akku.MoveFromAX ().ToString ());
-
-				break;
-			case 3: // div
-				VM.Instance.CPU.Akku.MoveAX (a);
-				VM.Instance.CPU.Akku.Div  (b);
-				Console.WriteLine (a + " ÷ " + b + " = " + VM.Instance.CPU.Akku.MoveFromAX ().ToString ());
-
-				break;
-			}
-		}
 		static ushort GetInput(string frage)
 		{
 			ushort k;
@@ -67,27 +39,34 @@ namespace Vcsos
 			}while(true);
 			return k;
 		}
+		static string GetInputString(string frage)
+		{
+			string k;
+			Console.Write (frage);
+			do
+			{
+				k = Console.ReadLine();
+				if(System.IO.File.Exists(k))
+					break;
+				else
+					Console.Write("Falsche Eingabe\n" + frage);
+			}while(true);
+			return k;
+		}
 		public static void Main (string[] args)
 		{
-			VM VirtualMaschine = VM.Instance;
+			VM.Instance.CreateVM (512);
+			string kernel = GetInputString ("Path to kernel image: ");
+			ushort org = GetInput ("Start-Adress: ");
 
-			VirtualMaschine.CreateVM (512);
-			VirtualMaschine.Start ();
-			while (VirtualMaschine.IsAlive) {
+			VM.Instance.Start (kernel, org);
+
+			while (VM.Instance.IsAlive) {
 			}
-			string r = VirtualMaschine.Ram.ToString ();
+			string r = VM.Instance.Ram.ToString ();
 			Console.WriteLine (r + System.Environment.NewLine);
-			Console.WriteLine (VirtualMaschine.CPU.Register.ToString ());
+			Console.WriteLine (VM.Instance.CPU.Register.ToString ());
 
-			/*short a = (short)GetInput ("Geben Sie eine Zahl für 'A' ein: ");
-			short b = (short)GetInput ("Geben Sie eine Zahl für 'B' ein: ");
-			for (int i = 0; i < 5; i++) {
-				AkkuTest (+a, +b, i);
-				AkkuTest (+a, -b, i);
-				AkkuTest (-a, +b, i);
-				AkkuTest (-a, -b, i);
-				Console.WriteLine ();
-			}*/
 		}
 	}
 }
