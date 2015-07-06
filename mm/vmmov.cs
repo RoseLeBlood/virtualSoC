@@ -39,12 +39,12 @@ namespace Vcsos.mm
 			int param2V = VM.Instance.Ram.Read32 (VM.Instance.CPU.Register.ip + 10); // 111
 
 			if (param2 == InstructionParam2.Value)
-				VM.Instance.CPU.Register.Stack.Push32 (VM.Instance.Ram.Read32 (param2V));
+				VM.Instance.CPU.Register.Stack.Push32 (param2V);
 			else if (param2 == InstructionParam2.Register) {
 				VM.Instance.CPU.Register.Stack.Push32 (VM.Instance.CPU.Register.Get (factory.m_pRegisters [param2V].Name));
 			}
 
-			if (param1 == InstructionParam2.Value)
+			if (param1 == InstructionParam2.Pointer)
 				VM.Instance.Ram.Write (VM.Instance.CPU.Register.Stack.Pop32 (), (uint)param1V);
 			else if (param1 == InstructionParam2.Register)
 				VM.Instance.CPU.Register.Set (factory.m_pRegisters [param1V].Name, VM.Instance.CPU.Register.Stack.Pop32 ());

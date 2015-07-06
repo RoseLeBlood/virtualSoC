@@ -46,10 +46,6 @@ namespace vmcli
 
 
 			VM.Instance.CreateVM (ramSize);
-			Console.WriteLine ("Image File: {0}:{2}\nRam: {1} Bytes\n" +
-				"Press a key to start.", imageFile, ramSize,
-				startAdress);
-			Console.ReadKey (true);
 
 			if (!VM.Instance.Start (imageFile, (int)startAdress)) {
 				Console.WriteLine ("Not enough bytes to load this image.");
