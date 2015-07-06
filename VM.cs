@@ -22,6 +22,7 @@
 using System;
 using vminst;
 using Vcsos.Komponent;
+using Vcsos;
 
 namespace Vcsos
 {
@@ -29,10 +30,13 @@ namespace Vcsos
 	{
 		private static VM m_instance = new VM ();
 		private Assembler m_pAssembler;
+		private CPU       m_pCpu;
+		private Memory    m_pMemory;
+		private Framebuffer m_pFbuffer;
 
-		internal CPU 	CPU;
-		internal Memory Ram;
-		internal Framebuffer FBdev;
+		public CPU 	CPU					{ get { return m_pCpu; } }
+		public Memory Ram				{ get { return m_pMemory; } }
+		public Framebuffer FBdev		{ get { return m_pFbuffer; } }
 
 		public bool IsAlive { get { return m_pAssembler.IsAlive; } }
 		public static VM Instance
@@ -47,24 +51,31 @@ namespace Vcsos
 		public void CreateVM(UInt32 ramSize)
 		{
 			int newMemorySize = ramSize.ToBoundary(4);
-			Ram = new Memory (newMemorySize);
-			FBdev = new Framebuffer (800, 600, 32);
+			m_pMemory = new Memory (newMemorySize);
+			m_pFbuffer = new Framebuffer (800, 600, 32);
 
 			if (newMemorySize != ramSize) 
 				Console.WriteLine("VM: Memory was expanded from {0} bytes to {1} bytes to a page boundary." + System.Environment.NewLine,
 					ramSize, newMemorySize);
 			
-			CPU = new CPU ();
+			m_pCpu = new CPU ();
 		}
-		public void Start(string osFile = "test.bin", int startAddr = 0x10)
+		public bool Start(string osFile = "test.bin", int startAddr = 0x10)
 		{
 			if (System.IO.File.Exists (osFile)) {
 				byte[] data = System.IO.File.ReadAllBytes (osFile);
-				Ram.Write (data);
+				if (data.Length >= Ram.Size) {
+					
+				} else {
+					Ram.Write (data);
 
-				CPU.Register.ip = startAddr;
-				m_pAssembler.Start ();
+					CPU.Register.ip = startAddr;
+					m_pAssembler.Start ();
+					return true;
+				}
+
 			}
+			return false;
 		}
 	}
 

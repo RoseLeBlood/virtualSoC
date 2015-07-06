@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{775C8DE9-9F35-43BF-96EE-9EB11623594C}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Vcsos</RootNamespace>
-    <AssemblyName>vmcpu</AssemblyName>
+    <ProjectGuid>{1CF36A28-40B6-49CB-96FD-4A486EC61E78}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>vmcli</RootNamespace>
+    <AssemblyName>vmcli</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -19,68 +19,51 @@
     <WarningLevel>4</WarningLevel>
     <Externalconsole>true</Externalconsole>
     <PlatformTarget>x86</PlatformTarget>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Commandlineparameters>test.bin </Commandlineparameters>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>full</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Externalconsole>true</Externalconsole>
     <PlatformTarget>x86</PlatformTarget>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Komponent\Memory.cs" />
-    <Compile Include="Komponent\CPU.cs" />
-    <Compile Include="Komponent\Stack.cs" />
-    <Compile Include="Komponent\Register.cs" />
-    <Compile Include="Akku.cs" />
-    <Compile Include="Komponent\Timer.cs" />
-    <Compile Include="Komponent\Serial.cs" />
-    <Compile Include="Komponent\Framebuffer.cs" />
-    <Compile Include="Assembler.cs" />
-    <Compile Include="mm\vmoperator.cs" />
-    <Compile Include="mm\vmend.cs" />
-    <Compile Include="mm\vmnop.cs" />
-    <Compile Include="mm\vmpush.cs" />
-    <Compile Include="mm\vmpop.cs" />
-    <Compile Include="mm\vmclr.cs" />
-    <Compile Include="mm\vmpeek.cs" />
-    <Compile Include="mm\vmadd.cs" />
-    <Compile Include="mm\vmsub.cs" />
-    <Compile Include="mm\vmmul.cs" />
-    <Compile Include="mm\vmdiv.cs" />
-    <Compile Include="mm\vmjmp.cs" />
-    <Compile Include="mm\vmmov.cs" />
-    <Compile Include="Utils.cs" />
-    <Compile Include="VM.cs" />
+    <Compile Include="CommandLineArgs.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Folder Include="Komponent\" />
-    <Folder Include="mm\" />
+    <ProjectReference Include="..\vmcpu.csproj">
+      <Project>{775C8DE9-9F35-43BF-96EE-9EB11623594C}</Project>
+      <Name>vmcpu</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\vminst\vminst.csproj">
+      <Project>{912FFE4A-12B8-48BE-B9CF-B86BB5BB13D2}</Project>
+      <Name>vminst</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="test.bin">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
         <Policies>
-          <DotNetNamingPolicy DirectoryNamespaceAssociation="PrefixedHierarchical" ResourceNamePolicy="MSBuild" />
           <StandardHeader Text=" &#xA; ${FileName}&#xA; &#xA; Author:&#xA;      ${AuthorName} &lt;${AuthorEmail}&gt;&#xA;&#xA; Copyright (c) ${Year} ${CopyrightHolder}&#xA;&#xA; This program is free software: you can redistribute it and/or modify&#xA; it under the terms of the GNU General Public License as published by&#xA; the Free Software Foundation, either version 3 of the License, or&#xA; (at your option) any later version.&#xA;&#xA; This program is distributed in the hope that it will be useful,&#xA; but WITHOUT ANY WARRANTY; without even the implied warranty of&#xA; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the&#xA; GNU General Public License for more details.&#xA;&#xA; You should have received a copy of the GNU General Public License&#xA; along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;." IncludeInNewFiles="True" />
         </Policies>
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
-  <ItemGroup>
-    <ProjectReference Include="vminst\vminst.csproj">
-      <Project>{912FFE4A-12B8-48BE-B9CF-B86BB5BB13D2}</Project>
-      <Name>vminst</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>
