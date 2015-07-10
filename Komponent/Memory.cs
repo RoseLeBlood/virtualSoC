@@ -29,7 +29,7 @@ namespace Vcsos.Komponent
 	{
 		private byte[] m_pMemory;
 		private int m_iSize;
-
+		private string m_strName;
 		public int Size 
 		{
 			get { return m_iSize; }
@@ -40,10 +40,11 @@ namespace Vcsos.Komponent
 			set { m_pMemory [adress] = value; }
 		}
 
-		public Memory (int mSize)
+		public Memory (int mSize, string name)
 		{
 			m_pMemory = new byte[mSize];
 			m_iSize = mSize;
+			m_strName = name;
 		}
 		public void Write(byte[] data)
 		{
@@ -99,4 +100,3 @@ namespace Vcsos.Komponent
 		}
 	}
 }
-

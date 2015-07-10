@@ -53,7 +53,7 @@ namespace vmasm
 					string l1 = l [i];
 					if (l1 == string.Empty)
 						continue;
-					
+
 					if (l1.ToUpper ().Contains ("ORG")) {
 						int Org = int.Parse (l1.Split (' ') [1].Replace ("0x", ""), NumberStyles.HexNumber);
 						Console.WriteLine ("[ORG] {0}", Org);
@@ -68,7 +68,7 @@ namespace vmasm
 						Console.WriteLine ("[Label] {0}  {1}", ll, writer.BaseStream.Position);
 						continue;
 					} else if (l1[0] == 'L' && l1[1] == 'B') { // Label vordifinieren
-						
+
 						string ll = l1.Split(' ')[1];
 						if (!m_pLabels.ContainsKey (ll)) {
 							m_pLabels.Add (ll, int.Parse (l1.Split (' ') [2]));
@@ -99,7 +99,7 @@ namespace vmasm
 				return CompOpp ((OpID (l [0])), l [1], stream);
 			else if (l.Length == 3)
 				return true;//CompOpp
-			
+
 			return false;
 		}
 		private bool CompOpp(int op, BinaryWriter stream)
@@ -110,7 +110,7 @@ namespace vmasm
 		}
 		private bool CompOpp(int op, string p1, BinaryWriter stream)
 		{
-			
+
 			stream.Write (op.ToBytes (), 0, 4);
 			Console.Write ("[Inst 1] {0} ({1}) ", op, stream.BaseStream.Position);
 			if (m_pInstruction [op].OpCode == "JMP") {

@@ -90,7 +90,7 @@ namespace Vcsos.Komponent
 		}
 		public CacheStack()
 		{
-			m_pCache = new Memory (256);
+			m_pCache = new Memory (256, "CPU-Stack");
 			m_pCache.Write ((ushort)(m_pCache.Size-1), 0); // Current Adress
 			m_pCache.Write ((ushort)(m_pCache.Size-1), 2); // Max Adresse
 		}

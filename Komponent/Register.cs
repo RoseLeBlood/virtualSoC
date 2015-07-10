@@ -109,7 +109,7 @@ namespace Vcsos.Komponent
 		}
 		public Register ()
 		{
-			m_pMemRegister = new Memory (22);
+			m_pMemRegister = new Memory (24, "Register");
 
 			sp = VM.Instance.Ram.Size - 1;
 			ip = 100;

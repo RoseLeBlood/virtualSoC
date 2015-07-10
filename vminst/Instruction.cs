@@ -47,30 +47,34 @@ namespace vminst
 	{
 		public Instructions()
 		{
-			Add (new Instruction (	"NOP", 	4, 	 0)); // OP(4)
-			Add (new Instruction ( 	"PUSH",	9,   1)); // OP (4) R@#(2) 3(4)
-			Add (new Instruction (	"POP", 	9, 	 1)); // OP (4) R@#(2) 3(4)
-			Add (new Instruction (	"PEEK", 9, 	 1)); // OP (4) R@#(2) 3(4)
+			Add (new Instruction (	"NOP", 	4, 	 0)); // OP(2)
+			Add (new Instruction ( 	"PUSH",	9,   1)); // OP (2) R@#(2) 3(4)
+			Add (new Instruction (	"POP", 	9, 	 1)); // OP (2) R@#(2) 3(4)
+			Add (new Instruction (	"PEEK", 9, 	 1)); // OP (2) R@#(2) 3(4)
 			Add (new Instruction (  "END",  4,   0));
-			Add (new Instruction ( 	"JMP", 	0,   1)); 
+			Add (new Instruction ( 	"JMP", 	9,   1)); 
 			Add (new Instruction (	"LCK",  9,   1));
 			Add (new Instruction (  "UCK",  9,   1));  
 			Add (new Instruction (  "ADD",  9,   1)); 
 			Add (new Instruction (  "SUB",  9,   1));
 			Add (new Instruction (  "MUL",  9,   1));
 			Add (new Instruction (  "DIV",  9,   1));
-			Add (new Instruction (  "MOV", 14,   2)); // MOV(4) T(1)V(4) T(1)V(4) 
+			Add (new Instruction (  "MOV", 14,   2)); // MOV(2) T(1)V(4) T(1)V(4) 
 			Add (new Instruction ( 	"CLR",	9,   1));
 			//
-			Add (new Instruction (  "OR",  19, 	 3)); // OP(4) T(1)V(4)  T(1)V(4) T(1)V(4)
-			Add (new Instruction (  "XOR", 19, 	 3)); // OP(4) T(1)V(4)  T(1)V(4) T(1)V(4)
-			Add (new Instruction (  "AND", 19, 	 3)); // OP(4) T(1)V(4)  T(1)V(4) T(1)V(4)
-			Add (new Instruction (  "NAND",19, 	 3)); // OP(4) T(1)V(4)  T(1)V(4) T(1)V(4)
-			Add (new Instruction (  "NOR", 19, 	 3)); // OP(4) T(1)V(4)  T(1)V(4) T(1)V(4)
-			Add (new Instruction (  "NOT", 14, 	 2)); // OP(4) T(1)V(4)  T(1)V(4) 
-			Add (new Instruction (  "TIK",  9,   1)); // OP(4) T(1)V(4)
+			Add (new Instruction (  "OR",  19, 	 3)); // OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
+			Add (new Instruction (  "XOR", 19, 	 3)); // OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
+			Add (new Instruction (  "AND", 19, 	 3)); // OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
+			Add (new Instruction (  "NAND",19, 	 3)); // OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
+			Add (new Instruction (  "NOR", 19, 	 3)); // OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
+			Add (new Instruction (  "NOT", 14, 	 2)); // OP(2) T(1)V(4)  T(1)V(4) 
+			Add (new Instruction (  "TIK",  9,   1)); // OP(2) T(1)V(4)
 
-
+			Add (new Instruction (  "ADR",  13,   2)); // ADD Regster MOV(2) R(4) T(1)V(4) 
+			Add (new Instruction (  "SBR",  13,   2)); // Sub Register MOV(2) R(4) T(1)V(4) 
+			Add (new Instruction (  "MLR",  13,   2)); // MUL Register MOV(2) R(4) T(1)V(4) 
+			Add (new Instruction (  "DVR",  13,   2)); // DIV Register MOV(2) R(4) T(1)V(4) 
+			Add (new Instruction ( 	"RET",	4,    0));
 		}
 	}
 	public class Register

@@ -1,5 +1,5 @@
 ﻿//
-//  Framebuffer.cs
+//  FramebufferForm.cs
 //
 //  Author:
 //       anna-sophia <${AuthorEmail}>
@@ -18,40 +18,39 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 using System;
-using Vcsos.Komponent;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Windows.Forms;
+using Vcsos.Komponent;
+using Vcsos;
+using DotArgs;
 
-namespace Vcsos.Komponent
+namespace vmcli
 {
-	public class Framebuffer
+	public class FramebufferForm : Form
 	{
-		public const uint FBDEV = 0xB000;
-		private Size m_pSize;
+		Framebuffer fb ;
 
-		private Memory m_pMemory;
-
-		public Size Size {
-			get {
-				return m_pSize;
-			}
-		}
-
-		public Memory Memory {
-			get {
-				return m_pMemory;
-			}
-		}
-
-		public int Bytes
+		public FramebufferForm ()
 		{
-			get { return m_pMemory.Size; }
+			fb = VM.Instance.FBdev;
+			Text = "vmcpu Framebuffer";
+			Size = fb.Size;
+			ResizeRedraw = true;
+
+			Paint += new PaintEventHandler(OnPaint);
+			CenterToScreen();
+
 		}
-		public Framebuffer (int w, int h, int bit)
-		{
-			m_pSize = new Size (w, h);
-			m_pMemory = new Memory ((int)(w * h * bit), "FrameBuffer");
+		void OnPaint(object sender, PaintEventArgs e)
+		{ 
+			System.Drawing.Graphics g = e.Graphics;
+			g.Clear (Color.Crimson);
+
+
+
+			g.Dispose ();
 		}
 	}
 }

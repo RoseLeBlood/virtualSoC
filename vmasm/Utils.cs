@@ -78,7 +78,7 @@ namespace vmasm
 		{
 			return A.Set (!A.Get (pos), pos);
 		}
-		public unsafe static byte[] ToBytes(this UInt16 UIntIn)
+		public unsafe static byte[] ToBytes(this ushort UIntIn)
 		{
 			//turn a uint into 4 bytes
 			byte[] fourBytes = new byte[2];

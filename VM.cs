@@ -51,25 +51,25 @@ namespace Vcsos
 		public void CreateVM(UInt32 ramSize)
 		{
 			int newMemorySize = ramSize.ToBoundary(4);
-			m_pMemory = new Memory (newMemorySize);
-			m_pFbuffer = new Framebuffer (800, 600, 32);
+			m_pMemory = new Memory (newMemorySize, "RAM");
+			m_pFbuffer = new Framebuffer (320, 320, 32);
 
 			if (newMemorySize != ramSize) 
 				Console.WriteLine("VM: Memory was expanded from {0} bytes to {1} bytes to a page boundary." + System.Environment.NewLine,
 					ramSize, newMemorySize);
-			
+
 			m_pCpu = new CPU ();
 		}
-		public bool Start(string osFile = "test.bin", int startAddr = 0x10)
+		public bool Start(string osFile = "test.bin")
 		{
 			if (System.IO.File.Exists (osFile)) {
 				byte[] data = System.IO.File.ReadAllBytes (osFile);
 				if (data.Length >= Ram.Size) {
-					
+
 				} else {
 					Ram.Write (data);
 
-					CPU.Register.ip = startAddr;
+					CPU.Register.ip = 16;
 					m_pAssembler.Start ();
 					return true;
 				}

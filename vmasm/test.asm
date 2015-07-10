@@ -1,4 +1,6 @@
-﻿ORG 0x10
+﻿#include 'vmcpu.inc'
+
+ORG 0x10
 
 Main:
 PUSH #5

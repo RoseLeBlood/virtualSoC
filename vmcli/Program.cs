@@ -46,12 +46,13 @@ namespace vmcli
 
 
 			VM.Instance.CreateVM (ramSize);
+			FramebufferForm form = new FramebufferForm ();
 
-			if (!VM.Instance.Start (imageFile, (int)startAdress)) {
+			if (!VM.Instance.Start (imageFile)) {
 				Console.WriteLine ("Not enough bytes to load this image.");
 				return;
 			}
-
+			System.Windows.Forms.Application.Run (form);
 
 			while (VM.Instance.IsAlive) {
 			}
