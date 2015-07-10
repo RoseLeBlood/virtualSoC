@@ -21,29 +21,41 @@
 
 using System;
 using System.Collections.Generic;
+using DotArgs;
 
 namespace vmasm
 {
 	class MainClass
 	{
+		internal static UInt32 GetValueFromArg(CommandLineArgs cmd, string val)
+		{
+			UInt32 outv;
+			if (!UInt32.TryParse (cmd.GetValue<string> (val), out outv))
+				throw  new ArgumentException ();
+
+			return outv;
+		}
 		public static void Main (string[] args)
 		{
-			string input = "";
-			string output = "";
+			CommandLineArgs cmd = new CommandLineArgs();
 
-			if (args.Length == 1) {
-				input = args [0];
-				output = System.IO.Path.GetFileNameWithoutExtension (args [0]) + ".bin.gz";
-			} else if (args.Length == 2) {
-				input = args [0];
-				output = args [1];
-			} else {
+			cmd.RegisterArgument( "i", new OptionArgument( null, true ) { HelpMessage="inputfile" } );
+			cmd.RegisterArgument( "o", new OptionArgument( ".bin", false )  { HelpMessage="write output to an outfile" });
+			cmd.RegisterArgument( "f", new OptionArgument( "raw", false) { HelpMessage=" select an output format RAW,gz,deflate" } );
+			cmd.SetDefaultArgument( "i" );
+			cmd.RegisterHelpArgument();
 
-				Console.WriteLine ("Using:\n\tvmasm.exe input.asm : output write to input.bin.gz");
-				Console.WriteLine ("\tor vmasm.exe input output");
-
+			if( !cmd.Validate(args) )
+			{
+				cmd.PrintHelp();
 				return;
 			}
+
+			string input = cmd.GetValue<string> ("i");
+			string output = cmd.GetValue<string> ("o");
+			if(output == ".bin")
+				output = System.IO.Path.GetFileNameWithoutExtension(input) + ".bin";
+			
 			Console.WriteLine ("Input File: {0} output: {1}", input, output);
 
 			Assembler asm = new Assembler ();

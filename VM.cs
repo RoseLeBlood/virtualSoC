@@ -60,20 +60,16 @@ namespace Vcsos
 
 			m_pCpu = new CPU ();
 		}
-		public bool Start(string osFile = "test.bin")
+		public bool Start(byte[] data)
 		{
-			if (System.IO.File.Exists (osFile)) {
-				byte[] data = System.IO.File.ReadAllBytes (osFile);
-				if (data.Length >= Ram.Size) {
+			if (data.Length >= Ram.Size) {
 
-				} else {
-					Ram.Write (data);
+			} else {
+				Ram.Write (data);
 
-					CPU.Register.ip = 16;
-					m_pAssembler.Start ();
-					return true;
-				}
-
+				CPU.Register.ip = 16;
+				m_pAssembler.Start ();
+				return true;
 			}
 			return false;
 		}

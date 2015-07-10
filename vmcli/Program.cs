@@ -6,7 +6,7 @@ namespace vmcli
 {
 	class MainClass
 	{
-		static UInt32 GetValueFromArg(CommandLineArgs cmd, string val)
+		internal static UInt32 GetValueFromArg(CommandLineArgs cmd, string val)
 		{
 			UInt32 outv;
 			if (!UInt32.TryParse (cmd.GetValue<string> (val), out outv))
@@ -20,8 +20,8 @@ namespace vmcli
 
 
 			cmd.RegisterArgument( "i", new OptionArgument( null, true ) { HelpMessage="The image file." } );
-			cmd.RegisterArgument( "s", new OptionArgument( "16", false )  { HelpMessage="The start adress from image. [> 0]" } );
 			cmd.RegisterArgument( "r", new OptionArgument( "256" )  { HelpMessage="Ram size. [> 0]" });
+			cmd.RegisterArgument( "t", new OptionArgument( "raw", true) { HelpMessage="Image type: gz,raw,deflate" } );
 
 			cmd.SetDefaultArgument( "i" );
 			cmd.RegisterHelpArgument();
@@ -32,11 +32,10 @@ namespace vmcli
 				return;
 			}
 			string imageFile;
-			UInt32 startAdress, ramSize;
+			UInt32 ramSize;
 			try
 			{
 				imageFile = cmd.GetValue<string>( "i" );
-				startAdress = GetValueFromArg(cmd, "s" );
 				ramSize = GetValueFromArg(cmd, "r" );
 			}
 			catch {
@@ -48,7 +47,9 @@ namespace vmcli
 			VM.Instance.CreateVM (ramSize);
 			FramebufferForm form = new FramebufferForm ();
 
-			if (!VM.Instance.Start (imageFile)) {
+			byte[] data = InputFactory.GetInputClass (cmd).LoadFromFile (imageFile);
+
+			if (!VM.Instance.Start (data)) {
 				Console.WriteLine ("Not enough bytes to load this image.");
 				return;
 			}
