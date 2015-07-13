@@ -45,6 +45,7 @@ namespace Vcsos.Komponent
 			m_pMemory = new byte[mSize];
 			m_iSize = mSize;
 			m_strName = name;
+			m_pMemory.RandMemory ();
 		}
 		public void Write(byte[] data)
 		{

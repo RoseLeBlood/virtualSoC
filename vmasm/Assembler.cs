@@ -23,6 +23,7 @@ using System;
 using System.IO;
 using vminst;
 using System.Globalization;
+using NCalc;
 
 namespace vmasm
 {
@@ -31,6 +32,7 @@ namespace vmasm
 		Instructions m_pInstruction = new Instructions ();
 		Registers m_pRegisters = new Registers ();
 		System.Collections.Generic.Dictionary<string, int> m_pLabels = new System.Collections.Generic.Dictionary<string, int>();
+		DefinesDef m_pDefines;
 
 		string[] m_r;
 		public  string[] l {
@@ -44,14 +46,19 @@ namespace vmasm
 		public  bool Comp(string outPutFile)
 		{
 			m_pLabels = new System.Collections.Generic.Dictionary<string, int> ();
+			m_pDefines = new DefinesDef();
 
 			//string[] l = System.IO.File.ReadAllLines (inPutFile);
 			var writer = new BinaryWriter (new FileStream (outPutFile, FileMode.Create));
 			{
-				writer.Write ("VMA");
 				for (int i = 0; i < l.Length; i++) {
-					string l1 = l [i];
+					string l0 = l [i];
+					string l1 = l0.Split (';') [0].Trim();
+
 					if (l1 == string.Empty)
+						continue;
+
+					if (m_pDefines.isLineADefine (l1))
 						continue;
 
 					if (l1.ToUpper ().Contains ("ORG")) {
@@ -60,12 +67,8 @@ namespace vmasm
 						writer.BaseStream.Seek (Org, SeekOrigin.Begin);
 						continue;
 					} else if (l1.Contains (":")) {
-						string ll = l1.Replace (":", "");
-						if (!m_pLabels.ContainsKey (ll)) {
-							m_pLabels.Add ("." + ll, (int)writer.BaseStream.Position);
-
-						}
-						Console.WriteLine ("[Label] {0}  {1}", ll, writer.BaseStream.Position);
+						// LABEL: EQU 34
+						CompLabel(l1,writer);
 						continue;
 					} else if (l1[0] == 'L' && l1[1] == 'B') { // Label vordifinieren
 
@@ -84,6 +87,31 @@ namespace vmasm
 
 
 			return true;
+		}
+		private void CompLabel(string l1, BinaryWriter writer)
+		{
+			// Label: ...
+			// Label: EQU 32
+			string[] la = l1.Split(':');
+			// 0 = LABEL
+			// 1 = NULL or (EQU 32)
+			int Pos = (int)writer.BaseStream.Position;
+			string label = la [0];
+
+			if (la.Length == 2 && la[1].Contains("EQU")) {
+				string t = la [1].TrimStart (' ').Remove (0, 3).Trim ();
+
+				t = m_pDefines.Get (t);
+				t = t.Replace ("#", "");
+
+				Pos = ParseNumber (t);
+			}
+
+			if (!m_pLabels.ContainsKey (label)) {
+				m_pLabels.Add ("." + label, Pos);
+
+			}
+			Console.WriteLine ("[Label] {0}  {1}", label, Pos);
 		}
 		private bool CompLine(string line, BinaryWriter stream)
 		{
@@ -168,6 +196,11 @@ namespace vmasm
 		{
 			bool isLable = false;
 
+			p1 = m_pDefines.Get (p1);
+
+
+
+
 			if (p1.Contains ("#")) {
 				stream.Write ((byte)InstructionParam2.Value);
 				Console.Write ("{0} ", InstructionParam2.Value);
@@ -184,7 +217,7 @@ namespace vmasm
 			} else if (p1.Contains (".")) {
 				stream.Write ((byte)InstructionParam2.Lable);
 				p1 = p1.Replace (".", "");
-				Console.Write ("{0} {1}", InstructionParam2.Lable, p1);
+				Console.Write ("{0} {1}", InstructionParam2.Lable, getLabelPos("."+p1));
 				isLable = true;
 			}
 			if (!isLable) {
@@ -193,25 +226,33 @@ namespace vmasm
 				stream.Write (p.ToBytes (), 0, 4);
 				return;
 			} else {
-				stream.Write(p1);
+				stream.Write(getLabelPos("."+p1));
+				isLable = false;
 			}
 		}
-		private int ParseNumber(string i)
+		private int ParseNumber(string l1)
 		{
 			// 56d = decimal //
 			// 56 = decimal //
 			// 56h = HEX //
 			// 56o = Octal
-			if (i.ToLower ().Contains ("h"))
-				return ParseHex (i);
-			else if (i.ToLower ().Contains ("o"))
-				return ParseOctal (i);
-			else if (i.ToLower ().Contains ("b"))
-				return ParseBin (i);
-			else
-				return ParseDec (i);
 
+			// TODO: Cheak of Math Funktion and Parse hear
+			Expression e = new Expression(l1);
+			e.EvaluateParameter += delegate(string name, ParameterArgs args) {
+				if (name.ToLower ().Contains ("h"))
+					args.Result = ParseHex (name);
+				else if (name.ToLower ().Contains ("o"))
+					args.Result =    ParseOctal (name);
+				else if (name.ToLower ().Contains ("b"))
+					args.Result =    ParseBin (name);
+				else
+					args.Result =    ParseDec (name);
+
+			};
+			return (int)e.Evaluate ();
 		}
+
 		private int ParseBin(string i)
 		{
 			i = i.ToLower().Replace ("b", "");

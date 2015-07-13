@@ -112,9 +112,14 @@ namespace Vcsos.Komponent
 			m_pMemRegister = new Memory (24, "Register");
 
 			sp = VM.Instance.Ram.Size - 1;
-			ip = 100;
+			ip = 0;
 			ax = ax.RandR ();
 			bx = bx.RandR ();
+
+			DivByZero = false;
+			OverFlow = false;
+			UnderFlow = false;
+
 
 			m_pStack = new Stack ();
 		}

@@ -119,10 +119,19 @@ namespace Vcsos
 				return newUint;
 			}
 		}
+		static Random r = new Random ((int)DateTime.Now.ToBinary ());
+
 		internal static int RandR(this int a)
 		{
-			Random r = new Random ((int)DateTime.Now.ToBinary ());
 			return r.Next (int.MinValue, int.MaxValue);
+		}
+		/*internal static byte RandR(this byte a)
+		{
+			byte val = (byte)r.Next (byte.MinValue, byte.MaxValue);
+		}*/
+		internal static void RandMemory(this byte[] a)
+		{
+			r.NextBytes (a);
 		}
 	}
 }

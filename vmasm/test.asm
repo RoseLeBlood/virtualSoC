@@ -15,5 +15,5 @@ Test:
 ADD #34d
 MOV BX,AX
 CLR AX
-JMP .Test
+MOV AX,FB
 END
