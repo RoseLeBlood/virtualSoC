@@ -121,12 +121,11 @@ namespace vmasm
 			if (l.Length == 1)
 				return CompOpp (OpID (l [0]), stream);
 			else if (l.Length == 2 && l [1].Contains (",")) {
-				string[] k = l [1].Split (',');
-				return CompOpp ((OpID (l [0])), k [0], k [1], stream);
+				string[] k = l [1].Split (','); // MOV 2
+				if(k.Length == 2) return CompOpp ((OpID (l [0])), k [0], k [1], stream);
+				if(k.Length == 3) return CompOpp ((OpID (l [0])), k [0], k [1], k [2], stream);
 			} else if (l.Length == 2)
 				return CompOpp ((OpID (l [0])), l [1], stream);
-			else if (l.Length == 3)
-				return true;//CompOpp
 
 			return false;
 		}
@@ -184,6 +183,17 @@ namespace vmasm
 			return true;
 		}
 
+		private bool CompOpp(int op, string p1, string p2, string p3, BinaryWriter stream)
+		{
+			stream.Write (op.ToBytes (), 0, 4);
+			Console.Write ("[Inst 3] {0} ({1}) ", op, stream.BaseStream.Position);
+			ParamTest (p1, stream);
+			ParamTest (p2, stream);
+			ParamTest (p3, stream);
+			Console.WriteLine ();
+			return true;
+		}
+
 		private int OpID(string text)
 		{
 			foreach (var item in m_pInstruction) {
@@ -216,8 +226,8 @@ namespace vmasm
 				p1 = p1.Replace ("@", "");
 			} else if (p1.Contains (".")) {
 				stream.Write ((byte)InstructionParam2.Lable);
-				p1 = p1.Replace (".", "");
-				Console.Write ("{0} {1}", InstructionParam2.Lable, getLabelPos("."+p1));
+				//p1 = p1.Replace (".", "");
+				Console.Write ("{0} {1}", InstructionParam2.Lable, getLabelPos(p1));
 				isLable = true;
 			}
 			if (!isLable) {
@@ -226,7 +236,7 @@ namespace vmasm
 				stream.Write (p.ToBytes (), 0, 4);
 				return;
 			} else {
-				stream.Write(getLabelPos("."+p1));
+				stream.Write(getLabelPos(p1));
 				isLable = false;
 			}
 		}
@@ -242,8 +252,6 @@ namespace vmasm
 			e.EvaluateParameter += delegate(string name, ParameterArgs args) {
 				if (name.ToLower ().Contains ("h"))
 					args.Result = ParseHex (name);
-				else if (name.ToLower ().Contains ("o"))
-					args.Result =    ParseOctal (name);
 				else if (name.ToLower ().Contains ("b"))
 					args.Result =    ParseBin (name);
 				else
@@ -263,14 +271,9 @@ namespace vmasm
 			i = i.ToLower().Replace ("d", "");
 			return int.Parse (i, NumberStyles.None);
 		}
-		private int ParseOctal(string i)
-		{
-			i = i.ToLower().Replace ("o", "");
-			return 0;
-		}
 		private int ParseHex(string i)
 		{
-			i = i.ToLower().Replace ("h", "");
+			i = i.ToLower().Replace ("0x", "");
 			return int.Parse (i, NumberStyles.HexNumber);
 		}
 	}

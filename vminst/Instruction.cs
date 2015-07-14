@@ -42,6 +42,10 @@ namespace vminst
 			OpParam1 = p1;
 			OpParam2 = p2;
 		}
+		public override string ToString ()
+		{
+			return string.Format ("{0} {1} {3}", OpCode, OpParam1, OpParam2);
+		}
 	}
 	public class Instructions : System.Collections.Generic.List<Instruction>
 	{
@@ -61,20 +65,20 @@ namespace vminst
 			Add (new Instruction (  "DIV",  9,   1));
 			Add (new Instruction (  "MOV", 14,   2)); // MOV(2) T(1)V(4) T(1)V(4) 
 			Add (new Instruction ( 	"CLR",	9,   1));
-			//
-			Add (new Instruction (  "OR",  19, 	 3)); // OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
-			Add (new Instruction (  "XOR", 19, 	 3)); // OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
-			Add (new Instruction (  "AND", 19, 	 3)); // OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
+			Add (new Instruction (  "OR",  19, 	 3)); //+ OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
+			Add (new Instruction (  "XOR", 19, 	 3)); //+ OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
+			Add (new Instruction (  "AND", 19, 	 3)); //+ OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
 			Add (new Instruction (  "NAND",19, 	 3)); // OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
-			Add (new Instruction (  "NOR", 19, 	 3)); // OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
-			Add (new Instruction (  "NOT", 14, 	 2)); // OP(2) T(1)V(4)  T(1)V(4) 
-			Add (new Instruction (  "TIK",  9,   1)); // OP(2) T(1)V(4)
-
-			Add (new Instruction (  "ADR",  13,   2)); // ADD Regster MOV(2) R(4) T(1)V(4) 
-			Add (new Instruction (  "SBR",  13,   2)); // Sub Register MOV(2) R(4) T(1)V(4) 
-			Add (new Instruction (  "MLR",  13,   2)); // MUL Register MOV(2) R(4) T(1)V(4) 
-			Add (new Instruction (  "DVR",  13,   2)); // DIV Register MOV(2) R(4) T(1)V(4) 
-			Add (new Instruction ( 	"RET",	4,    0));
+			Add (new Instruction (  "NOR", 19, 	 3)); //+ OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
+			Add (new Instruction (  "NXOR",19,   3)); //+ OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
+			Add (new Instruction (  "NOT", 14, 	 2)); //+ OP(2) T(1)V(4)  T(1)V(4) 
+			Add (new Instruction ( 	"RET",	4,   0));
+			Add (new Instruction (  "CALL", 9, 	 1));
+			//
+			Add (new Instruction (  "ADR",  19,   3)); // ADD return to V1 not to AX OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
+			Add (new Instruction (  "SBR",  19,   3)); // SUB return to V1 not to AX OP(2) T(1)V(4)  T(1)V(4) T(1)V(4) 
+			Add (new Instruction (  "MLR",  19,   3)); // MUL return to V1 not to AX OP(2) T(1)V(4)  T(1)V(4) T(1)V(4) 
+			Add (new Instruction (  "DVR",  19,   3)); // DIV return to V1 not to AX OP(2) T(1)V(4)  T(1)V(4) T(1)V(4) 
 		}
 	}
 	public class Register
@@ -92,6 +96,7 @@ namespace vminst
 			Add (new Register ("IP", 0)); // Intrsuction Pointer
 			Add (new Register ("AX", 0)); // Akku A
 			Add (new Register ("BX", 0)); // Akku B
+			Add (new Register ("TIK", 0)); // Current Tik
 		
 			Add (new Register ("CF", 2)); // Carry Flag
 			Add (new Register ("ZF", 2)); // Zero Flag

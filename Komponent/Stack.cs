@@ -46,21 +46,21 @@ namespace Vcsos.Komponent
 			byte[] _l = new byte[4];
 
 			for (int i = 0; i < 4; i++) {
-				_l[i] = VM.Instance.Ram [VM.Instance.CPU.Register.sp+1+i];
+				_l[i] = VM.Instance.Ram [VM.Instance.CPU.L2.sp+1+i];
 			}
 
 			return _l.ToInt ();
 		}
 		public void Push(byte data)
 		{
-			VM.Instance.Ram [VM.Instance.CPU.Register.sp] = data;
-			VM.Instance.CPU.Register.sp -= 1;
+			VM.Instance.Ram [VM.Instance.CPU.L2.sp] = data;
+			VM.Instance.CPU.L2.sp -= 1;
 		}
 		public byte Pop()
 		{
-			byte b = VM.Instance.Ram [VM.Instance.CPU.Register.sp+1];
-			VM.Instance.Ram [VM.Instance.CPU.Register.sp + 1] = 0;
-			VM.Instance.CPU.Register.sp += 1;
+			byte b = VM.Instance.Ram [VM.Instance.CPU.L2.sp+1];
+			VM.Instance.Ram [VM.Instance.CPU.L2.sp + 1] = 0;
+			VM.Instance.CPU.L2.sp += 1;
 
 
 			//VM.Instance.Ram [VM.Instance.CPU.Register.sp + 2] = 0;
@@ -68,7 +68,7 @@ namespace Vcsos.Komponent
 		}
 		public byte Peek()
 		{
-			return VM.Instance.Ram [VM.Instance.CPU.Register.sp+1];
+			return VM.Instance.Ram [VM.Instance.CPU.L2.sp+1];
 		}
 		public override string ToString ()
 		{
@@ -88,9 +88,9 @@ namespace Vcsos.Komponent
 			get { return m_pCache.Read16 (0); }
 			set { m_pCache.Write (value, 0); }
 		}
-		public CacheStack()
+		public CacheStack(int size, string name)
 		{
-			m_pCache = new Memory (256, "CPU-Stack");
+			m_pCache = new Memory (size, name);
 			m_pCache.Write ((ushort)(m_pCache.Size-1), 0); // Current Adress
 			m_pCache.Write ((ushort)(m_pCache.Size-1), 2); // Max Adresse
 		}
@@ -113,9 +113,35 @@ namespace Vcsos.Komponent
 				return 0;
 			}
 		}
+		public void Push32(int value)
+		{
+			byte[] _l = value.ToBytes ();
+			Array.Reverse (_l);
+			for (int i = 0; i < _l.Length; i++)
+				Push (_l [i]);
+			//Push (0);
+		}
+		public int Pop32()
+		{
+			byte[] _l = new byte[4];
+			for (int i = 0; i < 4; i++)
+				_l [i] = Pop ();
+
+			return _l.ToInt ();
+		}
 		public byte Peek()
 		{
 			return m_pCache [(int)(SP + 1)];
+		}
+		public int Peek32()
+		{
+			byte[] _l = new byte[4];
+
+			for (int i = 0; i < 4; i++) {
+				_l[i] = VM.Instance.Ram [VM.Instance.CPU.L2.sp+1+i];
+			}
+
+			return _l.ToInt ();
 		}
 		public override string ToString ()
 		{

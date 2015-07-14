@@ -52,7 +52,7 @@ namespace Vcsos
 		}
 		void TimerElapsed (object sender, System.Timers.ElapsedEventArgs e)
 		{
-			int op = VM.Instance.Ram.Read32 (VM.Instance.CPU.Register.ip);
+			int op = VM.Instance.Ram.Read32 (VM.Instance.CPU.L2.ip);
 
 			m_bIsAlive = m_pParser.ParseAndRun (op);
 			if(m_bIsAlive)

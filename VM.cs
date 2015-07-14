@@ -67,7 +67,7 @@ namespace Vcsos
 			} else {
 				Ram.Write (data);
 
-				CPU.Register.ip = 16;
+				CPU.L2.ip = 16;
 				m_pAssembler.Start ();
 				return true;
 			}

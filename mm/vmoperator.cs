@@ -55,6 +55,15 @@ namespace Vcsos.mm
 			m_pOperators.Add (new vmpush ());
 			m_pOperators.Add (new vmsub ());
 			m_pOperators.Add (new vmmov ());
+			m_pOperators.Add (new vmor ());
+			m_pOperators.Add (new vmxor ());
+			m_pOperators.Add (new vmand ());
+			m_pOperators.Add (new vmnor ());
+			m_pOperators.Add (new vmxnor ());
+			m_pOperators.Add (new vmneg ());
+			m_pOperators.Add (new vmnand ());
+			m_pOperators.Add (new vmcall ());
+			m_pOperators.Add (new vmret ());
 		}
 		internal  bool ParseAndRun(int pos)
 		{
@@ -62,16 +71,16 @@ namespace Vcsos.mm
 
 			#if DEBUG
 			Console.WriteLine ("{3} [{2}] {0} {1}", pos, c.OpCode, 
-				VM.Instance.CPU.Register.ip, CPU.Ticks);
+				VM.Instance.CPU.L2.ip, CPU.Ticks);
 			#endif
 
 			bool ret = getOperator (c).ParseAndRun (this);
-			VM.Instance.CPU.Register.ip += c.OpParam1;
+			VM.Instance.CPU.L2.ip += c.OpParam1;
 			return ret;
 		}
 		private vmoperator getOperator(Instruction c)
 		{
-			vmoperator ope = null;
+			vmoperator ope = new vmunknown(c);
 			foreach (var item in m_pOperators) {
 				if (item.Name == c.OpCode) {
 					ope = item;
@@ -83,7 +92,7 @@ namespace Vcsos.mm
 
 		internal InstructionParam2 getParam(int ipa)
 		{
-			return (InstructionParam2)VM.Instance.Ram [VM.Instance.CPU.Register.ip + ipa];
+			return (InstructionParam2)VM.Instance.Ram [VM.Instance.CPU.L2.ip + ipa];
 		}
 	}
 

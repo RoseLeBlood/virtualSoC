@@ -27,7 +27,7 @@ namespace Komponent
 	public class Serial
 	{
 		private SerialPort m_pPort;
-		private bool m_pReciveData;
+		//private bool m_pReciveData;
 
 		public byte SBUF // (99h)
 		{

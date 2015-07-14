@@ -59,7 +59,7 @@ namespace vmcli
 			}
 			string r = VM.Instance.Ram.ToString ();
 			Console.WriteLine (r + System.Environment.NewLine);
-			Console.WriteLine (VM.Instance.CPU.Register.ToString ());
+			Console.WriteLine (VM.Instance.CPU.L2.ToString ());
 		}
 	}
 }

@@ -89,6 +89,7 @@ namespace Vcsos.Komponent
 			var output = new StringWriter ();
 
 			int address = 0;
+			output.WriteLine (m_strName + ":");
 			foreach (byte b in m_pMemory)
 			{
 				if (address == 0 || address%16==0)

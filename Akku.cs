@@ -34,25 +34,25 @@ namespace Vcsos.Komponent
 		}
 		public void MoveAX(Int32 data) // MOV A, #6
 		{
-			m_pCpu.Register.ax = data;
+			m_pCpu.L2.ax = data;
 		}
 		public int MoveFromAX() // MOV REG, A
 		{
-			return m_pCpu.Register.ax;
+			return m_pCpu.L2.ax;
 		}
 		public int MoveFromBX() // MOX REG, B
 		{
-			return m_pCpu.Register.bx;
+			return m_pCpu.L2.bx;
 		}
 		public int Add(int data)
 		{
 			int result = 0;
-			int carry = (int)(m_pCpu.Register.CarryFlag ? 1 : 0);
+			int carry = (int)(m_pCpu.L2.CarryFlag ? 1 : 0);
 
-			m_pCpu.Register.OverFlow = Add (m_pCpu.Register.ax, data, ref carry, ref result);
-			m_pCpu.Register.ax = result;
-			m_pCpu.Register.CarryFlag = carry == 1;
-			m_pCpu.Register.UnderFlow = false;
+			m_pCpu.L2.OverFlow = Add (m_pCpu.L2.ax, data, ref carry, ref result);
+			m_pCpu.L2.ax = result;
+			m_pCpu.L2.CarryFlag = carry == 1;
+			m_pCpu.L2.UnderFlow = false;
 
 			return result;
 		}
@@ -70,71 +70,71 @@ namespace Vcsos.Komponent
 		}
 		public int Mul(int data)
 		{
-			m_pCpu.Register.AkkuHelp = (data > 0);
-			data = (!m_pCpu.Register.AkkuHelp) ? CmplTwo(data) : data;
+			m_pCpu.L2.AkkuHelp = (data > 0);
+			data = (!m_pCpu.L2.AkkuHelp) ? CmplTwo(data) : data;
 
-			m_pCpu.Register.bx = m_pCpu.Register.ax;
+			m_pCpu.L2.bx = m_pCpu.L2.ax;
 		
 			for (uint i = 0; i < data -1; i++) {
-				m_pCpu.Register.ax = Add (m_pCpu.Register.bx, m_pCpu.Register.ax);
+				m_pCpu.L2.ax = Add (m_pCpu.L2.bx, m_pCpu.L2.ax);
 			}
-			m_pCpu.Register.OverFlow = (m_pCpu.Register.ax < m_pCpu.Register.bx);
-			m_pCpu.Register.ax = (!m_pCpu.Register.AkkuHelp) ? CmplTwo( m_pCpu.Register.ax) 
-				: m_pCpu.Register.ax;
+			m_pCpu.L2.OverFlow = (m_pCpu.L2.ax < m_pCpu.L2.bx);
+			m_pCpu.L2.ax = (!m_pCpu.L2.AkkuHelp) ? CmplTwo( m_pCpu.L2.ax) 
+				: m_pCpu.L2.ax;
 			
 
-			return m_pCpu.Register.ax;
+			return m_pCpu.L2.ax;
 		}
 		public int Div(int data)
 		{
-			if (m_pCpu.Register.ax == 0)
-				m_pCpu.Register.DivByZero = true;
+			if (m_pCpu.L2.ax == 0)
+				m_pCpu.L2.DivByZero = true;
 
-			m_pCpu.Register.AkkuHelp = (data > 0);
-			data = (!m_pCpu.Register.AkkuHelp) ? CmplTwo(data) : data;
+			m_pCpu.L2.AkkuHelp = (data > 0);
+			data = (!m_pCpu.L2.AkkuHelp) ? CmplTwo(data) : data;
 
-			m_pCpu.Register.cx = m_pCpu.Register.ax;
+			m_pCpu.L2.cx = m_pCpu.L2.ax;
 
-			m_pCpu.Register.bx = (m_pCpu.Register.ax < 0) ? 
-				CmplTwo(m_pCpu.Register.ax) : m_pCpu.Register.ax;
-			m_pCpu.Register.ax = 0;
+			m_pCpu.L2.bx = (m_pCpu.L2.ax < 0) ? 
+				CmplTwo(m_pCpu.L2.ax) : m_pCpu.L2.ax;
+			m_pCpu.L2.ax = 0;
 
 
-			while (m_pCpu.Register.bx >= data) {
-				m_pCpu.Register.bx = Add(m_pCpu.Register.bx, ~data + 1);
-				m_pCpu.Register.CarryFlag = false;
+			while (m_pCpu.L2.bx >= data) {
+				m_pCpu.L2.bx = Add(m_pCpu.L2.bx, ~data + 1);
+				m_pCpu.L2.CarryFlag = false;
 				Add(1);
 			}
 
-			m_pCpu.Register.ax = (!m_pCpu.Register.AkkuHelp ^ !(m_pCpu.Register.cx > 0)) ? CmplTwo( m_pCpu.Register.ax) 
-				: m_pCpu.Register.ax;
+			m_pCpu.L2.ax = (!m_pCpu.L2.AkkuHelp ^ !(m_pCpu.L2.cx > 0)) ? CmplTwo( m_pCpu.L2.ax) 
+				: m_pCpu.L2.ax;
 			
-			return m_pCpu.Register.ax;
+			return m_pCpu.L2.ax;
 		}
 		public int Sub(int data)
 		{
 			int result = 0;
-			int carry = (int)(m_pCpu.Register.CarryFlag ? 1 : 0);
+			int carry = (int)(m_pCpu.L2.CarryFlag ? 1 : 0);
 
-			m_pCpu.Register.OverFlow = Add (m_pCpu.Register.ax, ~data + 1, ref carry, ref result);
-			m_pCpu.Register.ax = result;
-			m_pCpu.Register.CarryFlag = carry == 1;
+			m_pCpu.L2.OverFlow = Add (m_pCpu.L2.ax, ~data + 1, ref carry, ref result);
+			m_pCpu.L2.ax = result;
+			m_pCpu.L2.CarryFlag = carry == 1;
 
-			if (m_pCpu.Register.OverFlow) {
-				m_pCpu.Register.OverFlow = false;
+			if (m_pCpu.L2.OverFlow) {
+				m_pCpu.L2.OverFlow = false;
 			}
 			else
-				m_pCpu.Register.UnderFlow = (result <= int.MaxValue);
+				m_pCpu.L2.UnderFlow = (result <= int.MaxValue);
 
 			return result;
 		}
 		private int Add(int A, int B)
 		{
 			int result = 0;
-			int carry = (int)(m_pCpu.Register.CarryFlag ? 1 : 0);
+			int carry = (int)(m_pCpu.L2.CarryFlag ? 1 : 0);
 
-			m_pCpu.Register.OverFlow = Add (A, B, ref carry, ref result);
-			m_pCpu.Register.CarryFlag = carry == 1;
+			m_pCpu.L2.OverFlow = Add (A, B, ref carry, ref result);
+			m_pCpu.L2.CarryFlag = carry == 1;
 			return result;
 		}
 		private bool Add(int A, int B, ref int carry, ref int result)

@@ -26,6 +26,7 @@ namespace Vcsos.Komponent
 	public class CPU
 	{
 		protected CacheStack m_pCacheStack; // L1 IPC  
+		protected CacheStack m_pCallStack;  // L3 Call Stack  
 		private Register	 m_pRegister; 	// L2 Current Register
 
 		protected Akku 		 m_pAkku;
@@ -33,60 +34,64 @@ namespace Vcsos.Komponent
 
 		public static ulong   Ticks { get; private set; }
 
-		public Register Register
-		{
-			get { return m_pRegister; }
-			set { m_pRegister = value; }
-		}
+
 		public Akku Akku
 		{
 			get { return m_pAkku; }
 			set { m_pAkku = value; }
 		}
-		public CacheStack Cache
+		public CacheStack L1
 		{
 			get { return m_pCacheStack; }
+		}
+		public Register L2
+		{
+			get { return m_pRegister; }
+			set { m_pRegister = value; }
+		}
+		public CacheStack L3
+		{
+			get { return m_pCallStack; }
 		}
 		public CPU ()
 		{
 			m_pRegister = new Register ();
 			m_pAkku = new Akku (this);
-			m_pCacheStack = new CacheStack ();
+			m_pCacheStack = new CacheStack (256, "CPU-L1");
+			m_pCallStack = new CacheStack  (135, "CPU-L2"); // 32 Unterprogramme
 		}
 		public virtual void Run()
 		{
 
 		}
 
-		public void And(ref int v1, int v2)
+		public int And(int v1, int v2)
 		{
-			for (int i = 0; i < sizeof(int); i++)
-				v1.Set ( v1.Get (i) & v2.Get (i), i);
+			return v1 & v2;
 		}
-		public void Or(ref int v1, int v2)
+		public int Or(int v1, int v2)
 		{
-			for (int i = 0; i < 32; i++)
-				v1.Set (v1.Get (i) | v2.Get (i), i);
+			return v1 | v2;
 		}
-		public void Xor(ref int v1, int v2)
+		public int Xor(int v1, int v2)
 		{
-			for (int i = 0; i < 32; i++)
-				v1.Set (v1.Get (i) ^ v2.Get (i),i);
+			return v1 ^ v2;
 		}
-		public void Neg(ref int v1)
+		public int Neg(int v1)
 		{
-			for (int i = 0; i < 32; i++)
-				v1.Set (!v1.Get (i),i);
+			return -v1;
 		}
-		public void XNor(ref int v1, int v2)
+		public int XNor(int v1, int v2)
 		{
-			Xor (ref v1, v2);
-			Neg (ref v1);
+			return Neg (Xor (v1, v2));
 		}
-		public void Nand(ref int v1, int v2)
+		public int Nor(int v1, int v2)
 		{
-			And (ref v1, v2);
-			Neg (ref v1);
+			return Neg (Or (v1, v2));
+		}
+		public int Nand(int v1, int v2)
+		{
+			return Neg (And (v1, v2));
 		}
 		internal void Tick() {
 			Ticks += 1;

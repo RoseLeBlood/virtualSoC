@@ -1,5 +1,5 @@
 ﻿//
-//  vmpush.cs
+//  vmneg.cs
 //
 //  Author:
 //       anna-sophia <${AuthorEmail}>
@@ -23,21 +23,31 @@ using vminst;
 
 namespace Vcsos.mm
 {
-	public class vmpush: vmoperator
+	public class vmneg: vmoperator
 	{
 		public string Name {
-			get { return "PUSH"; }
+			get { return "NOT"; }
 		}
+
 		public bool ParseAndRun (ParserFactory factory)
 		{
-			InstructionParam2 param1 = factory.getParam(4);
-			int param1V = VM.Instance.Ram.Read32 (VM.Instance.CPU.L2.ip + 5);
+			InstructionParam2 param1 = factory.getParam(4); // 101 4 105
+			int param1V = VM.Instance.Ram.Read32 (VM.Instance.CPU.L2.ip + 5); //106
+
+			InstructionParam2 param2 = factory.getParam(9); // 110 4 114
+			int param2V = VM.Instance.Ram.Read32 (VM.Instance.CPU.L2.ip + 10); //115 
+
+
+			if (param2 == InstructionParam2.Value)
+				VM.Instance.CPU.L2.Stack.Push32 (param2V);
+			else if (param2 == InstructionParam2.Register) {
+				VM.Instance.CPU.L2.Stack.Push32 (VM.Instance.CPU.L2.Get (factory.m_pRegisters [param2V].Name));
+			}
 
 			if (param1 == InstructionParam2.Value)
-				VM.Instance.CPU.L2.Stack.Push32 (param1V);
-			else if (param1 == InstructionParam2.Register) {
-				VM.Instance.CPU.L2.Stack.Push32 (VM.Instance.CPU.L2.Get (factory.m_pRegisters [param1V].Name));
-			}
+				VM.Instance.Ram.Write (VM.Instance.CPU.Neg( VM.Instance.CPU.L2.Stack.Pop32 () ), (uint)param1V);
+			else if (param1 == InstructionParam2.Register)
+				VM.Instance.CPU.L2.Set (factory.m_pRegisters [param1V].Name, VM.Instance.CPU.Neg( VM.Instance.CPU.L2.Stack.Pop32 () ));
 
 			return true;
 		}

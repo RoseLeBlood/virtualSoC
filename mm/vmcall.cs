@@ -1,5 +1,5 @@
 ﻿//
-//  vmpush.cs
+//  vmcall.cs
 //
 //  Author:
 //       anna-sophia <${AuthorEmail}>
@@ -23,20 +23,23 @@ using vminst;
 
 namespace Vcsos.mm
 {
-	public class vmpush: vmoperator
+	public class vmcall: vmoperator
 	{
 		public string Name {
-			get { return "PUSH"; }
+			get { return "CALL"; }
 		}
 		public bool ParseAndRun (ParserFactory factory)
 		{
 			InstructionParam2 param1 = factory.getParam(4);
 			int param1V = VM.Instance.Ram.Read32 (VM.Instance.CPU.L2.ip + 5);
 
+			VM.Instance.CPU.L3.Push32 (VM.Instance.CPU.L2.ip+9);
+			VM.Instance.CPU.L2.Set ("IP", param1V);
+
 			if (param1 == InstructionParam2.Value)
-				VM.Instance.CPU.L2.Stack.Push32 (param1V);
+				VM.Instance.CPU.L2.Set ("IP", param1V);
 			else if (param1 == InstructionParam2.Register) {
-				VM.Instance.CPU.L2.Stack.Push32 (VM.Instance.CPU.L2.Get (factory.m_pRegisters [param1V].Name));
+				VM.Instance.CPU.L2.Set ("IP", VM.Instance.CPU.L2.Get(factory.m_pRegisters [param1V].Name));
 			}
 
 			return true;

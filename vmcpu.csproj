@@ -62,6 +62,16 @@
     <Compile Include="mm\vmmov.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="VM.cs" />
+    <Compile Include="mm\vmor.cs" />
+    <Compile Include="mm\vmxor.cs" />
+    <Compile Include="mm\vmneg.cs" />
+    <Compile Include="mm\vmand.cs" />
+    <Compile Include="mm\vmnand.cs" />
+    <Compile Include="mm\vmnor.cs" />
+    <Compile Include="mm\vmxnor.cs" />
+    <Compile Include="mm\vmret.cs" />
+    <Compile Include="mm\vmcall.cs" />
+    <Compile Include="mm\vmunknown.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

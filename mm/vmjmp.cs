@@ -30,9 +30,9 @@ namespace Vcsos.mm
 		public bool ParseAndRun (ParserFactory factory)
 		{
 			//InstructionParam2 param1 = factory.getParam(4);
-			int param1V = VM.Instance.Ram.Read32 (VM.Instance.CPU.Register.ip + 5);
+			int param1V = VM.Instance.Ram.Read32 (VM.Instance.CPU.L2.ip + 5);
 
-			VM.Instance.CPU.Register.Set ("IP", param1V);
+			VM.Instance.CPU.L2.Set ("IP", param1V);
 
 			return true;
 		}
