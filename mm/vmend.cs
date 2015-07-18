@@ -29,6 +29,12 @@ namespace Vcsos.mm
 		}
 		public bool ParseAndRun (ParserFactory factory)
 		{
+			#if DEBUG
+
+			string r = VM.Instance.Ram.ToString();
+			Console.WriteLine(r);
+			Console.WriteLine(VM.Instance.CPU.L2.ToString());
+			#endif
 			return false;
 		}
 	}
