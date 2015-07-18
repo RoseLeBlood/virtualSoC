@@ -28,6 +28,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using Vcsos;
 using Vcsos.Komponent;
+using OpenTK.Graphics;
 
 
 namespace vmcli
@@ -35,54 +36,74 @@ namespace vmcli
 	public class FramebufferForm : GameWindow
 	{
 		private FrameBufferInfo m_pInfo;
-		private int[] m_ppbuffer;
+		private Memory m_ppbuffer;
 
-		public FramebufferForm () : base(320,320, OpenTK.Graphics.GraphicsMode.Default,
+		public FramebufferForm () : base(320,320, GraphicsMode.Default, 
 			"", GameWindowFlags.FixedWindow, DisplayDevice.Default, 1,1,
 			OpenTK.Graphics.GraphicsContextFlags.Embedded)
 		{
 			VM.Instance.FBdev.UpdateFunction = UpdateBuffer;
 			VM.Instance.FBdev.InitFunction = InitFrameBuffer;
+
+			string versionOpenGL = GL.GetString(StringName.Version);
+
+			Console.WriteLine ("vmGPU on OpenGL {0}", versionOpenGL);
 		}
 		protected override void OnRenderFrame( FrameEventArgs e )
 		{
 			GL.Clear( ClearBufferMask.ColorBufferBit );
-
-			DrawImage(0);
+			View ();
+			Draw();
 
 			SwapBuffers();
 		}
-		private void DrawImage(int image)
+		private void View()
+		{
+			GL.Viewport (0, 0, m_pInfo.Width, m_pInfo.Height);
+			GL.MatrixMode (MatrixMode.Projection);
+			GL.LoadIdentity ();
+			GL.Ortho (0, m_pInfo.Width, 0, m_pInfo.Height, -1, 1);
+
+			GL.MatrixMode (MatrixMode.Modelview);
+			GL.LoadIdentity ();
+		}
+		private void Draw()
 		{
 			if (m_ppbuffer != null) {
-				GL.Viewport (0, 0, m_pInfo.Width, m_pInfo.Height);
-				GL.MatrixMode (MatrixMode.Projection);
-				GL.LoadIdentity ();
-				GL.Ortho (0, m_pInfo.Width, 0, m_pInfo.Height, -1, 1);
-
-				GL.MatrixMode (MatrixMode.Modelview);
-				GL.LoadIdentity ();
-
-
 				GL.Begin (PrimitiveType.Points);
 
 				for (int x = 0; x < m_pInfo.Width; x++) {
 					for (int y = 0; y < m_pInfo.Height; y++) {
-						GL.Color3 (Color.FromArgb (m_ppbuffer [x * y]));
+						var c = GetPixel (x, y);
+						GL.Color3 (Color.FromArgb (c));
 						GL.Vertex2 (x, y);
 					}
 				}
 				GL.End ();
 			}
 		}
+		private int GetPixel(int x, int y)
+		{
+			int offset = y * m_pInfo.Width * 3 + x * 3;
+
+			byte r = m_ppbuffer [offset + 0];
+			byte g = m_ppbuffer [offset + 1];
+			byte b = m_ppbuffer [offset + 2];
+
+			return ((r & 0xff) << 16) | ((g & 0xff) << 8) | (b & 0xff);
+		}
 		private void UpdateBuffer(Framebuffer FB)
 		{
+
 			m_ppbuffer = FB.Memory;
+
 		}
 		private void InitFrameBuffer(FrameBufferInfo buffer)
 		{
 			Size = new Size (buffer.Width, buffer.Height);
 			m_pInfo = buffer;
+
+
 			Title = buffer.ToString ();
 		}
 	}

@@ -46,10 +46,11 @@ namespace Vcsos.Komponent
 		public int Width,Height; // 8   .. 13
 		public int Size;
 		public FrameBufferOrientation Orientation;
-		internal void WriteToRam()
+
+		internal void WriteToRam(int position)
 		{
 			//0xAFF0
-			int b = VM.Instance.Ram.Write(physbase.ToBytes(), 0xAFD0);
+			int b = VM.Instance.Ram.Write(physbase.ToBytes(), position);
 			b = VM.Instance.Ram.Write (new byte[] { BitsPerPixel }, b);
 			b = VM.Instance.Ram.Write (Width.ToBytes (), b);
 			b = VM.Instance.Ram.Write (Height.ToBytes (), b);
@@ -95,8 +96,8 @@ namespace Vcsos.Komponent
 				Width = Height;
 				Height = w;
 			}
-			BitsPerPixel = 32;
-			Size = Width * Height;
+			BitsPerPixel = 24;
+			Size = Width * Height * (BitsPerPixel/8);
 		}
 		public override string ToString ()
 		{
@@ -117,7 +118,7 @@ namespace Vcsos.Komponent
 		private UpdateBuffer m_pUpdateFunction;
 		private InitFrameBuffer m_pInitFunction;
 
-		private int[] m_pMemory;
+		private Memory m_pMemory;
 
 		public UpdateBuffer UpdateFunction {
 			get { return m_pUpdateFunction; }
@@ -135,7 +136,7 @@ namespace Vcsos.Komponent
 			}
 		}
 
-		public int[] Memory {
+		public Memory Memory {
 			get {
 				return m_pMemory;
 			}
@@ -151,17 +152,19 @@ namespace Vcsos.Komponent
 			int mode = VM.Instance.CPU.L2.Stack.Pop32 ();
 
 			m_pInfo = new FrameBufferInfo (mode);// = new Size (w, h);
-			m_pInfo.WriteToRam();
+			m_pMemory = new Memory(m_pInfo.Size, "FrameBuffer");
 
-			m_pMemory = new int[(int)(m_pInfo.Size)];// "FrameBuffer");
+
+			for (int x = 0; x < m_pInfo.Width; x++) {
+				for (int y = 0; y < m_pInfo.Height; y++) {
+					SetPixel (colorRef, x, y);
+				}
+			}
+
 
 			if (m_pInitFunction != null)
 				m_pInitFunction (m_pInfo);
 			
-			for (int i = 0; i < m_pInfo.Size; i++ ) {
-				m_pMemory [i] = colorRef;
-			}
-
 			UpdateBuffer ();
 				
 		}
@@ -171,15 +174,31 @@ namespace Vcsos.Komponent
 			m_pMemory = null;
 			GC.Collect ();
 		}
+		/// <summary>
+		/// Sets the pixel.
+		/// </summary>
+		/// <param name="colorRef">Color RGB String</param>
+		/// <param name="x">The x coordinate.</param>
+		/// <param name="y">The y coordinate.</param>
 		public void SetPixel(int colorRef, int x, int y)
 		{
-			/*int i = x * y;
-			MemoryMap.Write((byte)(colorRef & 0xff), (int)(FBBASE + i));
-			MemoryMap.Write((byte)((colorRef >> 8) & 0xff), (int)(FBBASE + ++i));
-			MemoryMap.Write((byte)((colorRef >> 16) & 0xff), (int)(FBBASE + ++i));
-*/
-			m_pMemory [x * y] = colorRef;
+			int offset = y * m_pInfo.Width * 3 + x * 3;
+
+			m_pMemory [offset + 0] = (byte)((colorRef & 0xFF0000) >> 16); 
+			m_pMemory [offset + 1] = (byte)((colorRef & 0x00FF00) >> 8);
+			m_pMemory [offset + 2] = (byte)((colorRef & 0x0000FF));
+
 			UpdateBuffer ();
+		}
+		public int GetPixel(int x, int y)
+		{
+			int offset = y * m_pInfo.Width * 3 + x * 3;
+
+			byte r = m_pMemory [offset + 0];
+			byte g = m_pMemory [offset + 1];
+			byte b = m_pMemory [offset + 2];
+
+			return ((r & 0xff) << 16) | ((g & 0xff) << 8) | (b & 0xff);
 		}
 		internal void UpdateBuffer()
 		{

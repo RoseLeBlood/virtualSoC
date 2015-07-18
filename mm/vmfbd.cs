@@ -62,7 +62,7 @@ namespace Vcsos.mm
 			else if (param3 == InstructionParam2.Register) {
 				colorRef = (VM.Instance.CPU.L2.Get (factory.m_pRegisters [param3V].Name));
 			} else if (param3 == InstructionParam2.Pointer) {
-				colorRef = MemoryMap.Read32 (param2V);
+				colorRef = MemoryMap.Read32 (param3V);
 			}
 
 			VM.Instance.FBdev.SetPixel (colorRef, x, y);

@@ -25,54 +25,29 @@ namespace Vcsos
 {
 	public static class MemoryMap 
 	{
-		public static int Write(byte[] data, int addr)
+		public static int Write(byte[] data, int addr, bool fb = false)
 		{
 			return VM.Instance.Ram.Write (data, addr);
 		}
-		public static void Write(byte data, int addr)
+		public static void Write(byte data, int addr, bool fb = false)
 		{
 			VM.Instance.Ram[addr] = data;
 		}
-		public static int Write(Int16 data, int addr)
+		public static int Write(Int16 data, int addr, bool fb = false)
 		{
-			if(VM.Instance.FBdev.Memory == null)
-				return VM.Instance.Ram.Write (data, addr);
-			
-			if (addr >= Framebuffer.FBBASE || addr <= VM.Instance.FBdev.Memory.Length)
-				return VM.Instance.FBdev.Memory[ (int)(addr - Framebuffer.FBBASE)] = data;
-			else
-				return VM.Instance.Ram.Write (data, addr);
+			return VM.Instance.Ram.Write (data, addr);
 		}
-		public static int Write(Int32 data, uint addr)
+		public static int Write(Int32 data, uint addr, bool fb = false)
 		{
-			if(VM.Instance.FBdev.Memory == null)
-				return VM.Instance.Ram.Write (data, addr);
-			
-			if (addr >= Framebuffer.FBBASE || addr <= VM.Instance.FBdev.Memory.Length)
-				VM.Instance.FBdev.Memory[(uint)(addr - Framebuffer.FBBASE)] = data;
-			else
-				return VM.Instance.Ram.Write (data, addr);
-			return 0;
+			return VM.Instance.Ram.Write (data, addr);
 		}
-		public static Int32 Read32(Int32 addr)
+		public static Int32 Read32(Int32 addr, bool fb = false)
 		{
-			if(VM.Instance.FBdev.Memory == null)
-				return VM.Instance.Ram.Read32 (addr);
-			
-			if (addr >= Framebuffer.FBBASE || addr <= VM.Instance.FBdev.Memory.Length)
-				return VM.Instance.FBdev.Memory[ ((int)(addr - Framebuffer.FBBASE)) ];
-			else
-				return VM.Instance.Ram.Read32 (addr);
+			return VM.Instance.Ram.Read32 (addr);
 		}
-		public static Int16 Read16(Int32 addr)
+		public static Int16 Read16(Int32 addr, bool fb = false)
 		{
-			if(VM.Instance.FBdev.Memory == null)
-				return VM.Instance.Ram.Read16 (addr);
-			
-			if (addr >= Framebuffer.FBBASE || addr <= VM.Instance.FBdev.Memory.Length)
-				return (short)VM.Instance.FBdev.Memory[ ((int)(addr - Framebuffer.FBBASE)) ];
-			else
-				return VM.Instance.Ram.Read16 (addr);
+			return VM.Instance.Ram.Read16 (addr);
 		}
 	}
 }
