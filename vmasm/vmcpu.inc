@@ -25,7 +25,7 @@ RET
 ORG 0x100
 InitFramebuffer:
 PUSH #6  ; MODE
-PUSH #hFF555555 ; Color 
+PUSH #hFF000000; Color 
 FBI ; Create FrameBuffer and Write Info To Ram
 RET
 DestroyFramebuffer:

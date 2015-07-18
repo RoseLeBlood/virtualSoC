@@ -100,8 +100,8 @@ namespace Vcsos.Komponent
 		}
 		public override string ToString ()
 		{
-			return string.Format ("{0}x{1}:{2} {3} [{4}:{5}]", Width, Height, BitsPerPixel,
-			Orientation, physbase, Size);
+			return string.Format ("{0}x{1}-{2} {3} [0x{4:X4}:0x{5:X4}]", Width, Height, BitsPerPixel,
+				Orientation, physbase, physbase+Size);
 		}
 	}
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using Vcsos;
 using DotArgs;
-using System.Windows.Forms;
 
 namespace vmcli
 {
@@ -50,8 +49,6 @@ namespace vmcli
 			if (debugFile != "console") {
 				Console.SetOut (new System.IO.StreamWriter (debugFile));
 			}
-			Application.EnableVisualStyles();
-			Application.SetCompatibleTextRenderingDefault(false);
 
 			VM.Instance.CreateVM (ramSize);
 			FramebufferForm form = new FramebufferForm ();
@@ -62,9 +59,7 @@ namespace vmcli
 				Console.WriteLine ("Not enough bytes to load this image.");
 				return;
 			}
-			Application.Run (form);
-
-
+			form.Run ();
 		}
 	}
 }

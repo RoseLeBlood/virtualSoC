@@ -19,123 +19,71 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Windows.Forms;
-using Vcsos.Komponent;
-using Vcsos;
+using System.Drawing.Imaging;
 using DotArgs;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using Vcsos;
+using Vcsos.Komponent;
 
 
 namespace vmcli
 {
-	public class FramebufferForm : Form
+	public class FramebufferForm : GameWindow
 	{
-		private Bitmap buffer;
-		private OpenTK.GLControl openGLControl1;
-		private int[] m_pBuffer;
+		private FrameBufferInfo m_pInfo;
+		private int[] m_ppbuffer;
 
-		public FramebufferForm ()
+		public FramebufferForm () : base(320,320, OpenTK.Graphics.GraphicsMode.Default,
+			"", GameWindowFlags.FixedWindow, DisplayDevice.Default, 1,1,
+			OpenTK.Graphics.GraphicsContextFlags.Embedded)
 		{
-			openGLControl1 = new OpenTK.GLControl (OpenTK.Graphics.GraphicsMode.Default,
-				2,0, OpenTK.Graphics.GraphicsContextFlags.Default);
-	
-			openGLControl1.Dock = DockStyle.Fill;
-			openGLControl1.Paint += glControl1_Paint;
-			openGLControl1.BackColor = System.Drawing.SystemColors.ControlDark;
-			openGLControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-			openGLControl1.Location = new System.Drawing.Point(0, 0);
-			openGLControl1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
-			openGLControl1.Name = "glControl1";
-			openGLControl1.Size = new System.Drawing.Size(320, 320);
-			openGLControl1.Resize += OpenGLControl1_Resize;
-			openGLControl1.VSync = false;
-
-			this.Controls.Add (openGLControl1);
-
 			VM.Instance.FBdev.UpdateFunction = UpdateBuffer;
 			VM.Instance.FBdev.InitFunction = InitFrameBuffer;
-
-			Text = "vmcpu Framebuffer";
-			Size = new Size(320,320);
-			ResizeRedraw = true;
-
-			this.Resize += FrameBuffer_Resize;
-
-			FrameBuffer_Resize(this, null);
-
-
 		}
-		protected override void OnLoad(EventArgs e)
+		protected override void OnRenderFrame( FrameEventArgs e )
 		{
-			base.OnLoad(e);
+			GL.Clear( ClearBufferMask.ColorBufferBit );
 
-			OpenGLControl1_Resize(this, EventArgs.Empty);   // Ensure the Viewport is set up correctly
-			GL.ClearColor(Color.Crimson);
+			DrawImage(0);
+
+			SwapBuffers();
 		}
-		void OpenGLControl1_Resize (object sender, EventArgs e)
+		private void DrawImage(int image)
 		{
-			if (openGLControl1.ClientSize.Height == 0)
-				openGLControl1.ClientSize = new System.Drawing.Size(openGLControl1.ClientSize.Width, 1);
+			if (m_ppbuffer != null) {
+				GL.Viewport (0, 0, m_pInfo.Width, m_pInfo.Height);
+				GL.MatrixMode (MatrixMode.Projection);
+				GL.LoadIdentity ();
+				GL.Ortho (0, m_pInfo.Width, 0, m_pInfo.Height, -1, 1);
 
-			GL.Viewport(0, 0, openGLControl1.ClientSize.Width, openGLControl1.ClientSize.Height);
-		}
-		bool draw = false;
+				GL.MatrixMode (MatrixMode.Modelview);
+				GL.LoadIdentity ();
 
-		private void glControl1_Paint(object sender, PaintEventArgs e)
-		{
-			if (!draw)
-				return;
-			draw = false;
 
-			GL.MatrixMode (MatrixMode.Projection);
-			GL.LoadIdentity ();
+				GL.Begin (PrimitiveType.Points);
 
-			GL.Ortho (0.0, Width, 0.0, Height, -1, 1);
-			GL.MatrixMode (MatrixMode.Modelview);
-
-			GL.ClearColor(Color.SkyBlue);
-
-			openGLControl1.MakeCurrent();
-
-			GL.Clear(ClearBufferMask.ColorBufferBit);
-
-			GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Point);
-			GL.Begin (PrimitiveType.Points);
-
-			for (int x = 0; x < Size.Width; x++) {
-				for (int y = 0; y < Size.Height; y++) {
-					var c = Color.FromArgb (m_pBuffer [x * y]);
-
-					GL.Color3 (c);
-					GL.PointSize (1.0f);
-					GL.Vertex2 (x, y);
-
+				for (int x = 0; x < m_pInfo.Width; x++) {
+					for (int y = 0; y < m_pInfo.Height; y++) {
+						GL.Color3 (Color.FromArgb (m_ppbuffer [x * y]));
+						GL.Vertex2 (x, y);
+					}
 				}
+				GL.End ();
 			}
-
-			GL.End ();
-
-			openGLControl1.SwapBuffers();
-
-
-		}
-
-		private void FrameBuffer_Resize(object sender, EventArgs e)
-		{
-			openGLControl1.Size = new System.Drawing.Size(Width, Height);
 		}
 		private void UpdateBuffer(Framebuffer FB)
 		{
-			m_pBuffer = FB.Memory;
-			draw = true;
+			m_ppbuffer = FB.Memory;
 		}
 		private void InitFrameBuffer(FrameBufferInfo buffer)
 		{
 			Size = new Size (buffer.Width, buffer.Height);
-			FrameBuffer_Resize(this, null);
-			Text = buffer.ToString ();
+			m_pInfo = buffer;
+			Title = buffer.ToString ();
 		}
 	}
 }
