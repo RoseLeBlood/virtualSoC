@@ -46,17 +46,22 @@ namespace Vcsos.mm
 			else if (param2 == InstructionParam2.Register) {
 				VM.Instance.CPU.L2.Stack.Push32 (VM.Instance.CPU.L2.Get (factory.m_pRegisters [param2V].Name));
 			}
+			else if (param2 == InstructionParam2.Pointer)
+				VM.Instance.CPU.L2.Stack.Push32 (MemoryMap.Read32 (param2V));
+			///
 			if (param3 == InstructionParam2.Value)
 				VM.Instance.CPU.L2.Stack.Push32 (param3V);
 			else if (param3 == InstructionParam2.Register) {
 				VM.Instance.CPU.L2.Stack.Push32 (VM.Instance.CPU.L2.Get (factory.m_pRegisters [param3V].Name));
 			}
-
-			if (param1 == InstructionParam2.Value)
-				VM.Instance.Ram.Write (VM.Instance.CPU.XNor( VM.Instance.CPU.L2.Stack.Pop32 (), VM.Instance.CPU.L2.Stack.Pop32 () ), (uint)param1V);
+			else if (param3 == InstructionParam2.Pointer)
+				VM.Instance.CPU.L2.Stack.Push32 (MemoryMap.Read32 (param3V));
+			///
+			if (param1 == InstructionParam2.Pointer)
+				MemoryMap.Write (VM.Instance.CPU.XNor( VM.Instance.CPU.L2.Stack.Pop32 (), VM.Instance.CPU.L2.Stack.Pop32 () ), (uint)param1V);
 			else if (param1 == InstructionParam2.Register)
 				VM.Instance.CPU.L2.Set (factory.m_pRegisters [param1V].Name, VM.Instance.CPU.XNor( VM.Instance.CPU.L2.Stack.Pop32 (), VM.Instance.CPU.L2.Stack.Pop32 () ));
-
+			
 			return true;
 		}
 	}

@@ -55,8 +55,8 @@ namespace vminst
 			Add (new Instruction ( 	"PUSH",	9,   1)); // OP (2) R@#(2) 3(4)
 			Add (new Instruction (	"POP", 	9, 	 1)); // OP (2) R@#(2) 3(4)
 			Add (new Instruction (	"PEEK", 9, 	 1)); // OP (2) R@#(2) 3(4)
-			Add (new Instruction (  "END",  4,   0));
-			Add (new Instruction ( 	"JMP", 	9,   1)); 
+			Add (new Instruction (  "END",  0,   0));
+			Add (new Instruction ( 	"JMP", 	0,   1)); 
 			Add (new Instruction (	"LCK",  9,   1));
 			Add (new Instruction (  "UCK",  9,   1));  
 			Add (new Instruction (  "ADD",  9,   1)); 
@@ -72,13 +72,16 @@ namespace vminst
 			Add (new Instruction (  "NOR", 19, 	 3)); //+ OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
 			Add (new Instruction (  "NXOR",19,   3)); //+ OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
 			Add (new Instruction (  "NOT", 14, 	 2)); //+ OP(2) T(1)V(4)  T(1)V(4) 
-			Add (new Instruction ( 	"RET",	4,   0));
-			Add (new Instruction (  "CALL", 9, 	 1));
+			Add (new Instruction ( 	"RET",	0,   0));
+			Add (new Instruction (  "CALL", 0, 	 1));
 			//
 			Add (new Instruction (  "ADR",  19,   3)); // ADD return to V1 not to AX OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
 			Add (new Instruction (  "SBR",  19,   3)); // SUB return to V1 not to AX OP(2) T(1)V(4)  T(1)V(4) T(1)V(4) 
 			Add (new Instruction (  "MLR",  19,   3)); // MUL return to V1 not to AX OP(2) T(1)V(4)  T(1)V(4) T(1)V(4) 
 			Add (new Instruction (  "DVR",  19,   3)); // DIV return to V1 not to AX OP(2) T(1)V(4)  T(1)V(4) T(1)V(4) 
+
+			Add (new Instruction (  "FBI",   4,   0));
+			Add (new Instruction (  "FBSET",19,   3));
 		}
 	}
 	public class Register

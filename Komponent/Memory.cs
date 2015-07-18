@@ -25,7 +25,7 @@ using Vcsos;
 
 namespace Vcsos.Komponent
 {
-	public class Memory
+	public class Memory : System.IO.Stream
 	{
 		private byte[] m_pMemory;
 		private int m_iSize;
@@ -36,35 +36,41 @@ namespace Vcsos.Komponent
 		}
 		public byte this[int adress]
 		{
-			get { return m_pMemory [adress]; }
-			set { m_pMemory [adress] = value; }
+			get { return m_pMemory[adress]; }
+			set { m_pMemory[adress] = value; }
 		}
 
 		public Memory (int mSize, string name)
+			: base ()
 		{
 			m_pMemory = new byte[mSize];
 			m_iSize = mSize;
 			m_strName = name;
-			m_pMemory.RandMemory ();
+
+			this.Write (Utils.RandMemory (mSize), 0, mSize);
 		}
-		public void Write(byte[] data)
+		public int Write(byte[] data, int addr = 0)
 		{
-			for (int i = 0; i < data.Length; i++) {
+			for (int i = addr; i < data.Length; i++) {
 				m_pMemory [i] = data [i];
 			}
+			return addr + data.Length;
 		}
-		public void Write(Int16 data, uint addr)
-		{
-			byte[] _d = data.ToBytes ();
-			for (uint i = 0; i < _d.Length; i++)
-				m_pMemory [addr + i] = _d [i];
-		}
-		public void Write(Int32 data, UInt32 addr)
+		public int Write(Int16 data, int addr)
 		{
 			byte[] _d = data.ToBytes ();
 			for (uint i = 0; i < _d.Length; i++)
 				m_pMemory [addr + i] = _d [i];
 
+			return addr + _d.Length;
+		}
+		public int Write(Int32 data, uint addr)
+		{
+			byte[] _d = data.ToBytes ();
+			for (uint i = 0; i < _d.Length; i++)
+				m_pMemory [addr + i] = _d [i];
+
+			return (int)(addr + _d.Length);
 		}
 		public Int32 Read32(Int32 addr)
 		{
@@ -90,8 +96,8 @@ namespace Vcsos.Komponent
 
 			int address = 0;
 			output.WriteLine (m_strName + ":");
-			foreach (byte b in m_pMemory)
-			{
+			foreach (var b in m_pMemory) {
+
 				if (address == 0 || address%16==0)
 					output.Write(System.Environment.NewLine + "{0,-4:000} ", address);
 				address++;
@@ -100,5 +106,61 @@ namespace Vcsos.Komponent
 			}
 			return output.ToString ();
 		}
+
+		#region implemented abstract members of Stream
+
+		public override void Flush ()
+		{
+			
+		}
+
+		public override long Seek (long offset, SeekOrigin origin)
+		{
+			return 0;
+		}
+
+		public override void SetLength (long value)
+		{
+			
+		}
+
+		public override int Read (byte[] buffer, int offset, int count)
+		{
+			int read = Math.Min (count, Size);
+
+			for (int i = offset; i < read; i++)
+				buffer [i] = m_pMemory [i];
+
+			return read;
+		}
+
+		public override void Write (byte[] buffer, int offset, int count)
+		{
+			for (int i = offset; i < count; i++)
+				m_pMemory [i] = buffer [i];
+		}
+
+		public override bool CanRead {
+			get { return true; }
+		}
+
+		public override bool CanSeek {
+			get { return 	false; }
+		}
+
+		public override bool CanWrite {
+			get { return true; }
+		}
+
+		public override long Length {
+			get { return Size; }
+		}
+
+		public override long Position {
+			get { return 0; }
+			set {  }
+		}
+
+		#endregion
 	}
 }

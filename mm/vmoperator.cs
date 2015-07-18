@@ -64,6 +64,8 @@ namespace Vcsos.mm
 			m_pOperators.Add (new vmnand ());
 			m_pOperators.Add (new vmcall ());
 			m_pOperators.Add (new vmret ());
+			m_pOperators.Add (new vmfbi ());
+			m_pOperators.Add (new vmfbd ());
 		}
 		internal  bool ParseAndRun(int pos)
 		{

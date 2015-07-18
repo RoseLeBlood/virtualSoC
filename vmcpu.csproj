@@ -72,6 +72,9 @@
     <Compile Include="mm\vmret.cs" />
     <Compile Include="mm\vmcall.cs" />
     <Compile Include="mm\vmunknown.cs" />
+    <Compile Include="mm\vmfbi.cs" />
+    <Compile Include="MemoryMap.cs" />
+    <Compile Include="mm\vmfbd.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

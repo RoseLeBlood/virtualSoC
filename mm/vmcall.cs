@@ -41,6 +41,9 @@ namespace Vcsos.mm
 			else if (param1 == InstructionParam2.Register) {
 				VM.Instance.CPU.L2.Set ("IP", VM.Instance.CPU.L2.Get(factory.m_pRegisters [param1V].Name));
 			}
+			else if (param1 == InstructionParam2.Pointer) {
+				VM.Instance.CPU.L2.Set ("IP", MemoryMap.Read32(param1V));
+			}
 
 			return true;
 		}

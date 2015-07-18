@@ -73,8 +73,8 @@ namespace vmasm
 					} else if (l1[0] == 'L' && l1[1] == 'B') { // Label vordifinieren
 
 						string ll = l1.Split(' ')[1];
-						if (!m_pLabels.ContainsKey (ll)) {
-							m_pLabels.Add (ll, int.Parse (l1.Split (' ') [2]));
+						if (!m_pLabels.ContainsKey ("." + ll)) {
+							m_pLabels.Add ("." + ll, int.Parse (l1.Split (' ') [2]));
 						}
 
 					} else {
@@ -82,7 +82,10 @@ namespace vmasm
 							return false;
 					}
 				}
+				Console.WriteLine("MOD {1} Size: {0}", writer.BaseStream.Length,
+								  outPutFile);
 				writer.Close ();
+				
 			}
 
 
@@ -107,7 +110,7 @@ namespace vmasm
 				Pos = ParseNumber (t);
 			}
 
-			if (!m_pLabels.ContainsKey (label)) {
+			if (!m_pLabels.ContainsKey ("." + label)) {
 				m_pLabels.Add ("." + label, Pos);
 
 			}
@@ -273,7 +276,7 @@ namespace vmasm
 		}
 		private int ParseHex(string i)
 		{
-			i = i.ToLower().Replace ("0x", "");
+			i = i.ToLower().Replace ("h", "");
 			return int.Parse (i, NumberStyles.HexNumber);
 		}
 	}

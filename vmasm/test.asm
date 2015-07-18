@@ -1,19 +1,25 @@
-﻿#include 'vmcpu.inc'
+﻿
+LB Main 16
+LB TESTLB 147
 
-ORG 0x10
+#include 'vmcpu.inc'
 
 Main:
 PUSH #5
 PUSH #4
-PUSH #3
-POP #1
+PUSH @3
+POP @1
 PEEK AX
 PEEK BX
-POP #3
-POP #2
+POP @3
+POP @2
 Test:
-ADD #34d
+JMP .TESTLB
+ADD #34
 MOV BX,AX
 CLR AX
 MOV AX,FB
+END
+
+TESTLB:
 END

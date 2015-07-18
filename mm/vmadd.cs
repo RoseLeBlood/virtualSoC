@@ -35,10 +35,12 @@ namespace Vcsos.mm
 
 			if (param1 == InstructionParam2.Value)
 				VM.Instance.CPU.Akku.Add (param1V);
+			else if (param1 == InstructionParam2.Pointer)
+				VM.Instance.CPU.Akku.Add (MemoryMap.Read32 (param1V));
 			else if (param1 == InstructionParam2.Register) {
 				VM.Instance.CPU.Akku.Add (VM.Instance.CPU.L2.Get (factory.m_pRegisters [param1V].Name));
 			}
-
+		
 			return true;
 		}
 	}

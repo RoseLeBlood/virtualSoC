@@ -1,5 +1,5 @@
 ﻿//
-//  vmxor.cs
+//  vmfbd.cs
 //
 //  Author:
 //       anna-sophia <${AuthorEmail}>
@@ -23,12 +23,11 @@ using vminst;
 
 namespace Vcsos.mm
 {
-	public class vmxor: vmoperator
+	public class vmfbd: vmoperator
 	{
 		public string Name {
-			get { return "XOR"; }
+			get { return "FBSET"; } // FrameBuffer DOT ( SetPixel )
 		}
-
 		public bool ParseAndRun (ParserFactory factory)
 		{
 			InstructionParam2 param1 = factory.getParam(4); // 101 4 105
@@ -40,28 +39,33 @@ namespace Vcsos.mm
 			InstructionParam2 param3 = factory.getParam(14); // 119 4 123 
 			int param3V = VM.Instance.Ram.Read32 (VM.Instance.CPU.L2.ip + 15);
 
+			int x = 0, y = 0, colorRef = 0;
+
+			if (param1 == InstructionParam2.Value)
+				x = (param1V);
+			else if (param1 == InstructionParam2.Register) {
+				x = (VM.Instance.CPU.L2.Get (factory.m_pRegisters [param1V].Name));
+			} else if (param2 == InstructionParam2.Pointer) {
+				x = MemoryMap.Read32 (param1V);
+			}
 
 			if (param2 == InstructionParam2.Value)
-				VM.Instance.CPU.L2.Stack.Push32 (param2V);
+				y = (param2V);
 			else if (param2 == InstructionParam2.Register) {
-				VM.Instance.CPU.L2.Stack.Push32 (VM.Instance.CPU.L2.Get (factory.m_pRegisters [param2V].Name));
+				y = (VM.Instance.CPU.L2.Get (factory.m_pRegisters [param2V].Name));
+			} else if (param2 == InstructionParam2.Pointer) {
+				y = MemoryMap.Read32 (param2V);
 			}
-			else if (param2 == InstructionParam2.Pointer)
-				VM.Instance.CPU.L2.Stack.Push32 (MemoryMap.Read32 (param2V));
-			///
+
 			if (param3 == InstructionParam2.Value)
-				VM.Instance.CPU.L2.Stack.Push32 (param3V);
+				colorRef = (param3V);
 			else if (param3 == InstructionParam2.Register) {
-				VM.Instance.CPU.L2.Stack.Push32 (VM.Instance.CPU.L2.Get (factory.m_pRegisters [param3V].Name));
+				colorRef = (VM.Instance.CPU.L2.Get (factory.m_pRegisters [param3V].Name));
+			} else if (param3 == InstructionParam2.Pointer) {
+				colorRef = MemoryMap.Read32 (param2V);
 			}
-			else if (param3 == InstructionParam2.Pointer)
-				VM.Instance.CPU.L2.Stack.Push32 (MemoryMap.Read32 (param3V));
-			///
-			if (param1 == InstructionParam2.Pointer)
-				MemoryMap.Write (VM.Instance.CPU.Xor( VM.Instance.CPU.L2.Stack.Pop32 (), VM.Instance.CPU.L2.Stack.Pop32 () ), (uint)param1V);
-			else if (param1 == InstructionParam2.Register)
-				VM.Instance.CPU.L2.Set (factory.m_pRegisters [param1V].Name, VM.Instance.CPU.Xor( VM.Instance.CPU.L2.Stack.Pop32 (), VM.Instance.CPU.L2.Stack.Pop32 () ));
-			
+
+			VM.Instance.FBdev.SetPixel (colorRef, x, y);
 			return true;
 		}
 	}

@@ -129,9 +129,11 @@ namespace Vcsos
 		{
 			byte val = (byte)r.Next (byte.MinValue, byte.MaxValue);
 		}*/
-		internal static void RandMemory(this byte[] a)
+		internal static byte[] RandMemory(int size)
 		{
-			r.NextBytes (a);
+			byte[] buffer = new byte[size];
+			r.NextBytes (buffer);
+			return buffer;
 		}
 	}
 }

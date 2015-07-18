@@ -140,7 +140,7 @@ namespace Vcsos.Komponent
 			case "IP":
 				return ip;
 			case "TIK":
-				return CPU.Ticks;
+				return (int)CPU.Ticks;
 			default:
 				throw new Exception ("Register/Flag with Name: " + name + " not found");
 			}

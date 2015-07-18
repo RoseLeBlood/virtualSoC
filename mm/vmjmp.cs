@@ -19,6 +19,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using vminst;
 
 namespace Vcsos.mm
 {
@@ -29,11 +30,17 @@ namespace Vcsos.mm
 		}
 		public bool ParseAndRun (ParserFactory factory)
 		{
-			//InstructionParam2 param1 = factory.getParam(4);
+			InstructionParam2 param1 = factory.getParam(4);
 			int param1V = VM.Instance.Ram.Read32 (VM.Instance.CPU.L2.ip + 5);
 
-			VM.Instance.CPU.L2.Set ("IP", param1V);
-
+			if (param1 == InstructionParam2.Value || param1 == InstructionParam2.Lable)
+				VM.Instance.CPU.L2.Set ("IP", param1V);
+			else if (param1 == InstructionParam2.Register) {
+				VM.Instance.CPU.L2.Set ("IP", VM.Instance.CPU.L2.Get(factory.m_pRegisters [param1V].Name));
+			}
+			else if (param1 == InstructionParam2.Pointer) {
+				VM.Instance.CPU.L2.Set ("IP", MemoryMap.Read32(param1V));
+			}
 			return true;
 		}
 	}

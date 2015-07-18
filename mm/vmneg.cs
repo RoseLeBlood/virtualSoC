@@ -45,7 +45,7 @@ namespace Vcsos.mm
 			}
 
 			if (param1 == InstructionParam2.Value)
-				VM.Instance.Ram.Write (VM.Instance.CPU.Neg( VM.Instance.CPU.L2.Stack.Pop32 () ), (uint)param1V);
+				MemoryMap.Write (VM.Instance.CPU.Neg( VM.Instance.CPU.L2.Stack.Pop32 () ), (uint)param1V);
 			else if (param1 == InstructionParam2.Register)
 				VM.Instance.CPU.L2.Set (factory.m_pRegisters [param1V].Name, VM.Instance.CPU.Neg( VM.Instance.CPU.L2.Stack.Pop32 () ));
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using Vcsos;
 using DotArgs;
+using System.Windows.Forms;
 
 namespace vmcli
 {
@@ -22,6 +23,7 @@ namespace vmcli
 			cmd.RegisterArgument( "i", new OptionArgument( null, true ) { HelpMessage="The image file." } );
 			cmd.RegisterArgument( "r", new OptionArgument( "256" )  { HelpMessage="Ram size. [> 0]" });
 			cmd.RegisterArgument( "t", new OptionArgument( "raw", true) { HelpMessage="Image type: gz,raw,deflate" } );
+			cmd.RegisterArgument( "o", new OptionArgument( "console", false) { HelpMessage="Debug output" } );
 
 			cmd.SetDefaultArgument( "i" );
 			cmd.RegisterHelpArgument();
@@ -32,17 +34,24 @@ namespace vmcli
 				return;
 			}
 			string imageFile;
+			string debugFile;
 			UInt32 ramSize;
 			try
 			{
 				imageFile = cmd.GetValue<string>( "i" );
 				ramSize = GetValueFromArg(cmd, "r" );
+				debugFile = cmd.GetValue<string>("o");
 			}
 			catch {
 				cmd.PrintHelp();
 				return;
 			}
 
+			if (debugFile != "console") {
+				Console.SetOut (new System.IO.StreamWriter (debugFile));
+			}
+			Application.EnableVisualStyles();
+			Application.SetCompatibleTextRenderingDefault(false);
 
 			VM.Instance.CreateVM (ramSize);
 			FramebufferForm form = new FramebufferForm ();
@@ -53,13 +62,9 @@ namespace vmcli
 				Console.WriteLine ("Not enough bytes to load this image.");
 				return;
 			}
-			System.Windows.Forms.Application.Run (form);
+			Application.Run (form);
 
-			while (VM.Instance.IsAlive) {
-			}
-			string r = VM.Instance.Ram.ToString ();
-			Console.WriteLine (r + System.Environment.NewLine);
-			Console.WriteLine (VM.Instance.CPU.L2.ToString ());
+
 		}
 	}
 }

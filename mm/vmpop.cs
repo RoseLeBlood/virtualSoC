@@ -33,13 +33,12 @@ namespace Vcsos.mm
 			InstructionParam2 param1 = factory.getParam(4);
 			int param1V = VM.Instance.Ram.Read32 (VM.Instance.CPU.L2.ip + 5);
 
-			if (param1 == InstructionParam2.Value)
-				VM.Instance.Ram.Write (VM.Instance.CPU.L2.Stack.Pop32 (), (uint)param1V);
+			if (param1 == InstructionParam2.Pointer)
+				MemoryMap.Write (VM.Instance.CPU.L2.Stack.Pop32 (), (uint)param1V);
 			else if (param1 == InstructionParam2.Register) {
 				VM.Instance.CPU.L2.Set (factory.m_pRegisters [param1V].Name, VM.Instance.CPU.L2.Stack.Pop32 ());
 
 			}
-
 			return true;
 		}
 	}

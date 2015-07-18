@@ -25,32 +25,117 @@ using System.Windows.Forms;
 using Vcsos.Komponent;
 using Vcsos;
 using DotArgs;
+using OpenTK.Graphics.OpenGL;
+
 
 namespace vmcli
 {
 	public class FramebufferForm : Form
 	{
-		Framebuffer fb ;
+		private Bitmap buffer;
+		private OpenTK.GLControl openGLControl1;
+		private int[] m_pBuffer;
 
 		public FramebufferForm ()
 		{
-			fb = VM.Instance.FBdev;
+			openGLControl1 = new OpenTK.GLControl (OpenTK.Graphics.GraphicsMode.Default,
+				2,0, OpenTK.Graphics.GraphicsContextFlags.Default);
+	
+			openGLControl1.Dock = DockStyle.Fill;
+			openGLControl1.Paint += glControl1_Paint;
+			openGLControl1.BackColor = System.Drawing.SystemColors.ControlDark;
+			openGLControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+			openGLControl1.Location = new System.Drawing.Point(0, 0);
+			openGLControl1.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+			openGLControl1.Name = "glControl1";
+			openGLControl1.Size = new System.Drawing.Size(320, 320);
+			openGLControl1.Resize += OpenGLControl1_Resize;
+			openGLControl1.VSync = false;
+
+			this.Controls.Add (openGLControl1);
+
+			VM.Instance.FBdev.UpdateFunction = UpdateBuffer;
+			VM.Instance.FBdev.InitFunction = InitFrameBuffer;
+
 			Text = "vmcpu Framebuffer";
-			Size = fb.Size;
+			Size = new Size(320,320);
 			ResizeRedraw = true;
 
-			Paint += new PaintEventHandler(OnPaint);
-			CenterToScreen();
+			this.Resize += FrameBuffer_Resize;
+
+			FrameBuffer_Resize(this, null);
+
 
 		}
-		void OnPaint(object sender, PaintEventArgs e)
-		{ 
-			System.Drawing.Graphics g = e.Graphics;
-			g.Clear (Color.Crimson);
+		protected override void OnLoad(EventArgs e)
+		{
+			base.OnLoad(e);
+
+			OpenGLControl1_Resize(this, EventArgs.Empty);   // Ensure the Viewport is set up correctly
+			GL.ClearColor(Color.Crimson);
+		}
+		void OpenGLControl1_Resize (object sender, EventArgs e)
+		{
+			if (openGLControl1.ClientSize.Height == 0)
+				openGLControl1.ClientSize = new System.Drawing.Size(openGLControl1.ClientSize.Width, 1);
+
+			GL.Viewport(0, 0, openGLControl1.ClientSize.Width, openGLControl1.ClientSize.Height);
+		}
+		bool draw = false;
+
+		private void glControl1_Paint(object sender, PaintEventArgs e)
+		{
+			if (!draw)
+				return;
+			draw = false;
+
+			GL.MatrixMode (MatrixMode.Projection);
+			GL.LoadIdentity ();
+
+			GL.Ortho (0.0, Width, 0.0, Height, -1, 1);
+			GL.MatrixMode (MatrixMode.Modelview);
+
+			GL.ClearColor(Color.SkyBlue);
+
+			openGLControl1.MakeCurrent();
+
+			GL.Clear(ClearBufferMask.ColorBufferBit);
+
+			GL.PolygonMode(MaterialFace.FrontAndBack, PolygonMode.Point);
+			GL.Begin (PrimitiveType.Points);
+
+			for (int x = 0; x < Size.Width; x++) {
+				for (int y = 0; y < Size.Height; y++) {
+					var c = Color.FromArgb (m_pBuffer [x * y]);
+
+					GL.Color3 (c);
+					GL.PointSize (1.0f);
+					GL.Vertex2 (x, y);
+
+				}
+			}
+
+			GL.End ();
+
+			openGLControl1.SwapBuffers();
 
 
+		}
 
-			g.Dispose ();
+		private void FrameBuffer_Resize(object sender, EventArgs e)
+		{
+			openGLControl1.Size = new System.Drawing.Size(Width, Height);
+		}
+		private void UpdateBuffer(Framebuffer FB)
+		{
+			m_pBuffer = FB.Memory;
+			draw = true;
+		}
+		private void InitFrameBuffer(FrameBufferInfo buffer)
+		{
+			Size = new Size (buffer.Width, buffer.Height);
+			FrameBuffer_Resize(this, null);
+			Text = buffer.ToString ();
 		}
 	}
 }

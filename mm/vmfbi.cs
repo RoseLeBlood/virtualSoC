@@ -1,5 +1,5 @@
 ﻿//
-//  cmclr.cs
+//  vmfbi.cs
 //
 //  Author:
 //       anna-sophia <${AuthorEmail}>
@@ -19,26 +19,18 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
-using vminst;
 
 namespace Vcsos.mm
 {
-	public class vmclr : vmoperator
+	public class vmfbi: vmoperator
 	{
 		public string Name {
-			get { return "CLR"; }
+			get { return "FBI"; }
 		}
 		public bool ParseAndRun (ParserFactory factory)
 		{
-			InstructionParam2 param1 = factory.getParam(4);
-			int param1V = VM.Instance.Ram.Read32 (VM.Instance.CPU.L2.ip + 5);
-
-			if (param1 == InstructionParam2.Pointer)
-				MemoryMap.Write (0, (uint)param1V);
-			else if (param1 == InstructionParam2.Register) {
-				VM.Instance.CPU.L2.Set (factory.m_pRegisters [param1V].Name, 0);
-			}
-
+			VM.Instance.FBdev.Init ();
+		
 			return true;
 		}
 	}
