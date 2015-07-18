@@ -43,13 +43,13 @@ namespace vmasm
 					m_r[i] = value[i].Trim ('\t').Replace("\t".ToString(), " ");
 			}
 		}
-		public  bool Comp(string outPutFile)
+		public  byte[] Comp()
 		{
 			m_pLabels = new System.Collections.Generic.Dictionary<string, int> ();
 			m_pDefines = new DefinesDef();
-
+			MemoryStream Stream = new MemoryStream ();
 			//string[] l = System.IO.File.ReadAllLines (inPutFile);
-			var writer = new BinaryWriter (new FileStream (outPutFile, FileMode.Create));
+			var writer = new BinaryWriter (Stream);
 			{
 				for (int i = 0; i < l.Length; i++) {
 					string l0 = l [i];
@@ -79,17 +79,17 @@ namespace vmasm
 
 					} else {
 						if (!CompLine (l1, writer))
-							return false;
+							return null;
 					}
 				}
-				Console.WriteLine("MOD {1} Size: {0}", writer.BaseStream.Length,
-								  outPutFile);
-				writer.Close ();
+
+
 				
 			}
-
-
-			return true;
+			Stream.Position = 0;
+			byte[] date = new byte[Stream.Length];
+			Stream.Read (date, 0, date.Length);
+			return date;
 		}
 		private void CompLabel(string l1, BinaryWriter writer)
 		{

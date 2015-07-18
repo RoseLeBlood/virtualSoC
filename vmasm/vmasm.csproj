@@ -47,6 +47,10 @@
     <Compile Include="Exception.cs" />
     <Compile Include="CommandLineArgs.cs" />
     <Compile Include="DefinesDef.cs" />
+    <Compile Include="Factory\IModuleOutput.cs" />
+    <Compile Include="Factory\RawOutput.cs" />
+    <Compile Include="Factory\GzipOutput.cs" />
+    <Compile Include="Factory\DeflateOutput.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -74,5 +78,8 @@
     <None Include="vmcpu.inc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Factory\" />
   </ItemGroup>
 </Project>

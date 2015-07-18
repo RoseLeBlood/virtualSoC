@@ -1,5 +1,5 @@
 ﻿//
-//  GzipInputType.cs
+//  RawOutput.cs
 //
 //  Author:
 //       anna-sophia <${AuthorEmail}>
@@ -19,39 +19,22 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
-using System.IO.Compression;
-using System.IO;
 
-namespace vmcli
+namespace vmasm
 {
-	public class GzipInputType : IInputType
+	public class RawOutput : IModuleOutput
 	{
-		public byte[] LoadFromFile (string path)
-		{
-			try
-			{
-				return LoadFromStream (new System.IO.FileStream (path, System.IO.FileMode.Open));
-			}
-			catch {
-				return new byte[] { (byte)4 };
-			}
+		public string Name {
+			get { return "RAW"; }
 		}
-		public byte[] LoadFromStream (System.IO.Stream stream)
+
+		public bool WriteToFile (byte[] asmdata, string file)
 		{
-			if (stream == null)
-				return new byte[] { (byte)4 };
-
-			byte[] str = null;
-
-			using(GZipStream gStream = new GZipStream (stream, CompressionMode.Decompress))
+			using(var sfile = new System.IO.FileStream(file, System.IO.FileMode.Create))
 			{
-				using(MemoryStream mStream = new MemoryStream ())
-				{
-					gStream.CopyTo (mStream);
-					str = mStream.ToArray ();
-				}
+				sfile.Write (asmdata, 0, asmdata.Length);
 			}
-			return str;
+			return true;
 		}
 	}
 }

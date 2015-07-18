@@ -41,7 +41,7 @@ namespace vmasm
 
 			cmd.RegisterArgument( "i", new OptionArgument( null, true ) { HelpMessage="inputfile" } );
 			cmd.RegisterArgument( "o", new OptionArgument( ".bin", false )  { HelpMessage="write output to an outfile" });
-			cmd.RegisterArgument( "f", new OptionArgument( "raw", false) { HelpMessage=" select an output format RAW,gz,deflate" } );
+			cmd.RegisterArgument( "t", new OptionArgument( "raw", false) { HelpMessage=" select an output format raw,gz,deflate" } );
 			cmd.SetDefaultArgument( "i" );
 			cmd.RegisterHelpArgument();
 
@@ -54,13 +54,15 @@ namespace vmasm
 			string input = cmd.GetValue<string> ("i");
 			string output = cmd.GetValue<string> ("o");
 			if(output == ".bin")
-				output = System.IO.Path.GetFileNameWithoutExtension(input) + ".bin";
+				output = System.IO.Path.GetFileNameWithoutExtension(input);
 			
 			Console.WriteLine ("Input File: {0} output: {1}", input, output);
 
 			Assembler asm = new Assembler ();
 			asm.l = PreProcess (input);
-			asm.Comp (output);
+			byte[] data = asm.Comp ();
+
+			ModuleOutputFactory.WriteToFile (data, output, cmd.GetValue<string> ("t"));
 		}
 		private static string[] PreProcess(string input)
 		{
@@ -73,7 +75,6 @@ namespace vmasm
 
 					text [i] = _incText;
 				}
-				// TODO: Text in Temp File schreiben und dann einlesen weider und asm übergeben!!
 			}
 			System.IO.File.WriteAllLines (".comp.tml", text);
 			string[] l = System.IO.File.ReadAllLines (".comp.tml");

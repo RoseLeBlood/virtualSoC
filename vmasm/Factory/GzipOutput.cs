@@ -1,5 +1,5 @@
 ﻿//
-//  GzipInputType.cs
+//  GzipOutput.cs
 //
 //  Author:
 //       anna-sophia <${AuthorEmail}>
@@ -20,38 +20,25 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
 using System.IO.Compression;
-using System.IO;
 
-namespace vmcli
+namespace vmasm
 {
-	public class GzipInputType : IInputType
+	public class GzipOutput : IModuleOutput
 	{
-		public byte[] LoadFromFile (string path)
-		{
-			try
-			{
-				return LoadFromStream (new System.IO.FileStream (path, System.IO.FileMode.Open));
-			}
-			catch {
-				return new byte[] { (byte)4 };
-			}
+		public string Name {
+			get { return "GZIP"; }
 		}
-		public byte[] LoadFromStream (System.IO.Stream stream)
+
+		public bool WriteToFile (byte[] asmdata, string file)
 		{
-			if (stream == null)
-				return new byte[] { (byte)4 };
+			file = file + ".gz";
 
-			byte[] str = null;
-
-			using(GZipStream gStream = new GZipStream (stream, CompressionMode.Decompress))
+			using(var sfile = new System.IO.FileStream(file, System.IO.FileMode.Create))
 			{
-				using(MemoryStream mStream = new MemoryStream ())
-				{
-					gStream.CopyTo (mStream);
-					str = mStream.ToArray ();
-				}
+				using(GZipStream gStream = new GZipStream(sfile, CompressionMode.Compress))
+					gStream.Write (asmdata, 0, asmdata.Length);
 			}
-			return str;
+			return true;
 		}
 	}
 }
