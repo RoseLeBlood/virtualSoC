@@ -105,25 +105,17 @@ namespace Vcsos.Komponent
 				Orientation, physbase, physbase+Size);
 		}
 	}
-
-	public delegate void UpdateBuffer(Framebuffer Memory); 
 	public delegate void InitFrameBuffer(FrameBufferInfo buffer);
 
-	public class Framebuffer
+	public class Framebuffer : vmKomponente
 	{
 		public const uint FBINFO = 0xAFD0;
 		public const uint FBBASE = 0xB000;
 
 		private FrameBufferInfo m_pInfo;
-		private UpdateBuffer m_pUpdateFunction;
 		private InitFrameBuffer m_pInitFunction;
 
 		private Memory m_pMemory;
-
-		public UpdateBuffer UpdateFunction {
-			get { return m_pUpdateFunction; }
-			set { m_pUpdateFunction = value; }
-		}
 
 		public InitFrameBuffer InitFunction {
 			get { return m_pInitFunction; }
@@ -142,7 +134,7 @@ namespace Vcsos.Komponent
 			}
 		}
 			
-		public Framebuffer ()
+		public Framebuffer () : base("Referenz GPU", "Anna-Sophia Schroeck")
 		{
 		}
 		// ASM FBI // FrameBuffer Init
@@ -164,14 +156,10 @@ namespace Vcsos.Komponent
 
 			if (m_pInitFunction != null)
 				m_pInitFunction (m_pInfo);
-			
-			UpdateBuffer ();
-				
 		}
 		// ASM: FBD // FrameBuffer Destroy
 		public void Destroy()
 		{
-			m_pMemory = null;
 			GC.Collect ();
 		}
 		/// <summary>
@@ -182,28 +170,21 @@ namespace Vcsos.Komponent
 		/// <param name="y">The y coordinate.</param>
 		public void SetPixel(int colorRef, int x, int y)
 		{
-			int offset = y * m_pInfo.Width * 3 + x * 3;
+			int offset = (int)(FBBASE + (y * m_pInfo.Width * 3 + x * 3));
 
-			m_pMemory [offset + 0] = (byte)((colorRef & 0xFF0000) >> 16); 
-			m_pMemory [offset + 1] = (byte)((colorRef & 0x00FF00) >> 8);
-			m_pMemory [offset + 2] = (byte)((colorRef & 0x0000FF));
-
-			UpdateBuffer ();
+			MemoryMap.Write((byte)((colorRef & 0xFF0000) >> 16), offset + 0);
+			MemoryMap.Write ((byte)((colorRef & 0x00FF00) >> 8), offset + 1);
+			MemoryMap.Write ((byte)((colorRef & 0x0000FF)), offset + 2);
 		}
 		public int GetPixel(int x, int y)
 		{
-			int offset = y * m_pInfo.Width * 3 + x * 3;
+			int offset = (int)(FBBASE + (y * m_pInfo.Width * 3 + x * 3));
 
-			byte r = m_pMemory [offset + 0];
-			byte g = m_pMemory [offset + 1];
-			byte b = m_pMemory [offset + 2];
+			byte r = MemoryMap.Read8 (offset + 0);
+			byte g = MemoryMap.Read8 (offset + 1);
+			byte b = MemoryMap.Read8 (offset + 2);
 
 			return ((r & 0xff) << 16) | ((g & 0xff) << 8) | (b & 0xff);
-		}
-		internal void UpdateBuffer()
-		{
-			if (m_pUpdateFunction != null)
-				m_pUpdateFunction (this);
 		}
 	}
 }

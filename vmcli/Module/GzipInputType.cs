@@ -33,13 +33,13 @@ namespace vmcli
 				return LoadFromStream (new System.IO.FileStream (path, System.IO.FileMode.Open));
 			}
 			catch {
-				return new byte[] { (byte)4 };
+				throw new Exception ("file not found");
 			}
 		}
 		public byte[] LoadFromStream (System.IO.Stream stream)
 		{
 			if (stream == null)
-				return new byte[] { (byte)4 };
+				throw new Exception ("Stream is null");
 
 			byte[] str = null;
 

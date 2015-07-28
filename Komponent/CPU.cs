@@ -23,7 +23,7 @@ using System;
 
 namespace Vcsos.Komponent
 {
-	public class CPU
+	public class CPU : vmKomponente
 	{
 		protected CacheStack m_pCacheStack; // L1 IPC  
 		protected CacheStack m_pCallStack;  // L3 Call Stack  
@@ -53,7 +53,7 @@ namespace Vcsos.Komponent
 		{
 			get { return m_pCallStack; }
 		}
-		public CPU ()
+		public CPU () : base("Referenz CPU", "Anna-Sophia Schroeck")
 		{
 			m_pRegister = new Register ();
 			m_pAkku = new Akku (this);

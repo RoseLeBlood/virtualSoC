@@ -36,13 +36,14 @@ namespace vmcli
 	public class FramebufferForm : GameWindow
 	{
 		private FrameBufferInfo m_pInfo;
-		private Memory m_ppbuffer;
+		//private Memory m_ppbuffer;
+		//private bool   m_bReDraw;
 
 		public FramebufferForm () : base(320,320, GraphicsMode.Default, 
-			"", GameWindowFlags.FixedWindow, DisplayDevice.Default, 1,1,
-			OpenTK.Graphics.GraphicsContextFlags.Embedded)
+			"", GameWindowFlags.FixedWindow, DisplayDevice.Default, 1,0,
+			OpenTK.Graphics.GraphicsContextFlags.Default)
 		{
-			VM.Instance.FBdev.UpdateFunction = UpdateBuffer;
+			//VM.Instance.FBdev.UpdateFunction = UpdateBuffer;
 			VM.Instance.FBdev.InitFunction = InitFrameBuffer;
 
 			string versionOpenGL = GL.GetString(StringName.Version);
@@ -69,7 +70,8 @@ namespace vmcli
 		}
 		private void Draw()
 		{
-			if (m_ppbuffer != null) {
+
+			{
 				GL.Begin (PrimitiveType.Points);
 
 				for (int x = 0; x < m_pInfo.Width; x++) {
@@ -84,25 +86,31 @@ namespace vmcli
 		}
 		private int GetPixel(int x, int y)
 		{
-			int offset = y * m_pInfo.Width * 3 + x * 3;
+			//int offset = y * m_pInfo.Width * 3 + x * 3;
 
-			byte r = m_ppbuffer [offset + 0];
+			/*byte r = m_ppbuffer [offset + 0];
 			byte g = m_ppbuffer [offset + 1];
 			byte b = m_ppbuffer [offset + 2];
 
+			return ((r & 0xff) << 16) | ((g & 0xff) << 8) | (b & 0xff);*/
+
+			int offset = (int)(Framebuffer.FBBASE + (y * m_pInfo.Width * 3 + x * 3));
+
+			byte r = MemoryMap.Read8 (offset + 0);
+			byte g = MemoryMap.Read8 (offset + 1);
+			byte b = MemoryMap.Read8 (offset + 2);
+
 			return ((r & 0xff) << 16) | ((g & 0xff) << 8) | (b & 0xff);
 		}
-		private void UpdateBuffer(Framebuffer FB)
+		/*private void UpdateBuffer(Framebuffer FB)
 		{
-
-			m_ppbuffer = FB.Memory;
-
-		}
+			//m_ppbuffer = FB.Memory;
+			//m_bReDraw = true;
+		}*/
 		private void InitFrameBuffer(FrameBufferInfo buffer)
 		{
 			Size = new Size (buffer.Width, buffer.Height);
 			m_pInfo = buffer;
-
 
 			Title = buffer.ToString ();
 		}

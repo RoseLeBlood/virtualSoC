@@ -30,7 +30,9 @@ namespace vmasm
 
 		public bool WriteToFile (byte[] asmdata, string file)
 		{
-			using(var sfile = new System.IO.FileStream(file + ".bin", System.IO.FileMode.Create))
+			file = file.Contains(".df") ? file : file  + ".bin";
+
+			using(var sfile = new System.IO.FileStream(file, System.IO.FileMode.Create))
 			{
 				sfile.Write (asmdata, 0, asmdata.Length);
 			}

@@ -31,9 +31,8 @@ namespace vmasm
 
 		public bool WriteToFile (byte[] asmdata, string file)
 		{
-			file = file + ".def";
 
-			Console.WriteLine ("From vmcli.exe not support (yet)");
+			file = file.Contains("bin.df") ? file : file  + "bin.df";
 
 			using(var sfile = new System.IO.FileStream(file, System.IO.FileMode.Create))
 			{

@@ -25,29 +25,71 @@ namespace Vcsos
 {
 	public static class MemoryMap 
 	{
-		public static int Write(byte[] data, int addr, bool fb = false)
+		public static int Write(byte[] data, int addr)
 		{
-			return VM.Instance.Ram.Write (data, addr);
+			if (IsAddressFB (addr))
+				return VM.Instance.FBdev.Memory.Write (data, (int)(addr - Framebuffer.FBBASE));
+			else
+				return VM.Instance.Ram.Write (data, addr);
+	
 		}
-		public static void Write(byte data, int addr, bool fb = false)
+		public static void Write(byte data, int addr)
 		{
-			VM.Instance.Ram[addr] = data;
+			if (IsAddressFB (addr)) {
+				VM.Instance.FBdev.Memory [(int)(addr - Framebuffer.FBBASE)] = data;
+			} else {
+				VM.Instance.Ram [addr] = data;// (data, addr);
+			}
 		}
-		public static int Write(Int16 data, int addr, bool fb = false)
+		public static int Write(Int16 data, int addr)
 		{
-			return VM.Instance.Ram.Write (data, addr);
+			if (IsAddressFB (addr)) {
+				return VM.Instance.FBdev.Memory.Write (data, (int)(addr - Framebuffer.FBBASE));
+			} else {
+				return VM.Instance.Ram.Write (data, addr);
+			}
 		}
-		public static int Write(Int32 data, uint addr, bool fb = false)
+		public static int Write(Int32 data, uint addr)
 		{
-			return VM.Instance.Ram.Write (data, addr);
+			if (IsAddressFB ((int)addr)) {
+				return VM.Instance.FBdev.Memory.Write (data, (uint)(addr - Framebuffer.FBBASE));
+			} else {
+				return VM.Instance.Ram.Write (data, addr);
+			}
 		}
-		public static Int32 Read32(Int32 addr, bool fb = false)
+		public static Int32 Read32(Int32 addr)
 		{
-			return VM.Instance.Ram.Read32 (addr);
+			if (IsAddressFB (addr)) {
+				return VM.Instance.FBdev.Memory.Read32 ((int)(addr - Framebuffer.FBBASE));
+			} else {
+				return VM.Instance.Ram.Read32 (addr);
+			}
 		}
-		public static Int16 Read16(Int32 addr, bool fb = false)
+		public static Int16 Read16(Int32 addr)
 		{
-			return VM.Instance.Ram.Read16 (addr);
+			if (IsAddressFB (addr)) {
+				return VM.Instance.FBdev.Memory.Read16 ((int)(addr - Framebuffer.FBBASE));
+			} else {
+				return VM.Instance.Ram.Read16 (addr);
+			}
+		}
+		public static byte Read8(Int32 addr)
+		{
+			if (IsAddressFB (addr)) {
+				return VM.Instance.FBdev.Memory[ ((int)(addr - Framebuffer.FBBASE)) ];
+			} else {
+				return VM.Instance.Ram [addr];
+			}
+		}
+
+		private static bool IsAddressFB(int addr)
+		{
+			bool Result = true;
+			if (addr < Framebuffer.FBBASE || addr > (int)(Framebuffer.FBBASE + VM.Instance.FBdev.Memory.Length)) {
+				Result = false;
+			}
+
+			return Result;
 		}
 	}
 }

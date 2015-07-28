@@ -19,7 +19,7 @@
     <WarningLevel>4</WarningLevel>
     <Externalconsole>true</Externalconsole>
     <PlatformTarget>x86</PlatformTarget>
-    <Commandlineparameters>test.bin.gz  -r 520 -t gz</Commandlineparameters>
+    <Commandlineparameters>tettttst.bin.gz  -r 520 -t gz</Commandlineparameters>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
@@ -51,6 +51,8 @@
     <Compile Include="Module\IInputType.cs" />
     <Compile Include="Module\RawInputType.cs" />
     <Compile Include="Module\GzipInputType.cs" />
+    <Compile Include="RamCalc.cs" />
+    <Compile Include="Module\DeflateInputType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

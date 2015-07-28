@@ -23,20 +23,18 @@ using System;
 using vminst;
 using Vcsos.Komponent;
 using Vcsos;
+using System.Collections.Generic;
 
 namespace Vcsos
 {
-	public class VM
+	public class VM : List<IVMKomponente>
 	{
 		private static VM m_instance = new VM ();
 		private Assembler m_pAssembler;
-		private CPU       m_pCpu;
-		private Memory    m_pMemory;
-		private Framebuffer m_pFbuffer;
 
-		public CPU 	CPU					{ get { return m_pCpu; } }
-		public Memory Ram				{ get { return m_pMemory; } }
-		public Framebuffer FBdev		{ get { return m_pFbuffer; } }
+		public CPU 	CPU					{ get { return (CPU)this[1]; } }
+		public Memory Ram				{ get { return (Memory)this[0]; } }
+		public Framebuffer FBdev		{ get { return (Framebuffer)this[2]; } }
 
 		public bool IsAlive { get { return m_pAssembler.IsAlive; } }
 		public static VM Instance
@@ -46,19 +44,22 @@ namespace Vcsos
 		internal VM()
 		{
 			m_pAssembler = new Assembler ();
+
 		}
 
 		public void CreateVM(UInt32 ramSize)
 		{
 			int newMemorySize = ramSize.ToBoundary(4);
-			m_pMemory = new Memory (newMemorySize, "RAM");
-			m_pFbuffer = new Framebuffer ();
+			Add( new Memory (newMemorySize, "RAM"));
 
 			if (newMemorySize != ramSize) 
 				Console.WriteLine("VM: Memory was expanded from {0} bytes to {1} bytes to a page boundary." + System.Environment.NewLine,
 					ramSize, newMemorySize);
 
-			m_pCpu = new CPU ();
+			Add (new CPU ());
+			Add (new Framebuffer ());
+			Add (new Timer ());
+			Add (new Tastertur ());
 		}
 		public bool Start(byte[] data)
 		{

@@ -42,7 +42,7 @@ namespace vmcli
 				return LoadFromStream (new System.IO.FileStream (path, System.IO.FileMode.Open));
 			}
 			catch {
-				return new byte[] { (byte)4 };
+				throw new Exception ("file not found");
 			}
 		}
 		#endregion

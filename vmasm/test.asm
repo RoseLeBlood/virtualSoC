@@ -1,25 +1,9 @@
-﻿
-LB Main 16
-LB TESTLB 147
+﻿#include 'vmcpu.inc'
 
-#include 'vmcpu.inc'
+CALL .InitFramebuffer; Init Framebuffer define in vmcpu.inc
+MOV AX,#h34 ; Move 0x34 to AX
+ADD #d148   ; Add 2d to AX = 200d
 
-Main:
-PUSH #5
-PUSH #4
-PUSH @3
-POP @1
-PEEK AX
-PEEK BX
-POP @3
-POP @2
-Test:
-JMP .TESTLB
-ADD #34
-MOV BX,AX
-CLR AX
-MOV AX,FB
-END
+FBSET AX,AX,#h00FF00 ; SetPixel to (200)x(200) in green
 
-TESTLB:
-END
+HLT

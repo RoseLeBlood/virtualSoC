@@ -7,16 +7,18 @@
 #define P3 @h9004
 #define P4 @h9006
 #define P5 @h9008
-#define P7 @h900B
-#define P8 @h900D
+#define P6 @h900B
+#define P7 @h900D
+#define P8 @h900F
 
-#define P11 @h9010h 
-#define P12 @h9012h
-#define P13 @h9014h
-#define P14 @h9016h
-#define P15 @h9018h
-#define P17 @h901Bh
-#define P18 @h901Dh
+#define P11 @h9010 
+#define P12 @h9012
+#define P13 @h9014
+#define P14 @h9016
+#define P15 @h9018
+#define P16 @h901B
+#define P17 @h901D
+#define P18 @h901F
 
 ; ORG 0x4 Interrupt
 ORG 0x4 

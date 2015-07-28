@@ -78,6 +78,8 @@ namespace Vcsos.mm
 
 			bool ret = getOperator (c).ParseAndRun (this);
 			VM.Instance.CPU.L2.ip += c.OpParam1;
+			//ip += c.OpParam1;
+
 			return ret;
 		}
 		private vmoperator getOperator(Instruction c)

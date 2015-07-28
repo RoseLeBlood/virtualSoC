@@ -31,7 +31,7 @@ namespace vmasm
 
 		public bool WriteToFile (byte[] asmdata, string file)
 		{
-			file = file + ".gz";
+			file = file.Contains("bin.gz") ? file : file  + "bin.gz";
 
 			using(var sfile = new System.IO.FileStream(file, System.IO.FileMode.Create))
 			{

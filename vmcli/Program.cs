@@ -8,11 +8,7 @@ namespace vmcli
 	{
 		internal static UInt32 GetValueFromArg(CommandLineArgs cmd, string val)
 		{
-			UInt32 outv;
-			if (!UInt32.TryParse (cmd.GetValue<string> (val), out outv))
-				throw  new ArgumentException ();
-
-			return outv;
+			return (UInt32) RamCalc.Calc (cmd.GetValue<string> (val));
 		}
 		public static void Main (string[] args)
 		{
@@ -34,7 +30,7 @@ namespace vmcli
 			}
 			string imageFile;
 			string debugFile;
-			UInt32 ramSize;
+			UInt32 ramSize =10;
 			try
 			{
 				imageFile = cmd.GetValue<string>( "i" );

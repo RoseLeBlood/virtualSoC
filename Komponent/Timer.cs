@@ -23,10 +23,36 @@ using System;
 
 namespace Vcsos.Komponent
 {
-	public class Timer
+	public class Timer : vmKomponente
 	{
-		public Timer ()
+		private System.Timers.Timer m_pTimer;
+
+		public Timer () : base("Timer R0", "Anna-Sophia Schroeck")
 		{
+			m_pTimer = new System.Timers.Timer ();
+		}
+		public void Create()
+		{
+			m_pTimer.Interval =  VM.Instance.CPU.L2.Stack.Pop32();
+			m_pTimer.AutoReset = VM.Instance.CPU.L2.Stack.Pop32() == 1;
+			m_pTimer.Elapsed += TimerElapsed;
+
+		}
+		public void Start()
+		{
+			m_pTimer.Start ();
+		}
+		void TimerElapsed (object sender, System.Timers.ElapsedEventArgs e)
+		{
+			if (VM.Instance.CPU.L2.Exections) {
+				VM.Instance.CPU.L3.Push32 (VM.Instance.CPU.L2.ip);
+
+				VM.Instance.CPU.L2.Stack.Push32 (0); // TimerCode
+				VM.Instance.CPU.L2.Stack.Push32 ((int)VMExecptionType.Hardware); // Hardware Exeption
+
+
+				VM.Instance.CPU.L2.ip = 4;
+			}
 		}
 	}
 }

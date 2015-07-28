@@ -32,4 +32,7 @@ Global
 		{912FFE4A-12B8-48BE-B9CF-B86BB5BB13D2}.Release|x86.ActiveCfg = Release|Any CPU
 		{912FFE4A-12B8-48BE-B9CF-B86BB5BB13D2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = vmcli\vmcli.csproj
+	EndGlobalSection
 EndGlobal

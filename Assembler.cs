@@ -26,6 +26,11 @@ using Vcsos.mm;
 
 namespace Vcsos
 {
+	public enum VMExecptionType : int
+	{
+		Error,
+		Hardware
+	}
 	public class Assembler
 	{
 		private System.Timers.Timer m_pTimer;
@@ -52,13 +57,33 @@ namespace Vcsos
 		}
 		void TimerElapsed (object sender, System.Timers.ElapsedEventArgs e)
 		{
-			int op = VM.Instance.Ram.Read32 (VM.Instance.CPU.L2.ip);
+			try
+			{
+				int op = VM.Instance.Ram.Read32 (VM.Instance.CPU.L2.ip);
 
-			m_bIsAlive = m_pParser.ParseAndRun (op);
+				m_bIsAlive = m_pParser.ParseAndRun (op);
+				VM.Instance.CPU.Tick ();
+
+			}
+			catch(System.Exception ex) {
+				int errCode = -1;
+				if (ex is VMExections)
+					errCode = (ex as VMExections).ErrorCode;
+
+				if (VM.Instance.CPU.L2.Exections) {
+					VM.Instance.CPU.L3.Push32 (VM.Instance.CPU.L2.ip);
+					VM.Instance.CPU.L2.Stack.Push32 (errCode);
+					VM.Instance.CPU.L2.Stack.Push32 ((int)VMExecptionType.Error);
+
+					VM.Instance.CPU.L2.ip = 4;
+				} else {
+					Console.WriteLine (ex.ToString ());
+					m_bIsAlive = false;
+				}	
+			}
+
 			if(m_bIsAlive)
 				m_pTimer.Start ();
-
-			VM.Instance.CPU.Tick ();
 		}
 	}
 }

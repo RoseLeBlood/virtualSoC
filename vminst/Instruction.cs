@@ -55,7 +55,7 @@ namespace vminst
 			Add (new Instruction ( 	"PUSH",	9,   1)); // OP (2) R@#(2) 3(4)
 			Add (new Instruction (	"POP", 	9, 	 1)); // OP (2) R@#(2) 3(4)
 			Add (new Instruction (	"PEEK", 9, 	 1)); // OP (2) R@#(2) 3(4)
-			Add (new Instruction (  "END",  0,   0));
+			Add (new Instruction (  "HLT",  0,   0));
 			Add (new Instruction ( 	"JMP", 	0,   1)); 
 			Add (new Instruction (	"LCK",  9,   1));
 			Add (new Instruction (  "UCK",  9,   1));  

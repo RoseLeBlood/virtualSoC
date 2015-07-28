@@ -44,7 +44,6 @@
     <Compile Include="Komponent\Register.cs" />
     <Compile Include="Akku.cs" />
     <Compile Include="Komponent\Timer.cs" />
-    <Compile Include="Komponent\Serial.cs" />
     <Compile Include="Komponent\Framebuffer.cs" />
     <Compile Include="Assembler.cs" />
     <Compile Include="mm\vmoperator.cs" />
@@ -75,6 +74,12 @@
     <Compile Include="mm\vmfbi.cs" />
     <Compile Include="MemoryMap.cs" />
     <Compile Include="mm\vmfbd.cs" />
+    <Compile Include="VMExections.cs" />
+    <Compile Include="Komponent\PinHeader.cs" />
+    <Compile Include="Komponent\UART.cs" />
+    <Compile Include="Komponent\Testertur.cs" />
+    <Compile Include="Komponent\Beeper.cs" />
+    <Compile Include="Komponent\vmKomponente.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

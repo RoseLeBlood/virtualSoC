@@ -70,6 +70,11 @@ namespace Vcsos.Komponent
 			get { return m_pMemRegister.Read16(20).Get(6); }
 			set { m_pMemRegister.Write(m_pMemRegister.Read16(20).Set(value, 6), 20); }
 		}
+		internal bool Exections
+		{
+			get { return m_pMemRegister.Read16(20).Get(7); }
+			set { m_pMemRegister.Write(m_pMemRegister.Read16(20).Set(value, 7), 20); }
+		}
 		public int sp
 		{
 			get { return m_pMemRegister.Read32(0); }
@@ -107,11 +112,16 @@ namespace Vcsos.Komponent
 			get { return m_pMemRegister.Read32(16); }
 			set	{ m_pMemRegister.Write(value,16); }
 		}
-		public Register ()
+		public int pid
 		{
-			m_pMemRegister = new Memory (24, "Register");
+			get { return m_pMemRegister.Read32(24); }
+			set	{ m_pMemRegister.Write(value,24); }
+		}
+		public Register (int stackAddr = -1)
+		{
+			m_pMemRegister = new Memory (28, "Register");
 
-			sp = VM.Instance.Ram.Size - 1;
+			sp = (stackAddr == -1 ? VM.Instance.Ram.Size - 1 : stackAddr);
 			ip = 0;
 			ax = ax.RandR ();
 			bx = bx.RandR ();
@@ -119,8 +129,8 @@ namespace Vcsos.Komponent
 			DivByZero = false;
 			OverFlow = false;
 			UnderFlow = false;
-
-
+			Exections = false;
+			pid = 0;
 			m_pStack = new Stack ();
 		}
 		public override string ToString ()
@@ -160,6 +170,8 @@ namespace Vcsos.Komponent
 			case "IP":
 				ip = v;
 				break;
+			default:
+				throw new Exception ("Register/Flag with Name: " + name + " not found");
 			}
 		}
 	}

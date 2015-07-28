@@ -25,11 +25,16 @@ using Vcsos;
 
 namespace Vcsos.Komponent
 {
-	public class Memory : System.IO.Stream
+	public class Memory : System.IO.Stream, IVMKomponente
 	{
 		private byte[] m_pMemory;
 		private int m_iSize;
 		private string m_strName;
+		private string m_strAutor;
+
+		public string Name { get { return m_strName; } }
+		public string Autor { get { return m_strAutor; } }
+
 		public int Size 
 		{
 			get { return m_iSize; }
@@ -48,6 +53,8 @@ namespace Vcsos.Komponent
 			m_strName = name;
 
 			this.Write (Utils.RandMemory (mSize), 0, mSize);
+
+			Console.WriteLine ("[VmSoC Komponente] {0} Craeted", name);
 		}
 		public int Write(byte[] data, int addr = 0)
 		{
@@ -96,12 +103,14 @@ namespace Vcsos.Komponent
 
 			int address = 0;
 			output.WriteLine (m_strName + ":");
-			foreach (var b in m_pMemory) {
+			for (int i = 0; i < m_pMemory.Length; i++) {
+				var b = m_pMemory [i];
+				var b1 = m_pMemory [++i];
 
 				if (address == 0 || address%16==0)
-					output.Write(System.Environment.NewLine + "{0,-4:000} ", address);
-				address++;
-				output.Write(" {0:X2} ",(int)b);
+					output.Write(System.Environment.NewLine + "[{0:X4}] ", address);
+				address += 2;
+				output.Write(" {0:X2}{1:X2} ",(int)b, (int)b1);
 
 			}
 			return output.ToString ();

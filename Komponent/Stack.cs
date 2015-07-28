@@ -61,9 +61,6 @@ namespace Vcsos.Komponent
 			byte b = VM.Instance.Ram [VM.Instance.CPU.L2.sp+1];
 			VM.Instance.Ram [VM.Instance.CPU.L2.sp + 1] = 0;
 			VM.Instance.CPU.L2.sp += 1;
-
-
-			//VM.Instance.Ram [VM.Instance.CPU.Register.sp + 2] = 0;
 			return b;
 		}
 		public byte Peek()

@@ -25,7 +25,7 @@ namespace Vcsos.mm
 	public class vmend : vmoperator
 	{
 		public string Name {
-			get { return "END"; }
+			get { return "HLT"; }
 		}
 		public bool ParseAndRun (ParserFactory factory)
 		{
