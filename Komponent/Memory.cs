@@ -33,7 +33,7 @@ namespace Vcsos.Komponent
 		private string m_strAutor;
 
 		public string Name { get { return m_strName; } }
-		public string Autor { get { return m_strAutor; } }
+		public string Author { get { return m_strAutor; } }
 
 		public int Size 
 		{
@@ -50,7 +50,8 @@ namespace Vcsos.Komponent
 		{
 			m_pMemory = new byte[mSize];
 			m_iSize = mSize;
-			m_strName = name;
+            m_strAutor = "Anna-Sophia Schröck";
+            m_strName = name;
 
 			this.Write (Utils.RandMemory (mSize), 0, mSize);
 

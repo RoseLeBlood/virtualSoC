@@ -1,4 +1,5 @@
-﻿//
+﻿
+//
 //  Instruction.cs
 //
 //  Author:
@@ -23,30 +24,67 @@ using System;
 
 namespace vminst
 {
+    /// <summary>
+    /// Typ arten eines Parameter
+    /// </summary>
 	public enum InstructionParam2 : int
 	{
+        /// <summary>
+        /// Nachfolgene Bits ist ein Adresse zu einen Register
+        /// </summary>
 		Register = 0,
+        /// <summary>
+        /// Nachfolgene Bits ist eine Value
+        /// </summary>
 		Value = 1,
+        /// <summary>
+        /// Nachfolgene Bits ist ein zeiger
+        /// </summary>
 		Pointer = 2,
+        /// <summary>
+        /// Nachfolgene Bits ist ein Label
+        /// </summary>
 		Lable = 3,
 		No = 9
 	}
+    /// <summary>
+    /// Basis Klasse jeder Instruction
+    /// </summary>
 	public class Instruction
 	{
+        /// <summary>
+        /// Name / String des Codes
+        /// </summary>
 		public string OpCode;
+        /// <summary>
+        /// param1 = instruction Lenght in bytes; Param2 Parameter Anzahl
+        /// </summary>
 		public int OpParam1, OpParam2; //Param1 = IP Lenght int byte; Param2 = Parameter Count
 
-		public Instruction (string text, int p1, int p2)
+        /// <summary>
+        /// Konstruter zum erstellen eines OpCode
+        /// </summary>
+        /// <param name="text">Name des OpCodes</param>
+        /// <param name="p1">Lenght in bytes </param>
+        /// <param name="p2">Parameter Count</param>
+        public Instruction (string text, int p1, int p2)
 		{
 			OpCode = text;
 			OpParam1 = p1;
 			OpParam2 = p2;
 		}
+        /// <summary>
+        /// ToString()
+        /// </summary>
+        /// <returns>instruction als string</returns>
 		public override string ToString ()
 		{
 			return string.Format ("{0} {1} {3}", OpCode, OpParam1, OpParam2);
 		}
 	}
+    /// <summary>
+    /// Liste aller vorhandenen Instructionen
+    /// </summary>
 	public class Instructions : System.Collections.Generic.List<Instruction>
 	{
 		public Instructions()
@@ -84,13 +122,36 @@ namespace vminst
 			Add (new Instruction (  "FBSET",19,   3));
 		}
 	}
+    public enum RegisterType : int
+    {
+        Cpu = 0,
+        Flags = 2,
+        Cache = 3
+    }
+    /// <summary>
+    /// Item der Registers Liste
+    /// </summary>
 	public class Register
 	{
+        /// <summary>
+        /// Name des Registers
+        /// </summary>
 		public string Name;
-		public int    Type;
+        /// <summary>
+        /// Typ des Registers
+        /// </summary>
+		public RegisterType Type;
 
-		public Register(string n, int t) { Name = n; Type = t; }
+        /// <summary>
+        /// Konstructor für ein Register
+        /// </summary>
+        /// <param name="n">Name des Registers</param>
+        /// <param name="t">Typ des Registers</param>
+		public Register(string n, int t) { Name = n; Type = (RegisterType)t; }
 	}
+    /// <summary>
+    /// Liste aller vorhandenen Register
+    /// </summary>
 	public class Registers : System.Collections.Generic.List<Register>
 	{
 		public Registers()
@@ -111,6 +172,11 @@ namespace vminst
 			Add (new Register ("CM", 3));  // Cache Max Size 
 			Add (new Register ("CP", 3));  // Cache Peek
 		}
+        /// <summary>
+        /// Ist der Register Name in der Liste vorhanden
+        /// </summary>
+        /// <param name="str">Register name der gesucht wird</param>
+        /// <returns>true wenn der Registername in der Liste ist</returns>
 		public bool Contains(string str)
 		{
 			foreach (var item in this) {
@@ -119,6 +185,11 @@ namespace vminst
 			}
 			return false;
 		}
+        /// <summary>
+        /// Index of des gesuchten Registers
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns>Index des Registers in der liste</returns>
 		public int IndexOf(string name)
 		{
 			for (int i = 0; i < Count; i++) {

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gzip',['GZIP',['../da/d54/namespacevmasm.html#a55e2bc35cf6af0d83926a4a35a50c606af1cd28417b03cfab3a8e16d66e34e18a',1,'vmasm']]]
+  ['error',['Error',['../d8/def/namespace_vcsos.html#a04962665d1376844966470d9d3acdf7aa902b0d55fddef6f8d651fe1035b7d4bd',1,'Vcsos']]]
 ];

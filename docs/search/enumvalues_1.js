@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['error',['Error',['../d8/def/namespace_vcsos.html#a04962665d1376844966470d9d3acdf7aa902b0d55fddef6f8d651fe1035b7d4bd',1,'Vcsos']]]
+  ['deflate',['Deflate',['../da/d54/namespacevmasm.html#a55e2bc35cf6af0d83926a4a35a50c606ae2430ff724c45c3d68893fb1a3584426',1,'vmasm']]]
 ];

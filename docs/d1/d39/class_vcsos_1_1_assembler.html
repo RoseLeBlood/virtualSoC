@@ -81,21 +81,27 @@ $(function() {
 <div class="title">Vcsos.Assembler Klassenreferenz</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><a class="el" href="../../d1/d39/class_vcsos_1_1_assembler.html" title="Assembler Klasse. Diese Klasse führt die Bearbeitzng aus ">Assembler</a> Klasse. Diese Klasse führt die Bearbeitzng aus  
+ <a href="../../d1/d39/class_vcsos_1_1_assembler.html#details">Mehr ...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Öffentliche Methoden</h2></td></tr>
 <tr class="memitem:a27bf93878782d80215f7f74f9edbe527"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d39/class_vcsos_1_1_assembler.html#a27bf93878782d80215f7f74f9edbe527">Assembler</a> ()</td></tr>
 <tr class="separator:a27bf93878782d80215f7f74f9edbe527"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8566e622685c247444308c493804cdea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d39/class_vcsos_1_1_assembler.html#a8566e622685c247444308c493804cdea">Start</a> ()</td></tr>
+<tr class="memdesc:a8566e622685c247444308c493804cdea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Starte das System  <a href="#a8566e622685c247444308c493804cdea">Mehr ...</a><br /></td></tr>
 <tr class="separator:a8566e622685c247444308c493804cdea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Propertys</h2></td></tr>
 <tr class="memitem:a17f5bb8f050e546a50ec4aee79cab1e3"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d39/class_vcsos_1_1_assembler.html#a17f5bb8f050e546a50ec4aee79cab1e3">IsAlive</a><code> [get]</code></td></tr>
+<tr class="memdesc:a17f5bb8f050e546a50ec4aee79cab1e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">get ob system noch läuft  <a href="#a17f5bb8f050e546a50ec4aee79cab1e3">Mehr ...</a><br /></td></tr>
 <tr class="separator:a17f5bb8f050e546a50ec4aee79cab1e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Ausführliche Beschreibung</h2>
-<div class="textblock"></div><h2 class="groupheader">Beschreibung der Konstruktoren und Destruktoren</h2>
+<div class="textblock"><p><a class="el" href="../../d1/d39/class_vcsos_1_1_assembler.html" title="Assembler Klasse. Diese Klasse führt die Bearbeitzng aus ">Assembler</a> Klasse. Diese Klasse führt die Bearbeitzng aus </p>
+</div><h2 class="groupheader">Beschreibung der Konstruktoren und Destruktoren</h2>
 <a id="a27bf93878782d80215f7f74f9edbe527"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a27bf93878782d80215f7f74f9edbe527">&#9670;&nbsp;</a></span>Assembler()</h2>
 
@@ -110,7 +116,7 @@ Propertys</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;        {</div><div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;            <span class="comment">// bischen dröseln</span></div><div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;            m_pTimer = <span class="keyword">new</span> <a class="code" href="../../d8/dd0/namespace_system.html">System</a>.Timers.Timer (1000.0 / (<a class="code" href="../../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html">CPU</a>.<a class="code" href="../../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html#ac43d2aa886cad91db7a543250dadbc7a">BaudMhz</a>));</div><div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            m_pTimer.Elapsed += TimerElapsed;</div><div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;            m_pTimer.AutoReset = <span class="keyword">false</span>;</div><div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div><div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            m_pParser = <span class="keyword">new</span> <a class="code" href="../../de/d43/class_vcsos_1_1mm_1_1_parser_factory.html">ParserFactory</a> ();</div><div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            m_bIsAlive = <span class="keyword">true</span>;</div><div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div><div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        }</div><div class="ttc" id="namespace_system_html"><div class="ttname"><a href="../../d8/dd0/namespace_system.html">System</a></div></div>
+<div class="fragment"><div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        {</div><div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <span class="comment">// bischen drlsseln des Timers</span></div><div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            m_pTimer = <span class="keyword">new</span> <a class="code" href="../../d8/dd0/namespace_system.html">System</a>.Timers.Timer (1000.0 / (<a class="code" href="../../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html">CPU</a>.<a class="code" href="../../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html#ac43d2aa886cad91db7a543250dadbc7a">BaudMhz</a>));</div><div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            <span class="comment">// weise dem Timer event Elapsed die Function TimerElapsed zu</span></div><div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            m_pTimer.Elapsed += TimerElapsed;</div><div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;            <span class="comment">// Setze Timer AutoRest zu false (aus)</span></div><div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;            m_pTimer.AutoReset = <span class="keyword">false</span>;</div><div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div><div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;            <span class="comment">// Erstelle die Parser Faktory</span></div><div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;            m_pParser = <span class="keyword">new</span> <a class="code" href="../../de/d43/class_vcsos_1_1mm_1_1_parser_factory.html">ParserFactory</a> ();</div><div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <span class="comment">// Setze die Variable m_bIsAlive auf true</span></div><div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;            m_bIsAlive = <span class="keyword">true</span>;</div><div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div><div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;        }</div><div class="ttc" id="namespace_system_html"><div class="ttname"><a href="../../d8/dd0/namespace_system.html">System</a></div></div>
 <div class="ttc" id="class_vcsos_1_1_komponent_1_1_c_p_u_html_ac43d2aa886cad91db7a543250dadbc7a"><div class="ttname"><a href="../../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html#ac43d2aa886cad91db7a543250dadbc7a">Vcsos.Komponent.CPU.BaudMhz</a></div><div class="ttdeci">const float BaudMhz</div><div class="ttdef"><b>Definition:</b> CPU.cs:33</div></div>
 <div class="ttc" id="class_vcsos_1_1mm_1_1_parser_factory_html"><div class="ttname"><a href="../../de/d43/class_vcsos_1_1mm_1_1_parser_factory.html">Vcsos.mm.ParserFactory</a></div><div class="ttdef"><b>Definition:</b> vmoperator.cs:34</div></div>
 <div class="ttc" id="class_vcsos_1_1_komponent_1_1_c_p_u_html"><div class="ttname"><a href="../../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html">Vcsos.Komponent.CPU</a></div><div class="ttdef"><b>Definition:</b> CPU.cs:26</div></div>
@@ -132,7 +138,9 @@ Propertys</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        {</div><div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;            m_pTimer.<a class="code" href="../../dd/de9/class_vcsos_1_1_komponent_1_1_timer.html#acb8a03c5d7731beb1d78ec510b2e5498">Start</a> ();</div><div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        }</div><div class="ttc" id="class_vcsos_1_1_komponent_1_1_timer_html_acb8a03c5d7731beb1d78ec510b2e5498"><div class="ttname"><a href="../../dd/de9/class_vcsos_1_1_komponent_1_1_timer.html#acb8a03c5d7731beb1d78ec510b2e5498">Vcsos.Komponent.Timer.Start</a></div><div class="ttdeci">void Start()</div><div class="ttdef"><b>Definition:</b> Timer.cs:41</div></div>
+
+<p>Starte das System </p>
+<div class="fragment"><div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;        {</div><div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;            <span class="comment">// Starte den Timer somit das System</span></div><div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            m_pTimer.<a class="code" href="../../dd/de9/class_vcsos_1_1_komponent_1_1_timer.html#acb8a03c5d7731beb1d78ec510b2e5498">Start</a> ();</div><div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;        }</div><div class="ttc" id="class_vcsos_1_1_komponent_1_1_timer_html_acb8a03c5d7731beb1d78ec510b2e5498"><div class="ttname"><a href="../../dd/de9/class_vcsos_1_1_komponent_1_1_timer.html#acb8a03c5d7731beb1d78ec510b2e5498">Vcsos.Komponent.Timer.Start</a></div><div class="ttdeci">void Start()</div><div class="ttdef"><b>Definition:</b> Timer.cs:41</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -156,6 +164,8 @@ Propertys</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>get ob system noch läuft </p>
 
 </div>
 </div>

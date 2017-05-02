@@ -91,6 +91,8 @@ $(function() {
  <div class="center">
   <img src="../../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.png" usemap="#Vcsos.Komponent.CPU_map" alt=""/>
   <map id="Vcsos.Komponent.CPU_map" name="Vcsos.Komponent.CPU_map">
+<area href="../../d9/d63/class_vcsos_1_1_komponent_1_1vm_komponente.html" alt="Vcsos.Komponent.vmKomponente" shape="rect" coords="0,56,209,80"/>
+<area href="../../d6/dca/interface_vcsos_1_1_komponent_1_1_i_v_m_komponente.html" alt="Vcsos.Komponent.IVMKomponente" shape="rect" coords="0,0,209,24"/>
 </map>
  </div></div>
 <table class="memberdecls">
@@ -141,6 +143,10 @@ Propertys</h2></td></tr>
 <tr class="separator:a091bc615b8aa86a00f1a608630ffc521"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a72507cc4d6e1ba933b0455b77f07300e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../df/d68/class_vcsos_1_1_komponent_1_1_cache_stack.html">CacheStack</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html#a72507cc4d6e1ba933b0455b77f07300e">L3</a><code> [get]</code></td></tr>
 <tr class="separator:a72507cc4d6e1ba933b0455b77f07300e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a55a0e7e0158df3c1b1cc4a0c815f0d"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d63/class_vcsos_1_1_komponent_1_1vm_komponente.html#a3a55a0e7e0158df3c1b1cc4a0c815f0d">Name</a><code> [get]</code></td></tr>
+<tr class="separator:a3a55a0e7e0158df3c1b1cc4a0c815f0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d896711db3b302867f724b92cd67d94"><td class="memItemLeft" align="right" valign="top">string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d9/d63/class_vcsos_1_1_komponent_1_1vm_komponente.html#a1d896711db3b302867f724b92cd67d94">Author</a><code> [get]</code></td></tr>
+<tr class="separator:a1d896711db3b302867f724b92cd67d94"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Ausführliche Beschreibung</h2>
 <div class="textblock"></div><h2 class="groupheader">Beschreibung der Konstruktoren und Destruktoren</h2>
@@ -159,7 +165,7 @@ Propertys</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <div class="fragment"><div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                      : base(<span class="stringliteral">&quot;Referenz CPU&quot;</span>, <span class="stringliteral">&quot;Anna-Sophia Schroeck&quot;</span>)</div><div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        {</div><div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            m_pRegister = <span class="keyword">new</span> <a class="code" href="../../d3/d02/namespacevminst.html#a9551e925dd6f3648f54d40c3308d27d9a0ba7583639a274c434bbe6ef797115a4">Register</a> ();</div><div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;            <a class="code" href="../../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html#af4516495a1ad24763fc39321edf4c34c">m_pAkku</a> = <span class="keyword">new</span> <a class="code" href="../../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html#a7c56c4e4dce0712f993450d5fb54cb4f">Akku</a> (<span class="keyword">this</span>);</div><div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;            <a class="code" href="../../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html#a01728bb2f0c0de6a1ee6213c9a9c8d54">m_pCacheStack</a> = <span class="keyword">new</span> CacheStack (256, <span class="stringliteral">&quot;CPU-L1&quot;</span>);</div><div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            <a class="code" href="../../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html#ade334d0bdc4f08d83385643384479768">m_pCallStack</a> = <span class="keyword">new</span> CacheStack  (135, <span class="stringliteral">&quot;CPU-L2&quot;</span>); <span class="comment">// 32 Unterprogramme</span></div><div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        }</div><div class="ttc" id="class_vcsos_1_1_komponent_1_1_c_p_u_html_a01728bb2f0c0de6a1ee6213c9a9c8d54"><div class="ttname"><a href="../../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html#a01728bb2f0c0de6a1ee6213c9a9c8d54">Vcsos.Komponent.CPU.m_pCacheStack</a></div><div class="ttdeci">CacheStack m_pCacheStack</div><div class="ttdef"><b>Definition:</b> CPU.cs:28</div></div>
-<div class="ttc" id="namespacevminst_html_a9551e925dd6f3648f54d40c3308d27d9a0ba7583639a274c434bbe6ef797115a4"><div class="ttname"><a href="../../d3/d02/namespacevminst.html#a9551e925dd6f3648f54d40c3308d27d9a0ba7583639a274c434bbe6ef797115a4">vminst.InstructionParam2.Register</a></div></div>
+<div class="ttc" id="namespacevminst_html_a9551e925dd6f3648f54d40c3308d27d9a0ba7583639a274c434bbe6ef797115a4"><div class="ttname"><a href="../../d3/d02/namespacevminst.html#a9551e925dd6f3648f54d40c3308d27d9a0ba7583639a274c434bbe6ef797115a4">vminst.InstructionParam2.Register</a></div><div class="ttdoc">Nachfolgene Bits ist ein Adresse zu einen Register </div></div>
 <div class="ttc" id="class_vcsos_1_1_komponent_1_1_c_p_u_html_af4516495a1ad24763fc39321edf4c34c"><div class="ttname"><a href="../../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html#af4516495a1ad24763fc39321edf4c34c">Vcsos.Komponent.CPU.m_pAkku</a></div><div class="ttdeci">Akku m_pAkku</div><div class="ttdef"><b>Definition:</b> CPU.cs:32</div></div>
 <div class="ttc" id="class_vcsos_1_1_komponent_1_1_c_p_u_html_ade334d0bdc4f08d83385643384479768"><div class="ttname"><a href="../../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html#ade334d0bdc4f08d83385643384479768">Vcsos.Komponent.CPU.m_pCallStack</a></div><div class="ttdeci">CacheStack m_pCallStack</div><div class="ttdef"><b>Definition:</b> CPU.cs:29</div></div>
 <div class="ttc" id="class_vcsos_1_1_komponent_1_1_c_p_u_html_a7c56c4e4dce0712f993450d5fb54cb4f"><div class="ttname"><a href="../../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html#a7c56c4e4dce0712f993450d5fb54cb4f">Vcsos.Komponent.CPU.Akku</a></div><div class="ttdeci">Akku Akku</div><div class="ttdef"><b>Definition:</b> CPU.cs:39</div></div>
@@ -488,6 +494,28 @@ Propertys</h2></td></tr>
 
 </div>
 </div>
+<a id="a1d896711db3b302867f724b92cd67d94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d896711db3b302867f724b92cd67d94">&#9670;&nbsp;</a></span>Author</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string Vcsos.Komponent.vmKomponente.Author</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">inherited</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a03512dc7087a5499b9dc9980862c0535"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a03512dc7087a5499b9dc9980862c0535">&#9670;&nbsp;</a></span>L1</h2>
 
@@ -548,6 +576,28 @@ Propertys</h2></td></tr>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a3a55a0e7e0158df3c1b1cc4a0c815f0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a55a0e7e0158df3c1b1cc4a0c815f0d">&#9670;&nbsp;</a></span>Name</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">string Vcsos.Komponent.vmKomponente.Name</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span><span class="mlabel">inherited</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

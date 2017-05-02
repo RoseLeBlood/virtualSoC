@@ -17,7 +17,7 @@ namespace vmcli
 
 			cmd.RegisterArgument( "i", new OptionArgument( null, true ) { HelpMessage="The image file." } );
 			cmd.RegisterArgument( "r", new OptionArgument( "256" )  { HelpMessage="Ram size. [> 0]" });
-			cmd.RegisterArgument( "t", new OptionArgument( "raw", true) { HelpMessage="Image type: gz,raw,deflate" } );
+			cmd.RegisterArgument( "t", new OptionArgument( "raw", true) { HelpMessage="Image type: gz,raw" } );
 			cmd.RegisterArgument( "o", new OptionArgument( "console", false) { HelpMessage="Debug output" } );
 
 			cmd.SetDefaultArgument( "i" );

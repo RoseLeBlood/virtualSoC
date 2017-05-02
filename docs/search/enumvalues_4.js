@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['lable',['Lable',['../d3/d02/namespacevminst.html#a9551e925dd6f3648f54d40c3308d27d9a8b87e5be27f03a0175238964e714a362',1,'vminst']]],
-  ['landscape',['Landscape',['../d1/d9b/namespace_vcsos_1_1_komponent.html#aaf01a2f9cb3b7ccb3b2336419d794f56a815dff01257e5ef182b25d4c1ef0a7a0',1,'Vcsos::Komponent']]]
+  ['gzip',['GZIP',['../da/d54/namespacevmasm.html#a55e2bc35cf6af0d83926a4a35a50c606af1cd28417b03cfab3a8e16d66e34e18a',1,'vmasm']]]
 ];

@@ -19,5 +19,7 @@ var searchData=
   ['ip',['ip',['../d2/d0a/class_vcsos_1_1_komponent_1_1_register.html#adfcbe06c140a09eb8829be2c1e2c681c',1,'Vcsos::Komponent::Register']]],
   ['isalive',['IsAlive',['../d1/d39/class_vcsos_1_1_assembler.html#a17f5bb8f050e546a50ec4aee79cab1e3',1,'Vcsos.Assembler.IsAlive()'],['../d6/dfa/class_vcsos_1_1_v_m.html#a79680bc46d37749b005fc579d5c4ca26',1,'Vcsos.VM.IsAlive()']]],
   ['islineadefine',['isLineADefine',['../d0/d4c/classvmasm_1_1_defines_def.html#a0252a4220e56164f51a7331e1e3fd53b',1,'vmasm::DefinesDef']]],
-  ['isrequired',['IsRequired',['../df/d7f/class_dot_args_1_1_alias_argument.html#a348eb91b92138ce8ce001d0680c352c1',1,'DotArgs.AliasArgument.IsRequired()'],['../d4/d7e/class_dot_args_1_1_argument.html#a8b272c57082047a210464127fe4b9f06',1,'DotArgs.Argument.IsRequired()']]]
+  ['isrequired',['IsRequired',['../df/d7f/class_dot_args_1_1_alias_argument.html#a348eb91b92138ce8ce001d0680c352c1',1,'DotArgs.AliasArgument.IsRequired()'],['../d4/d7e/class_dot_args_1_1_argument.html#a8b272c57082047a210464127fe4b9f06',1,'DotArgs.Argument.IsRequired()']]],
+  ['ivmkomponente',['IVMKomponente',['../d6/dca/interface_vcsos_1_1_komponent_1_1_i_v_m_komponente.html',1,'Vcsos::Komponent']]],
+  ['ivmkomponente_2ecs',['IVMKomponente.cs',['../d8/d61/_i_v_m_komponente_8cs.html',1,'']]]
 ];

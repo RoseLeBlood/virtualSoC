@@ -27,9 +27,19 @@ using System.Collections.Generic;
 
 namespace Vcsos
 {
+    /// <summary>
+    /// Diese Klasse beschreibt die Virtualle Maschine und ist eine
+    /// zusammenstellung der verwendete Komponenten
+    /// </summary>
 	public class VM : List<IVMKomponente>
 	{
+        /// <summary>
+        /// statische Instance der Klasse VM - Singleton
+        /// </summary>
 		private static VM m_instance = new VM ();
+        /// <summary>
+        /// Die Assembler Klasse schalt zentrale
+        /// </summary>
 		private Assembler m_pAssembler;
 
 		public CPU 	CPU					{ get { return (CPU)this[1]; } }
@@ -37,16 +47,26 @@ namespace Vcsos
 		public Framebuffer FBdev		{ get { return (Framebuffer)this[2]; } }
 
 		public bool IsAlive { get { return m_pAssembler.IsAlive; } }
+
+        /// <summary>
+        /// Gibt die Singleton Instance zzrück
+        /// </summary>
 		public static VM Instance
 		{
 			get { return m_instance; }
 		}
+        /// <summary>
+        /// Erstellt die Virtaule maschine
+        /// </summary>
 		internal VM()
 		{
 			m_pAssembler = new Assembler ();
 
 		}
-
+        /// <summary>
+        /// Erstellt die Virtuale Maschine
+        /// </summary>
+        /// <param name="ramSize">Größe des Arbeitsspeicher</param>
 		public void CreateVM(UInt32 ramSize)
 		{
 			int newMemorySize = ramSize.ToBoundary(4);
@@ -59,8 +79,13 @@ namespace Vcsos
 			Add (new CPU ());
 			Add (new Framebuffer ());
 			Add (new Timer ());
-			Add (new Tastertur ());
+			
 		}
+        /// <summary>
+        /// Startet die Virtualle Maschine
+        /// </summary>
+        /// <param name="data">Programm code </param>
+        /// <returns>rückgabe true bei keinen ausführ fehler</returns>
 		public bool Start(byte[] data)
 		{
 			if (data.Length >= Ram.Size) {

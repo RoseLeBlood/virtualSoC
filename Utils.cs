@@ -23,13 +23,27 @@ using System;
 
 namespace Vcsos
 {
+    /// <summary>
+    /// Mathematische helper classe
+    /// </summary>
 	public static class Utils
 	{
+        /// <summary>
+        /// Number to boundary
+        /// </summary>
+        /// <param name="number"></param>
+        /// <param name="boundary"></param>
+        /// <returns></returns>
 		public static int ToBoundary(this uint number, uint boundary)
 		{
 			int newNumber = (int)(boundary * ((number / boundary) + ((number % boundary > 0) ? 1: 0)));
 			return newNumber;
 		}
+        /// <summary>
+        /// extension uint to byte array
+        /// </summary>
+        /// <param name="UIntIn">Die Variable die in bytes zerlegt werden soll</param>
+        /// <returns>byte array von der Variable </returns>
 		public unsafe static byte[] ToBytes(this uint UIntIn)
 		{
 			//turn a uint into 4 bytes
@@ -42,6 +56,11 @@ namespace Vcsos
 			fourBytes[3] = *bt++;
 			return fourBytes;
 		}
+        /// <summary>
+        /// extension int to byte array
+        /// </summary>
+        /// <param name="IntIn">Die Variable die in bytes zerlegt werden soll</param>
+        /// <returns>byte array vin der Variable</returns>
 		public unsafe static byte[] ToBytes(this int IntIn)
 		{
 			//turn a uint into 4 bytes
@@ -54,6 +73,11 @@ namespace Vcsos
 			fourBytes[3] = *bt++;
 			return fourBytes;
 		}
+        /// <summary>
+        /// byte array to int
+        /// </summary>
+        /// <param name="BytesIn">das byte array</param>
+        /// <returns></returns>
 		public unsafe static int ToUint(this byte[] BytesIn)
 		{
 			fixed(byte* otherbytes = BytesIn)
@@ -74,7 +98,6 @@ namespace Vcsos
 				return newUint;
 			}
 		}
-
 		public static bool Get(this int A, int pos)
 		{
 			return (A >> pos & 1) == 1;
