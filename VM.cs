@@ -42,7 +42,8 @@ namespace Vcsos
         /// </summary>
 		private Assembler m_pAssembler;
 
-		public CPU 	CPU					{ get { return (CPU)this[1]; } }
+		public Core 	MasterCore		{ get { return ((CPU)this[1]).MasterCore; } }
+     
 		public Memory Ram				{ get { return (Memory)this[0]; } }
 		public Framebuffer FBdev		{ get { return (Framebuffer)this[2]; } }
 
@@ -76,7 +77,7 @@ namespace Vcsos
 				Console.WriteLine("VM: Memory was expanded from {0} bytes to {1} bytes to a page boundary." + System.Environment.NewLine,
 					ramSize, newMemorySize);
 
-			Add (new CPU ());
+			Add (new CPU (4));
 			Add (new Framebuffer ());
 			Add (new Timer ());
 			
@@ -93,7 +94,7 @@ namespace Vcsos
 			} else {
 				Ram.Write (data);
 
-				CPU.L2.ip = 16;
+				MasterCore.Register.ip = 16;
 				m_pAssembler.Start ();
 				return true;
 			}
