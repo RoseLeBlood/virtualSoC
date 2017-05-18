@@ -31,14 +31,14 @@ namespace Vcsos.mm
 		public bool ParseAndRun (ParserFactory factory)
 		{
 			InstructionParam2 param1 = factory.getParam(4);
-			int param1V = VM.Instance.Ram.Read32 (VM.Instance.CPU.L2.ip + 5);
+			int param1V = VM.Instance.Ram.Read32 (VM.Instance.MasterCore.Register.ip + 5);
 
 			if (param1 == InstructionParam2.Value)
-				VM.Instance.CPU.Akku.Add (param1V);
+				VM.Instance.MasterCore.Akku.Add (param1V);
 			else if (param1 == InstructionParam2.Pointer)
-				VM.Instance.CPU.Akku.Add (MemoryMap.Read32 (param1V));
+				VM.Instance.MasterCore.Akku.Add (MemoryMap.Read32 (param1V));
 			else if (param1 == InstructionParam2.Register) {
-				VM.Instance.CPU.Akku.Add (VM.Instance.CPU.L2.Get (factory.m_pRegisters [param1V].Name));
+				VM.Instance.MasterCore.Akku.Add (VM.Instance.MasterCore.Register.Get (factory.m_pRegisters [param1V].Name));
 			}
 		
 			return true;

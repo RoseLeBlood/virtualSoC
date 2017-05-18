@@ -73,11 +73,11 @@ namespace Vcsos.mm
 
 			#if DEBUG
 			Console.WriteLine ("{3} [{2}] {0} {1}", pos, c.OpCode, 
-				VM.Instance.CPU.L2.ip, CPU.Ticks);
+				VM.Instance.MasterCore.Register.ip, Core.Ticks);
 			#endif
 
 			bool ret = getOperator (c).ParseAndRun (this);
-			VM.Instance.CPU.L2.ip += c.OpParam1;
+			VM.Instance.MasterCore.Register.ip += c.OpParam1;
 			//ip += c.OpParam1;
 
 			return ret;
@@ -96,7 +96,7 @@ namespace Vcsos.mm
 
 		internal InstructionParam2 getParam(int ipa)
 		{
-			return (InstructionParam2)VM.Instance.Ram [VM.Instance.CPU.L2.ip + ipa];
+			return (InstructionParam2)VM.Instance.Ram [VM.Instance.MasterCore.Register.ip + ipa];
 		}
 	}
 

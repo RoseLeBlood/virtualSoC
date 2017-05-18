@@ -31,18 +31,18 @@ namespace Vcsos.mm
 		public bool ParseAndRun (ParserFactory factory)
 		{
 			InstructionParam2 param1 = factory.getParam(4);
-			int param1V = VM.Instance.Ram.Read32 (VM.Instance.CPU.L2.ip + 5);
+			int param1V = VM.Instance.Ram.Read32 (VM.Instance.MasterCore.Register.ip + 5);
 
-			VM.Instance.CPU.L3.Push32 (VM.Instance.CPU.L2.ip+9);
-			VM.Instance.CPU.L2.Set ("IP", param1V);
+			VM.Instance.MasterCore.Stack.Push32 (VM.Instance.MasterCore.Register.ip+9);
+			VM.Instance.MasterCore.Register.Set ("IP", param1V);
 
 			if (param1 == InstructionParam2.Value)
-				VM.Instance.CPU.L2.Set ("IP", param1V);
+				VM.Instance.MasterCore.Register.Set ("IP", param1V);
 			else if (param1 == InstructionParam2.Register) {
-				VM.Instance.CPU.L2.Set ("IP", VM.Instance.CPU.L2.Get(factory.m_pRegisters [param1V].Name));
+				VM.Instance.MasterCore.Register.Set ("IP", VM.Instance.MasterCore.Register.Get(factory.m_pRegisters [param1V].Name));
 			}
 			else if (param1 == InstructionParam2.Pointer) {
-				VM.Instance.CPU.L2.Set ("IP", MemoryMap.Read32(param1V));
+				VM.Instance.MasterCore.Register.Set ("IP", MemoryMap.Read32(param1V));
 			}
 
 			return true;

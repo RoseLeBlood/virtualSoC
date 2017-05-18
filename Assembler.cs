@@ -63,7 +63,7 @@ namespace Vcsos
 		public Assembler ()
 		{
 			// bischen drlsseln des Timers
-			m_pTimer = new System.Timers.Timer (1000.0 / (CPU.BaudMhz));
+			m_pTimer = new System.Timers.Timer (1000.0 / (Core.BaudMhz));
             // weise dem Timer event Elapsed die Function TimerElapsed zu
             m_pTimer.Elapsed += TimerElapsed;
             // Setze Timer AutoRest zu false (aus)
@@ -94,13 +94,13 @@ namespace Vcsos
 			{
                 // weise op, den Aktuellen OpCode zu aus der Position  im RAM
                 // Position: Register IP
-				int op = VM.Instance.Ram.Read32 (VM.Instance.CPU.L2.ip);
+				int op = VM.Instance.Ram.Read32 (VM.Instance.MasterCore.Register.ip);
 
                 // Wandele und Führe den OpCode aus 
                 // weise den rückgabe wert m_bIsAlive zu
                 m_bIsAlive = m_pParser.ParseAndRun (op);
                 // Führe die Funktion CPU.Tick() aus
-				VM.Instance.CPU.Tick ();
+				VM.Instance.MasterCore.Tick ();
 
 			}
             // bei fehler
@@ -110,15 +110,15 @@ namespace Vcsos
                     errCode = (ex as VMExections).ErrorCode; // weuse errCode die VMExections.errCode zu
 
                 // Ist Exceptions Flg gesetzt dann... 
-                if (VM.Instance.CPU.L2.Exections) { 
+                if (VM.Instance.MasterCore.Register.Exections) { 
                     // Push Register IP auf den Stack
-					VM.Instance.CPU.L3.Push32 (VM.Instance.CPU.L2.ip);
+					VM.Instance.MasterCore.Stack.Push32 (VM.Instance.MasterCore.Register.ip);
                     // Push errCode auf den Szack
-					VM.Instance.CPU.L2.Stack.Push32 (errCode);
+					VM.Instance.MasterCore.Register.Stack.Push32 (errCode);
                     // Push VMExecptionType.Error auf dem Stack
-                    VM.Instance.CPU.L2.Stack.Push32 ((int)VMExecptionType.Error);
+                    VM.Instance.MasterCore.Register.Stack.Push32 ((int)VMExecptionType.Error);
                     // Setze den Register IP auf 4
-					VM.Instance.CPU.L2.ip = 4;
+					VM.Instance.MasterCore.Register.ip = 4;
 				} else { // wenn Exception nicht aktiviert sind...
                     // dann schalte das system auf tot und gib den Fehler auf die Console aus
 					Console.WriteLine (ex.ToString ());

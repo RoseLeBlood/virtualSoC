@@ -34,22 +34,22 @@ namespace Vcsos.mm
 			// 97 - 110
 			// OP(97,4) P(101,1) VAL(102 ,4) P(106,1) VAL(107, 4) 111 
 			InstructionParam2 param1 = factory.getParam(4); // 101 4
-			int param1V = VM.Instance.Ram.Read32 (VM.Instance.CPU.L2.ip + 5); //106
+			int param1V = VM.Instance.Ram.Read32 (VM.Instance.MasterCore.Register.ip + 5); //106
 			InstructionParam2 param2 = factory.getParam(9); // 110
-			int param2V = VM.Instance.Ram.Read32 (VM.Instance.CPU.L2.ip + 10); // 111
+			int param2V = VM.Instance.Ram.Read32 (VM.Instance.MasterCore.Register.ip + 10); // 111
 
 			if (param2 == InstructionParam2.Value)
-				VM.Instance.CPU.L2.Stack.Push32 (param2V);
+				VM.Instance.MasterCore.Register.Stack.Push32 (param2V);
 			else if (param2 == InstructionParam2.Register) {
-				VM.Instance.CPU.L2.Stack.Push32 (VM.Instance.CPU.L2.Get (factory.m_pRegisters [param2V].Name));
+				VM.Instance.MasterCore.Register.Stack.Push32 (VM.Instance.MasterCore.Register.Get (factory.m_pRegisters [param2V].Name));
 			}
 			else if(param2 == InstructionParam2.Pointer)
-				VM.Instance.CPU.L2.Stack.Push32 (MemoryMap.Read32(param2V));
+				VM.Instance.MasterCore.Register.Stack.Push32 (MemoryMap.Read32(param2V));
 
 			if (param1 == InstructionParam2.Pointer)
-				MemoryMap.Write (VM.Instance.CPU.L2.Stack.Pop32 (), (uint)param1V);
+				MemoryMap.Write (VM.Instance.MasterCore.Register.Stack.Pop32 (), (uint)param1V);
 			else if (param1 == InstructionParam2.Register)
-				VM.Instance.CPU.L2.Set (factory.m_pRegisters [param1V].Name, VM.Instance.CPU.L2.Stack.Pop32 ());
+				VM.Instance.MasterCore.Register.Set (factory.m_pRegisters [param1V].Name, VM.Instance.MasterCore.Register.Stack.Pop32 ());
 
 			return true;
 		}
