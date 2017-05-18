@@ -36,9 +36,7 @@ namespace vmcli
 			if (cmd.GetValue<string> ("t") == "gz") {
 				return new GzipInputType();
 			}
-			if (cmd.GetValue<string> ("t") == "deflate") {
-				return new DeflateInputType ();
-			}
+			
 			return new RawInputType();
 		}
 	}

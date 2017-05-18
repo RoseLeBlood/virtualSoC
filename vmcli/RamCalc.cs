@@ -10,7 +10,7 @@ namespace vmcli
 
         internal static uint Calc(string value)
         {
-            uint ramSize = 0;
+            uint ramSize = 1;
             string str = value.ToUpper();
 
             if (str.Contains("M"))
@@ -37,7 +37,7 @@ namespace vmcli
                 ramSize *= size;
             }
             else
-                ramSize *= 256;
+                ramSize *= 512;
             return ramSize;
         }
     }

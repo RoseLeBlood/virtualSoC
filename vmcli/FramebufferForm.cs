@@ -19,11 +19,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
-using System.ComponentModel;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;e
-using DotArgs;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using Vcsos;
@@ -33,14 +29,14 @@ using OpenTK.Graphics;
 
 namespace vmcli
 {
-	public class FramebufferForm : GameWindow
+    public class FramebufferForm : GameWindow
 	{
 		private FrameBufferInfo m_pInfo;
 		//private Memory m_ppbuffer;
 		//private bool   m_bReDraw;
 
 		public FramebufferForm () : base(320,320, GraphicsMode.Default, 
-			"", GameWindowFlags.FixedWindow, DisplayDevice.Default, 1,0,
+			"", GameWindowFlags.Default, DisplayDevice.Default, 2,0,
 			OpenTK.Graphics.GraphicsContextFlags.Default)
 		{
 			//VM.Instance.FBdev.UpdateFunction = UpdateBuffer;
@@ -60,6 +56,7 @@ namespace vmcli
 		}
 		private void View()
 		{
+            this.Size = new Size(m_pInfo.Width, m_pInfo.Height);
 			GL.Viewport (0, 0, m_pInfo.Width, m_pInfo.Height);
 			GL.MatrixMode (MatrixMode.Projection);
 			GL.LoadIdentity ();

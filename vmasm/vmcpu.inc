@@ -20,6 +20,11 @@
 #define P17 @h901D
 #define P18 @h901F
 
+#define CPU0 #hC001
+#define CPU1 #hC002
+#define CPU2 #hC003
+#define CPU3 #hC004
+
 ; ORG 0x4 Interrupt
 ORG 0x4 
 RET
