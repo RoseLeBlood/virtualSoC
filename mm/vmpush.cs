@@ -28,7 +28,11 @@ namespace Vcsos.mm
 		public string Name {
 			get { return "PUSH"; }
 		}
-		public bool ParseAndRun (ParserFactory factory)
+        public string Info
+        {
+            get { return "Puscht element auf den Stack - PUSH @d255"; }
+        }
+        public bool ParseAndRun (ParserFactory factory)
 		{
 			InstructionParam2 param1 = factory.getParam(4);
 			int param1V = VM.Instance.Ram.Read32 (VM.Instance.MasterCore.Register.ip + 5);

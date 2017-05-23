@@ -28,7 +28,11 @@ namespace Vcsos.mm
 		public string Name {
 			get { return "FBSET"; } // FrameBuffer DOT ( SetPixel )
 		}
-		public bool ParseAndRun (ParserFactory factory)
+        public string Info
+        {
+            get { return "Setzt ein Pixel an position x, y - FBSET #d5, #d5, #hff0000"; }
+        }
+        public bool ParseAndRun (ParserFactory factory)
 		{
 			InstructionParam2 param1 = factory.getParam(4); // 101 4 105
 			int param1V = VM.Instance.Ram.Read32 (VM.Instance.MasterCore.Register.ip + 5); //106

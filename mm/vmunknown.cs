@@ -33,7 +33,11 @@ namespace Vcsos.mm
 		public string Name {
 			get { return ""; }
 		}
-		public bool ParseAndRun (ParserFactory factory)
+        public string Info
+        {
+            get { return ""; }
+        }
+        public bool ParseAndRun (ParserFactory factory)
 		{
 			Console.WriteLine ("Unknown instruction: {0}", m_pc);
 			return false;

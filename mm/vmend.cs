@@ -27,7 +27,11 @@ namespace Vcsos.mm
 		public string Name {
 			get { return "HLT"; }
 		}
-		public bool ParseAndRun (ParserFactory factory)
+        public string Info
+        {
+            get { return "Beendet das Programm - HLT "; }
+        }
+        public bool ParseAndRun (ParserFactory factory)
 		{
 			#if DEBUG
 

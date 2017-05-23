@@ -22,12 +22,15 @@ using System;
 using vminst;
 using System.Collections.Generic;
 using Vcsos.Komponent;
+using System.Text;
 
 namespace Vcsos.mm
 {
 	public interface vmoperator
 	{
 		string Name { get; }
+        string Info { get; }
+
 		bool ParseAndRun(ParserFactory factory);
 	}
 
@@ -76,6 +79,8 @@ namespace Vcsos.mm
             m_pOperators.Add(new vmjno());
             m_pOperators.Add(new vminc());
             m_pOperators.Add(new vmdec());
+            m_pOperators.Add(new vmsto());
+            m_pOperators.Add(new vminv());
         }
 		internal  bool ParseAndRun(int pos)
 		{
@@ -108,7 +113,17 @@ namespace Vcsos.mm
 		{
 			return (InstructionParam2)VM.Instance.Ram [VM.Instance.MasterCore.Register.ip + ipa];
 		}
-	}
+
+        public override string ToString()
+        {
+            StringBuilder result = new StringBuilder();
+            foreach(var i in m_pOperators)
+            {
+                result.AppendFormat("{0}: {1}\n", i.Name, i.Info);
+            }
+            return result.ToString();
+        }
+    }
 
 }
 

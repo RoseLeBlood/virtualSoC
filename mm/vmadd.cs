@@ -28,6 +28,10 @@ namespace Vcsos.mm
 		public string Name {
 			get { return "ADD"; }
 		}
+        public string Info
+        {
+            get { return "Add Number, Register, Pointer to AX - ADD #d5";  }
+        }
 		public bool ParseAndRun (ParserFactory factory)
 		{
 			InstructionParam2 param1 = factory.getParam(4);

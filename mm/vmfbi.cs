@@ -27,7 +27,11 @@ namespace Vcsos.mm
 		public string Name {
 			get { return "FBI"; }
 		}
-		public bool ParseAndRun (ParserFactory factory)
+        public string Info
+        {
+            get { return "Initalisiert den Framebuffer - FBI"; }
+        }
+        public bool ParseAndRun (ParserFactory factory)
 		{
 			VM.Instance.FBdev.Init ();
 		

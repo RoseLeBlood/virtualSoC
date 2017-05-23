@@ -116,15 +116,14 @@ namespace vminst
 			Add (new Instruction (  "SBR",  19,   3)); // SUB return to V1 not to AX OP(2) T(1)V(4)  T(1)V(4) T(1)V(4) 
 			Add (new Instruction (  "MLR",  19,   3)); // MUL return to V1 not to AX OP(2) T(1)V(4)  T(1)V(4) T(1)V(4) 
 			Add (new Instruction (  "DVR",  19,   3)); // DIV return to V1 not to AX OP(2) T(1)V(4)  T(1)V(4) T(1)V(4) 
-            Add (new Instruction (  "JC",    9,   0)); // Jump Carry OP(4) T(1)V(4)
-            Add (new Instruction (  "JNC",   9,   0)); // Jump not carry
-            Add (new Instruction (  "JO",    9,   0)); // Jump overflow
-            Add (new Instruction (  "JNO",   9,   0)); // Jump not overflow 
+            Add (new Instruction (  "JC",    0,   0)); // Jump Carry OP(4) T(1)V(4)
+            Add (new Instruction (  "JNC",   0,   0)); // Jump not carry
+            Add (new Instruction (  "JO",    0,   0)); // Jump overflow
+            Add (new Instruction (  "JNO",   0,   0)); // Jump not overflow 
             Add (new Instruction (  "INC",   9,   1));
             Add (new Instruction (  "DEC",   9,   1));
-
-            Add(new Instruction("INV", 9, 1)); // register, flags, pointer invetieren
-            Add(new Instruction("STO", 9, 1)); // register, flags, pointer = 1
+            Add (new Instruction(   "INV",   9,   1)); // register, flags, pointer invetieren
+            Add (new Instruction(   "STO",   9,   1)); // register, flags, pointer = 1
             //
             Add (new Instruction("JG", 19, 0)); // Jump greater: o1 o2 addr - OP(2) T(1)V(4) > T(1)V(4) T(1)V(4)
             Add (new Instruction("JGE", 19, 0)); // Jump greater equel  OP(2) T(1)V(4) >= T(1)V(4) T(1)V(4) 

@@ -28,7 +28,11 @@ namespace Vcsos.mm
 		public string Name {
 			get { return "SUB"; }
 		}
-		public bool ParseAndRun (ParserFactory factory)
+        public string Info
+        {
+            get { return "Sub Number, Register, Pointer to AX - SUB #d5"; }
+        }
+        public bool ParseAndRun (ParserFactory factory)
 		{
 			InstructionParam2 param1 = factory.getParam(4);
 			int param1V = VM.Instance.Ram.Read32 (VM.Instance.MasterCore.Register.ip + 5);

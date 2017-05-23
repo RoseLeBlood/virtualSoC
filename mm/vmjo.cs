@@ -27,7 +27,11 @@ namespace Vcsos.mm
     {
         public string Name
         {
-            get { return "J0"; }
+            get { return "JO"; }
+        }
+        public string Info
+        {
+            get { return "Jump wenn OverFlow Flag 1 ist - JO test"; }
         }
         public bool ParseAndRun(ParserFactory factory)
         {
@@ -47,6 +51,8 @@ namespace Vcsos.mm
                     VM.Instance.MasterCore.Register.Set("IP", MemoryMap.Read32(param1V));
                 }
             }
+            else
+                VM.Instance.MasterCore.Register.Set("IP", VM.Instance.MasterCore.Register.ip + 9);
             return true;
         }
     }

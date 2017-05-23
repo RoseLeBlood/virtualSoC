@@ -129,7 +129,11 @@ namespace Vcsos
             if (m_bIsAlive)
 				m_pTimer.Start (); // starte den Server neu
 		}
-	}
+        public override string ToString()
+        {
+            return m_pParser.ToString();
+        }
+    }
 
 }
 

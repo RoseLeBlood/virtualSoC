@@ -43,6 +43,10 @@ namespace vmasm
 					m_r[i] = value[i].Trim ('\t').Replace("\t".ToString(), " ");
 			}
 		}
+        public string InstructionsList
+        {
+            get { return m_pInstruction.ToString(); }
+        }
 		public  byte[] Comp()
 		{
 			m_pLabels = new System.Collections.Generic.Dictionary<string, int> ();

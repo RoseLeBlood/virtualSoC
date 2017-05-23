@@ -29,6 +29,10 @@ namespace Vcsos.mm
         {
             get { return "DEC"; }
         }
+        public string Info
+        {
+            get { return "Decriment Pointer oder Register - DEC AX  "; }
+        }
         public bool ParseAndRun(ParserFactory factory)
         {
             InstructionParam2 param1 = factory.getParam(4);

@@ -39,10 +39,17 @@ namespace vmasm
 		{
 			CommandLineArgs cmd = new CommandLineArgs();
 
-			cmd.RegisterArgument( "i", new OptionArgument( null, true ) { HelpMessage="inputfile" } );
-			cmd.RegisterArgument( "o", new OptionArgument( ".bin", false )  { HelpMessage="write output to an outfile" });
+			cmd.RegisterArgument( "i", new OptionArgument( "test.asm", false ) { HelpMessage="inputfile" } );
+			cmd.RegisterArgument( "o", new OptionArgument( "a.bin", false )  { HelpMessage="write output to an outfile" });
 			cmd.RegisterArgument( "t", new OptionArgument( "raw", false) { HelpMessage=" select an output format raw,gz,deflate" } );
-			cmd.SetDefaultArgument( "i" );
+
+            FlagArgument arg = new FlagArgument();
+            arg.Processor = (v) => PrintAssembler();
+            arg.HelpMessage = "list all mnemonic";
+
+            cmd.RegisterArgument("lsall", arg);
+
+            cmd.SetDefaultArgument( "i" );
 			cmd.RegisterHelpArgument();
 
 			if( !cmd.Validate(args) )
@@ -50,13 +57,16 @@ namespace vmasm
 				cmd.PrintHelp();
 				return;
 			}
+            else if(cmd.GetValue<bool>("lsall"))
+            {
+                PrintAssembler();
+                return;
+            }
 
 			string input = cmd.GetValue<string> ("i");
 			string output = cmd.GetValue<string> ("o");
-			if(output == ".bin")
-				output = System.IO.Path.GetFileNameWithoutExtension(input);
 			
-			Console.WriteLine ("Input File: {0} output: {1}", input, output);
+			Console.WriteLine ("Input File: {0} -> output: {1}", input, output);
 
 			Assembler asm = new Assembler ();
 			asm.l = PreProcess (input);
@@ -64,7 +74,14 @@ namespace vmasm
 
 			ModuleOutputFactory.WriteToFile (data, output, cmd.GetValue<string> ("t"));
 		}
-		private static string[] PreProcess(string input)
+
+        private static void PrintAssembler()
+        {
+            string res = (new Vcsos.Assembler()).ToString();
+            Console.WriteLine(res);
+        }
+
+        private static string[] PreProcess(string input)
 		{
 			//System.IO.File.WriteAllText(".output.tmp", System.IO.File.ReadAllText (input));
 			string[] text = System.IO.File.ReadAllLines(input);

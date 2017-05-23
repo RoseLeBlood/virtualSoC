@@ -27,7 +27,11 @@ namespace Vcsos.mm
 		public string Name {
 			get { return "NOP"; }
 		}
-		public bool ParseAndRun (ParserFactory factory)
+        public string Info
+        {
+            get { return "No operating - NOP"; }
+        }
+        public bool ParseAndRun (ParserFactory factory)
 		{
 			return true;
 		}

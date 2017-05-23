@@ -28,7 +28,11 @@ namespace Vcsos.mm
 		public string Name {
 			get { return "RET"; }
 		}
-		public bool ParseAndRun (ParserFactory factory)
+        public string Info
+        {
+            get { return "Springe zurück aus dem Unterprogramm - RET"; }
+        }
+        public bool ParseAndRun (ParserFactory factory)
 		{
 			VM.Instance.MasterCore.Register.Set ("IP", VM.Instance.MasterCore.Stack.Pop32 ());
 

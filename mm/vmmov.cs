@@ -28,8 +28,11 @@ namespace Vcsos.mm
 		public string Name {
 			get { return "MOV"; }
 		}
-
-		public bool ParseAndRun (ParserFactory factory)
+        public string Info
+        {
+            get { return "Setze Pointer oder Register Wert   - MOV AX, #d5"; }
+        }
+        public bool ParseAndRun (ParserFactory factory)
 		{
 			// 97 - 110
 			// OP(97,4) P(101,1) VAL(102 ,4) P(106,1) VAL(107, 4) 111 

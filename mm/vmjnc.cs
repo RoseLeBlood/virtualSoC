@@ -29,6 +29,10 @@ namespace Vcsos.mm
         {
             get { return "JNC"; }
         }
+        public string Info
+        {
+            get { return "Jump wenn Carry 0 ist JNC Test"; }
+        }
         public bool ParseAndRun(ParserFactory factory)
         {
             InstructionParam2 param1 = factory.getParam(4);
@@ -47,6 +51,8 @@ namespace Vcsos.mm
                     VM.Instance.MasterCore.Register.Set("IP", MemoryMap.Read32(param1V));
                 }
             }
+            else
+                VM.Instance.MasterCore.Register.Set("IP", VM.Instance.MasterCore.Register.ip + 9);
             return true;
         }
     }

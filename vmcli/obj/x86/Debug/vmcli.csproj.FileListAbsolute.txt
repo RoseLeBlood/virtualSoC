@@ -1,0 +1,7 @@
+D:\annas\Documents\GitHub\bin\Debug\test.bin
+D:\annas\Documents\GitHub\bin\Debug\vmcli.exe.config
+D:\annas\Documents\GitHub\bin\Debug\vmcli.exe
+D:\annas\Documents\GitHub\bin\Debug\vmcli.pdb
+D:\annas\Documents\GitHub\virtualSoC\vmcli\obj\x86\Debug\vmcli.csprojResolveAssemblyReference.cache
+D:\annas\Documents\GitHub\virtualSoC\vmcli\obj\x86\Debug\vmcli.exe
+D:\annas\Documents\GitHub\virtualSoC\vmcli\obj\x86\Debug\vmcli.pdb
