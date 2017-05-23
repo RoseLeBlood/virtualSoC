@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['xnor',['XNor',['../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html#a27bb68c09f6679f69b2e8f5e2634ccd4',1,'Vcsos::Komponent::CPU']]],
-  ['xor',['Xor',['../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html#ae9a81d9d54011ee73afbd5ec08156952',1,'Vcsos::Komponent::CPU']]]
+  ['xnor',['XNor',['../d2/d92/class_vcsos_1_1_komponent_1_1_core.html#a9a452007002d41c39e4bbe120382ca6e',1,'Vcsos::Komponent::Core']]],
+  ['xor',['Xor',['../d2/d92/class_vcsos_1_1_komponent_1_1_core.html#a9f2b352768af562ab05c82856ddea93e',1,'Vcsos::Komponent::Core']]]
 ];

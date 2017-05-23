@@ -1,44 +1,36 @@
-<!-- HTML header for doxygen 1.8.8-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <!-- For Mobile Devices -->
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
-        <meta name="generator" content="Doxygen 1.8.13"/>
-        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <title>vmSoC: virtualSoC</title>
-        <!--<link href="tabs.css" rel="stylesheet" type="text/css"/>-->
-        <script type="text/javascript" src="dynsections.js"></script>
-        <link href="search/search.css" rel="stylesheet" type="text/css"/>
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.13"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>virtualSoC: virtualSoC</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
-        <link href="doxygen.css" rel="stylesheet" type="text/css" />
-        <link href="customdoxygen.css" rel="stylesheet" type="text/css"/>
-        <link href='https://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-        <link href="jquery.smartmenus.bootstrap.css" rel="stylesheet">
-        <script type="text/javascript" src="jquery.smartmenus.js"></script>
-        <!-- SmartMenus jQuery Bootstrap Addon -->
-        <script type="text/javascript" src="jquery.smartmenus.bootstrap.js"></script>
-        <!-- SmartMenus jQuery plugin -->
-    </head>
-    <body>
-        <nav class="navbar navbar-default" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand">vmSoC 0.2.8</a>
-                </div>
-            </div>
-        </nav>
-        <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
-            <div class="content" id="content">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-12 panel " style="padding-bottom: 15px;">
-                            <div style="margin-bottom: 15px;">
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="virtualSoc.png"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">virtualSoC
+   &#160;<span id="projectnumber">0.4.9</span>
+   </div>
+   <div id="projectbrief">baskett</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
 <!-- end header part -->
 <!-- Erzeugt von Doxygen 1.8.13 -->
 <script type="text/javascript">
@@ -73,20 +65,51 @@ $(function() {
 <div class="title">virtualSoC </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>virtual Chip with own instruction set </p>
+<div class="textblock"><p>virtual Chip with own instruction set</p>
+<h2>Current using Mnemonic</h2>
+<ul>
+<li>NOP: No operating - NOP</li>
+<li>HLT: Beendet das Programm - HLT</li>
+<li>ADD: Add Number, Register, Pointer to AX - ADD #d5</li>
+<li>CLR: Setze pointer oder register auf 0 - CLR AX</li>
+<li>DIV: Div Number, Register, Pointer to AX - DIV #d5</li>
+<li>JMP: Jump zu Adresse - JMP Test</li>
+<li>MUL: Mul Number, Register, Pointer to AX - MUL #d5</li>
+<li>PEEK: Lese aktullen Wert auf den Stack - PEEK </li>
+<li>POP: Pop element vom Stack - POP </li>
+<li>PUSH: Puscht element auf den Stack - PUSH </li>
+<li>SUB: Sub Number, Register, Pointer to AX - SUB #d5</li>
+<li>MOV: Setze Pointer oder Register Wert - MOV AX, #d5</li>
+<li>OR: Oder Operator2 Operator3 to Operator1 - OR , #d5, #d5</li>
+<li>XOR: Exclusiv Oder Operator2 Operator3 to Operator1 - XOR , #d5, #d5</li>
+<li>AND: And Operator2 Operator3 to Operator1 AND , #d5, #d5</li>
+<li>NOR: Nicht oder Operator2 Operator3 to Operator1 - NOR , #d5, #d5</li>
+<li>NXOR: Nicht exclusiv oder Operator2 Operator3 to Operator1 - NXOR , #d5, #d5</li>
+<li>NOT: NOT Operator2 to Operator1 NOT , #d5</li>
+<li>NAND: Not And Operator2 Operator3 to Operator1 - NAND , #d5, #d5</li>
+<li>CALL: Springe zum unter Programm und lege ip+9 in den stack</li>
+<li>RET: Springe zurück aus dem Unterprogramm - RET</li>
+<li>FBI: Initalisiert den Framebuffer - FBI</li>
+<li>FBSET: Setzt ein Pixel an position x, y - FBSET #d5, #d5, #hff0000</li>
+<li>ADR: Add Operator2 Operator3 to Operator1 ADR , #d5, #d5</li>
+<li>SBR: Sub Operator2 Operator3 to Operator1 - SBR , #d5, #d5</li>
+<li>DVR: Div Operator2 Operator3 to Operator1 DVR , #d5, #d5</li>
+<li>MLR: Multiplikation Operator2 Operator3 to Operator1 MLR , #d5, #d5</li>
+<li>JO: Jump wenn OverFlow Flag 1 ist - JO test</li>
+<li>JC: Jump wenn Carry 1 ist - JC </li>
+<li>JNC: Jump wenn Carry 0 ist JNC Test</li>
+<li>JN0: Jump wenn OverFlow Flag 0 ist - JNO test</li>
+<li>INC: Incremiert ein Pointer oder Register - INC </li>
+<li>DEC: Decriment Pointer oder Register - DEC AX</li>
+<li>STO: Setze pointer oder register auf 1 - STO AX</li>
+<li>INV: Invetiere ein Pointer oder Register - Inv  </li>
+</ul>
 </div></div><!-- contents -->
-<!-- HTML footer for doxygen 1.8.8-->
 <!-- start footer part -->
-</div>
-</div>
-</div>
-</div>
-</div>
 <hr class="footer"/><address class="footer"><small>
 Erzeugt von &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.13
 </small></address>
 </body>
-        <script type="text/javascript" src="doxy-boot.js"></script>
 </html>

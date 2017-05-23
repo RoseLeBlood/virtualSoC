@@ -5,5 +5,5 @@ var searchData=
   ['moveax',['MoveAX',['../d6/d0a/class_vcsos_1_1_komponent_1_1_akku.html#a2bc4cd1317c1888f614752197d16a42a',1,'Vcsos::Komponent::Akku']]],
   ['movefromax',['MoveFromAX',['../d6/d0a/class_vcsos_1_1_komponent_1_1_akku.html#aee464dac82b8898ad1ce0a75443f0938',1,'Vcsos::Komponent::Akku']]],
   ['movefrombx',['MoveFromBX',['../d6/d0a/class_vcsos_1_1_komponent_1_1_akku.html#abc487302c0de7ef90adb1dd8d9aa140c',1,'Vcsos::Komponent::Akku']]],
-  ['mul',['Mul',['../d6/d0a/class_vcsos_1_1_komponent_1_1_akku.html#a87c2bf2ab570161870b9a8bdec8c274e',1,'Vcsos::Komponent::Akku']]]
+  ['mul',['Mul',['../d6/d0a/class_vcsos_1_1_komponent_1_1_akku.html#a87c2bf2ab570161870b9a8bdec8c274e',1,'Vcsos.Komponent.Akku.Mul(int data)'],['../d6/d0a/class_vcsos_1_1_komponent_1_1_akku.html#a337e99a80b66e275916f115bc7fa6044',1,'Vcsos.Komponent.Akku.Mul(int a, int data)']]]
 ];

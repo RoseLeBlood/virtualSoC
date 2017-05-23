@@ -8,7 +8,7 @@ var searchData=
   ['deflateoutput',['DeflateOutput',['../d8/db9/classvmasm_1_1_deflate_output.html',1,'vmasm']]],
   ['deflateoutput_2ecs',['DeflateOutput.cs',['../d1/d73/_deflate_output_8cs.html',1,'']]],
   ['destroy',['Destroy',['../d0/da6/class_vcsos_1_1_komponent_1_1_framebuffer.html#a5694a8c3924215b769748ce084f97271',1,'Vcsos::Komponent::Framebuffer']]],
-  ['div',['Div',['../d6/d0a/class_vcsos_1_1_komponent_1_1_akku.html#a894f8872f2b50c95d9f8a33c3c8c22c1',1,'Vcsos::Komponent::Akku']]],
+  ['div',['Div',['../d6/d0a/class_vcsos_1_1_komponent_1_1_akku.html#a894f8872f2b50c95d9f8a33c3c8c22c1',1,'Vcsos.Komponent.Akku.Div(int data)'],['../d6/d0a/class_vcsos_1_1_komponent_1_1_akku.html#a693a7c392f6541204337fa258d5e10e1',1,'Vcsos.Komponent.Akku.Div(int a, int data)']]],
   ['divbyzero',['DivByZero',['../d2/d0a/class_vcsos_1_1_komponent_1_1_register.html#aad6e64a82a23fb5a439e037d540448a3',1,'Vcsos::Komponent::Register']]],
   ['dotargs',['DotArgs',['../d6/db7/namespace_dot_args.html',1,'']]]
 ];

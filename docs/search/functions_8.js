@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['nand',['Nand',['../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html#a031182f5c72922590a110e8bc4ca7f34',1,'Vcsos::Komponent::CPU']]],
-  ['neg',['Neg',['../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html#a79f84a19ab94e6a92838472438ab86a2',1,'Vcsos::Komponent::CPU']]],
-  ['nor',['Nor',['../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html#a50a8bace050409a3dc14a9bb7b0db150',1,'Vcsos::Komponent::CPU']]]
+  ['nand',['Nand',['../d2/d92/class_vcsos_1_1_komponent_1_1_core.html#af56ce6a02640eac0bbd2dae35776e7b6',1,'Vcsos::Komponent::Core']]],
+  ['neg',['Neg',['../d2/d92/class_vcsos_1_1_komponent_1_1_core.html#a7e56d435ae36546881aa54d483bef4d6',1,'Vcsos::Komponent::Core']]],
+  ['nor',['Nor',['../d2/d92/class_vcsos_1_1_komponent_1_1_core.html#a41263d76f212a5424f5712c3781b8704',1,'Vcsos::Komponent::Core']]]
 ];

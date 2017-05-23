@@ -32,6 +32,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>virtualSoc.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Numerics" />
@@ -91,7 +94,9 @@
     <Compile Include="mm\vmfbd.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="virtualSoc.ico" />
+  </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>

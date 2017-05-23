@@ -33,6 +33,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>virtualSoc.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="NCalc">
@@ -67,6 +70,7 @@
     <Content Include="test.asm">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="virtualSoc.ico" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
