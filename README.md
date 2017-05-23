@@ -22,7 +22,7 @@ NXOR: Nicht exclusiv oder Operator2 Operator3 to Operator1 - NXOR @d255, #d5, #d
 NOT: NOT Operator2 to Operator1 NOT @d255, #d5
 NAND: Not And Operator2 Operator3 to Operator1 - NAND @d255, #d5, #d5
 CALL: Springe zum unter Programm und lege ip+9 in den stack
-RET: Springe zurück aus dem Unterprogramm - RET
+RET: Springe zurÃ¼ck aus dem Unterprogramm - RET
 FBI: Initalisiert den Framebuffer - FBI
 FBSET: Setzt ein Pixel an position x, y - FBSET #d5, #d5, #hff0000
 ADR: Add Operator2 Operator3 to Operator1 ADR @d255, #d5, #d5
@@ -37,3 +37,4 @@ INC: Incremiert ein Pointer oder Register - INC @d255
 DEC: Decriment Pointer oder Register - DEC AX
 STO: Setze pointer oder register auf 1 - STO AX
 INV: Invetiere ein Pointer oder Register - Inv @d255
+
