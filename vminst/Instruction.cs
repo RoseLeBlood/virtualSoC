@@ -89,20 +89,20 @@ namespace vminst
 	{
 		public Instructions()
 		{
-			Add (new Instruction (	"NOP", 	4, 	 0)); // OP(2)
-			Add (new Instruction ( 	"PUSH",	9,   1)); // OP (2) R@#(2) 3(4)
-			Add (new Instruction (	"POP", 	9, 	 1)); // OP (2) R@#(2) 3(4)
-			Add (new Instruction (	"PEEK", 9, 	 1)); // OP (2) R@#(2) 3(4)
+			Add (new Instruction (	"NOP", 	4, 	 0)); // OP(4)
+			Add (new Instruction ( 	"PUSH",	9,   1)); // OP (4) R@#(2) 3(4)
+			Add (new Instruction (	"POP", 	9, 	 1)); // OP (4) R@#(2) 3(4)
+			Add (new Instruction (	"PEEK", 9, 	 1)); // OP (4) R@#(2) 3(4)
 			Add (new Instruction (  "HLT",  0,   0));
 			Add (new Instruction ( 	"JMP", 	0,   1)); 
-			Add (new Instruction (	"LCK",  9,   1));
-			Add (new Instruction (  "UCK",  9,   1));  
+			Add (new Instruction (	"LCK",  9,   1)); // not imp
+			Add (new Instruction (  "UCK",  9,   1)); // not imp 
 			Add (new Instruction (  "ADD",  9,   1)); 
 			Add (new Instruction (  "SUB",  9,   1));
 			Add (new Instruction (  "MUL",  9,   1));
 			Add (new Instruction (  "DIV",  9,   1));
-			Add (new Instruction (  "MOV", 14,   2)); // MOV(2) T(1)V(4) T(1)V(4) 
-			Add (new Instruction ( 	"CLR",	9,   1));
+			Add (new Instruction (  "MOV", 14,   2)); // MOV(4) T(1)V(4) T(1)V(4) 
+			Add (new Instruction ( 	"CLR",	9,   1)); // register, pointer, flag löschen
 			Add (new Instruction (  "OR",  19, 	 3)); //+ OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
 			Add (new Instruction (  "XOR", 19, 	 3)); //+ OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
 			Add (new Instruction (  "AND", 19, 	 3)); //+ OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
@@ -112,13 +112,28 @@ namespace vminst
 			Add (new Instruction (  "NOT", 14, 	 2)); //+ OP(2) T(1)V(4)  T(1)V(4) 
 			Add (new Instruction ( 	"RET",	0,   0));
 			Add (new Instruction (  "CALL", 0, 	 1));
-			//
-			Add (new Instruction (  "ADR",  19,   3)); // ADD return to V1 not to AX OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
+            Add (new Instruction (  "ADR",  19,   3)); // ADD return to V1 not to AX OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
 			Add (new Instruction (  "SBR",  19,   3)); // SUB return to V1 not to AX OP(2) T(1)V(4)  T(1)V(4) T(1)V(4) 
 			Add (new Instruction (  "MLR",  19,   3)); // MUL return to V1 not to AX OP(2) T(1)V(4)  T(1)V(4) T(1)V(4) 
 			Add (new Instruction (  "DVR",  19,   3)); // DIV return to V1 not to AX OP(2) T(1)V(4)  T(1)V(4) T(1)V(4) 
+            Add (new Instruction (  "JC",    9,   0)); // Jump Carry OP(4) T(1)V(4)
+            Add (new Instruction (  "JNC",   9,   0)); // Jump not carry
+            Add (new Instruction (  "JO",    9,   0)); // Jump overflow
+            Add (new Instruction (  "JNO",   9,   0)); // Jump not overflow 
+            Add (new Instruction (  "INC",   9,   1));
+            Add (new Instruction (  "DEC",   9,   1));
 
-			Add (new Instruction (  "FBI",   4,   0));
+            Add(new Instruction("INV", 9, 1)); // register, flags, pointer invetieren
+            Add(new Instruction("STO", 9, 1)); // register, flags, pointer = 1
+            //
+            Add (new Instruction("JG", 19, 0)); // Jump greater: o1 o2 addr - OP(2) T(1)V(4) > T(1)V(4) T(1)V(4)
+            Add (new Instruction("JGE", 19, 0)); // Jump greater equel  OP(2) T(1)V(4) >= T(1)V(4) T(1)V(4) 
+            Add (new Instruction("JL", 19, 0)); // Jump less OP(2) T(1)V(4) < T(1)V(4) T(1)V(4) 
+            Add (new Instruction("JLE", 19, 0)); // Jump less equel OP(2) T(1)V(4) <= T(1)V(4) T(1)V(4) 
+
+           
+
+            Add(new Instruction (  "FBI",   4,   0));
 			Add (new Instruction (  "FBSET",19,   3));
 		}
 	}
@@ -156,17 +171,17 @@ namespace vminst
 	{
 		public Registers()
 		{
-			Add (new Register ("SP", 0)); // Stack Pointer
-			Add (new Register ("IP", 0)); // Intrsuction Pointer
-			Add (new Register ("AX", 0)); // Akku A
-			Add (new Register ("BX", 0)); // Akku B
-			Add (new Register ("TIK", 0)); // Current Tik
+			Add (new Register ("SP", 0)); //0 Stack Pointer 
+			Add (new Register ("IP", 0)); //1 Intrsuction Pointer
+			Add (new Register ("AX", 0)); //2 Akku A
+			Add (new Register ("BX", 0)); //3 Akku B
+			Add (new Register ("TIK", 0)); //4 Current Tik
 		
-			Add (new Register ("CF", 2)); // Carry Flag
-			Add (new Register ("ZF", 2)); // Zero Flag
-			Add (new Register ("UF", 2)); // Underflow Flag
-			Add (new Register ("OF", 2)); // Overflow Flag
-			Add (new Register ("SF", 2));  // Sign Flag
+			Add (new Register ("CF", 2)); //5 Carry Flag
+			Add (new Register ("ZF", 2)); //6 Zero Flag
+			Add (new Register ("UF", 2)); //7 Underflow Flag
+			Add (new Register ("OF", 2)); //8 Overflow Flag
+			Add (new Register ("SF", 2));  //9 Sign Flag
 
 			Add (new Register ("CSP", 3)); // Cache Stack Pointer
 			Add (new Register ("CM", 3));  // Cache Max Size 

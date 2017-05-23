@@ -40,6 +40,17 @@
   <ItemGroup>
     <Compile Include="Komponent\CPU.cs" />
     <Compile Include="Komponent\IVMKomponente.cs" />
+    <Compile Include="mm\vmadr.cs" />
+    <Compile Include="mm\vmdec.cs" />
+    <Compile Include="mm\vmdvr.cs" />
+    <Compile Include="mm\vminc.cs" />
+    <Compile Include="mm\vminv.cs" />
+    <Compile Include="mm\vmjc.cs" />
+    <Compile Include="mm\vmjnc.cs" />
+    <Compile Include="mm\vmjno.cs" />
+    <Compile Include="mm\vmjo.cs" />
+    <Compile Include="mm\vmmlr.cs" />
+    <Compile Include="mm\vmsbr.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Komponent\Memory.cs" />
     <Compile Include="Komponent\Core.cs" />

@@ -139,6 +139,32 @@ namespace Vcsos.Komponent
             // Return das Etgebnoss der Multiplikation
 			return m_pCpu.Register.ax;
 		}
+
+        
+        public int Mul(int a, int data)
+        {
+            //AkkuHelp Flag (intern) zuweisen
+            m_pCpu.Register.AkkuHelp = (data > 0);
+            // Testen ob AkkuHelp true ist dann erstelle das 2er Kompliment von data und weise
+            // es data zu (2er Kompliment wenn data eine positive zahl enthält)
+            data = (!m_pCpu.Register.AkkuHelp) ? CmplTwo(data) : data;
+
+            // Weise dem Register BX den Wert aus dem Register BX zu
+            m_pCpu.Register.bx = a;
+
+            // Addiere Register AX mit Register BX per Schleife (data-1)
+            for (uint i = 0; i < data - 1; i++)
+            {
+                a = Add(m_pCpu.Register.bx, a);
+            }
+            // Wenn Register AX kleiner als Register BX ist dann liegt ein Overflow vor
+            m_pCpu.Register.OverFlow = (a < m_pCpu.Register.bx);
+            // Wenn Register AkkuHelp false ist erstelle das 2er Compliment vom Register AX 
+            // und weise dies Register AX ist sonst Weise Register AX Revister AX zu
+            return (!m_pCpu.Register.AkkuHelp) ? CmplTwo(a)
+                : a;
+        }
+        /// <summary>
         /// <summary>
         /// Dividiere Register AX mit data
         /// </summary>
@@ -184,6 +210,43 @@ namespace Vcsos.Komponent
             // Gebe das Ergebniss aus dem Register AX zurück
 			return m_pCpu.Register.ax;
 		}
+        public int Div(int a, int data)
+        {
+            if (a == 0) // Ist a gleich 0...
+            {
+                // Setze Flag DivByZero
+                m_pCpu.Register.DivByZero = true;
+                // gebe null zurück
+                return 0;
+            }
+            // Ist data positive dann setze AkkuHelp auf true
+            m_pCpu.Register.AkkuHelp = (data > 0);
+            // weise data zu - Ist AkkuHelp true dann das 2er Kompliment sonst data
+            data = (!m_pCpu.Register.AkkuHelp) ? CmplTwo(data) : data;
+
+            // Weise dem Register CX den Wert a zu
+            m_pCpu.Register.cx = a;
+            // Weise dem Register BX zu - Ist a negative das 2er Kompliment von a
+            // sonst a
+            m_pCpu.Register.bx = (a < 0) ?
+                CmplTwo(a) : a;
+            // Weise dem Register a null zu
+            a = 0;
+
+            // Führe die Division als Addition durch 
+            while (m_pCpu.Register.bx >= data)
+            { // solange wie Register BX größer data ist 
+              // Weise dem Register BX das Ergebniss aus der Addition von Register BX und
+              // dem 2er Kompliment von data zu
+                m_pCpu.Register.bx = Add(m_pCpu.Register.bx, ~data + 1);
+                // Weise dem Carry Flag false zu
+                m_pCpu.Register.CarryFlag = false;
+                // Addiere auf a eine 1 
+                Add(a, 1);
+            }
+            // gibt das Ergebniss der Division zu
+            return (!m_pCpu.Register.AkkuHelp ^ !(m_pCpu.Register.cx > 0)) ? CmplTwo(a) : a;
+        }
         /// <summary>
         /// Subtration vom Register AX 
         /// </summary>
@@ -214,13 +277,38 @@ namespace Vcsos.Komponent
             // rückgabe der variable result
             return result;
 		}
+        public int Sub(int a, int b)
+        {
+            int result = 0; // result : speichern des Ergebnisses
+            int carry = (int)(m_pCpu.Register.CarryFlag ? 1 : 0); // carry : carry-flag als int from bool
+
+            // Subtraction per Zweiterkompliment und Addition
+            // benutze old carry und speichere das ergebniss in result
+            m_pCpu.Register.OverFlow = Add(a, ~b + 1, ref carry, ref result);
+
+            // speichern des Carry Flags
+            m_pCpu.Register.CarryFlag = carry == 1;
+
+            // ist OverFlow (OF) flag gesetzt...
+            if (m_pCpu.Register.OverFlow)
+            {
+                // Dann löscbe das Flag
+                m_pCpu.Register.OverFlow = false;
+            }
+            else
+                // Wenn nicht dann schaue ob underflow vorliegt (TODO)
+                m_pCpu.Register.UnderFlow = (result <= int.MaxValue);
+
+            // rückgabe der variable result
+            return result;
+        }
         /// <summary>
         /// Addition zweier Zahlen (32bit)
         /// </summary>
         /// <param name="A">Erster Summand der Addition</param>
         /// <param name="B">Zweiter Summand der Addition</param>
         /// <returns>Ergebniss der Addition von A und B</returns>
-		private int Add(int A, int B)
+		public int Add(int A, int B)
 		{
 			int result = 0;
 			int carry = (int)(m_pCpu.Register.CarryFlag ? 1 : 0);

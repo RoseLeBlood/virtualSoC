@@ -66,7 +66,17 @@ namespace Vcsos.mm
 			m_pOperators.Add (new vmret ());
 			m_pOperators.Add (new vmfbi ());
 			m_pOperators.Add (new vmfbd ());
-		}
+            m_pOperators.Add (new vmadr ());
+            m_pOperators.Add (new vmsbr());
+            m_pOperators.Add (new vmdvr());
+            m_pOperators.Add (new vmmlr());
+            m_pOperators.Add(new vmjo());
+            m_pOperators.Add(new vmjc());
+            m_pOperators.Add(new vmjnc());
+            m_pOperators.Add(new vmjno());
+            m_pOperators.Add(new vminc());
+            m_pOperators.Add(new vmdec());
+        }
 		internal  bool ParseAndRun(int pos)
 		{
 			Instruction c = m_pInstructions [pos];
