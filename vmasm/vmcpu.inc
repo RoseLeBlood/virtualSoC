@@ -26,10 +26,10 @@
 #define CPU3 #hC004
 
 ; ORG 0x4 Interrupt
-ORG 0x4 
+ORG h4 
 RET
 
-ORG 0x100
+ORG h100
 InitFramebuffer:
 PUSH #6  ; MODE
 PUSH #hFF000000; Color 
@@ -38,8 +38,8 @@ RET
 DestroyFramebuffer:
 RET
 ; Basic IP for other Cores
-ORG 0x7
+ORG h7
 JMP $
 
 ; Start Address is 0x10
-ORG 0x10
+ORG h10

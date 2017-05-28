@@ -28,6 +28,8 @@ namespace Vcsos.Komponent
             get { return m_lstCores[m_iCurCore]; }
         }
 
+        public int Cores { get { return m_lstCores.Count; } }
+
         public Core this[int index]
         {
             get { return m_lstCores[index]; }

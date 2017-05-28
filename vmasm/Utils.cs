@@ -30,6 +30,11 @@ namespace vmasm
 			uint newNumber = (uint)(boundary * ((number / boundary) + ((number % boundary > 0) ? 1: 0)));
 			return newNumber;
 		}
+        public static byte[] ToBytes(this string text)
+        {
+            System.Text.ASCIIEncoding ascii = new System.Text.ASCIIEncoding();
+            return ascii.GetBytes(text);
+        }
 		public unsafe static byte[] ToBytes(this uint UIntIn)
 		{
 			//turn a uint into 4 bytes

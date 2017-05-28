@@ -20,18 +20,19 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using vminst;
-using System.Globalization;
-using NCalc;
 
 namespace vmasm
 {
-	public class Assembler
+    public class Assembler
 	{
 		Instructions m_pInstruction = new Instructions ();
 		Registers m_pRegisters = new Registers ();
-		System.Collections.Generic.Dictionary<string, int> m_pLabels = new System.Collections.Generic.Dictionary<string, int>();
+		Dictionary<string, int> m_pLabels = new Dictionary<string, int>();
+        Dictionary<string, int> m_pVariablen = new Dictionary<string, int>(); // name - speicher addrese
 		DefinesDef m_pDefines;
 
 		string[] m_r;
@@ -66,12 +67,12 @@ namespace vmasm
 						continue;
 
 					if (l1.ToUpper ().Contains ("ORG")) {
-						int Org = int.Parse (l1.Split (' ') [1].Replace ("0x", ""), NumberStyles.HexNumber);
+						int Org = this.ParseNumber(l1.Split (' ')[1] );
 						Console.WriteLine ("[ORG] {0}", Org);
 						writer.BaseStream.Seek (Org, SeekOrigin.Begin);
 						continue;
 					} else if (l1.Contains (":")) {
-						// LABEL: EQU 34
+						// LABEL
 						CompLabel(l1,writer);
 						continue;
 					} else if (l1[0] == 'L' && l1[1] == 'B') { // Label vordifinieren
@@ -81,7 +82,12 @@ namespace vmasm
 							m_pLabels.Add ("." + ll, int.Parse (l1.Split (' ') [2]));
 						}
 
-					} else {
+					}
+                    else if (l1.Contains(".dim")) { // variable
+                        
+                        CompVariable(l1, false, writer);
+                    }
+                    else {
 						if (!CompLine (l1, writer))
 							return null;
 					}
@@ -95,7 +101,42 @@ namespace vmasm
 			Stream.Read (date, 0, date.Length);
 			return date;
 		}
-		private void CompLabel(string l1, BinaryWriter writer)
+
+        private void CompVariable(string l1, bool constante, BinaryWriter writer)
+        {
+            string[] va = l1.Split((" ").ToCharArray(), 3); //.dim Name daten daten daten 
+            int Pos = (int)writer.BaseStream.Position;
+            
+            List<byte> data = new List<byte>();
+
+            int start = (int)writer.BaseStream.Position;
+            if (va.Length == 3)
+            {
+                string sd = va[2];
+                if (sd.Contains("'"))
+                {
+                    sd = sd.Replace("'", "");
+                    data.AddRange( sd.ToBytes());
+                }
+                else
+                {
+                    //ParseNumber
+                    string[] vs = sd.Split(' ');
+                    foreach (var i in vs)
+                    {
+                        data.AddRange(ParseNumber(i).ToBytes() );
+                    }
+
+                }
+
+                ComVar(data.ToArray(), writer);
+            }
+            m_pVariablen.Add("%"+va[1], Pos);
+            Console.WriteLine("\tVariable Add {0} pos {1} {2}", va[1], Pos, 
+                ((int)writer.BaseStream.Position - start));
+        }
+
+        private void CompLabel(string l1, BinaryWriter writer)
 		{
 			// Label: ...
 			// Label: EQU 32
@@ -136,6 +177,23 @@ namespace vmasm
 
 			return false;
 		}
+        private bool ComVar( byte[] data, BinaryWriter stream)
+        {
+            stream.Write( (Instructions.VariableCode).ToBytes()); // 
+            stream.Write(data.Length.ToBytes());  // Size
+            //5
+            
+            Console.Write("[Var] {0} [", data.Length);
+
+            foreach (byte item in data)
+            {
+                stream.Write(item); // schreibe daten
+                Console.Write(item);
+            }
+            Console.WriteLine("]");
+            
+            return true;
+        }
 		private bool CompOpp(int op, BinaryWriter stream)
 		{
 			stream.Write (op.ToBytes());
@@ -180,7 +238,16 @@ namespace vmasm
 			else
 				throw new Exception ("Address not found");
 		}
-		private bool CompOpp(int op, string p1, string p2, BinaryWriter stream)
+        private int getVarablePos(string name)
+        {
+            int pos;
+            if (m_pVariablen.TryGetValue(name, out pos))
+                return pos;
+            else
+                throw new Exception("Variable " + name + " not found");
+        }
+
+        private bool CompOpp(int op, string p1, string p2, BinaryWriter stream)
 		{
 			stream.Write (op.ToBytes (), 0, 4);
 			Console.Write ("[Inst 2] {0} ({1}) ", op, stream.BaseStream.Position);
@@ -212,6 +279,7 @@ namespace vmasm
 		private void ParamTest(string p1, BinaryWriter stream, bool findLable = false)
 		{
 			bool isLable = false;
+            bool isVariable = false;
 
 			p1 = m_pDefines.Get (p1);
 
@@ -236,38 +304,53 @@ namespace vmasm
 				//p1 = p1.Replace (".", "");
 				Console.Write ("{0} {1}", InstructionParam2.Lable, getLabelPos(p1));
 				isLable = true;
-			}
-			if (!isLable) {
-				int p = ParseNumber (p1);
-				Console.Write ("{0} ", p);
-				stream.Write (p.ToBytes (), 0, 4);
-				return;
-			} else {
+			} else if (p1.Contains ("%"))
+            {
+                Console.Write("{0} {1}", InstructionParam2.Variable, getVarablePos(p1));
+                isVariable = true;
+            }
+
+            if (isVariable)
+            {
+                stream.Write(getVarablePos(p1));
+                isVariable = false;
+            }
+            else if (!isLable) {
+                int p = ParseNumber(p1);
+                Console.Write("{0} ", p);
+                stream.Write(p.ToBytes(), 0, 4);
+                return;
+            }
+			else {
 				stream.Write(getLabelPos(p1));
 				isLable = false;
 			}
 		}
 		private int ParseNumber(string l1)
 		{
-			// 56d = decimal //
-			// 56 = decimal //
-			// 56h = HEX //
-			// 56o = Octal
+            // 56d = decimal //
+            // 56 = decimal //
+            // 56h = HEX //
+            // 56o = Octal
+            int n = 0;
+            if (contain("d", ref l1))
+                n= ParseDec(l1);
+            else if (contain("h", ref l1))
+                n = ParseHex(l1);
+            else if (contain("b", ref l1))
+                n = ParseBin(l1);
 
-			// TODO: Cheak of Math Funktion and Parse hear
-			Expression e = new Expression(l1);
-			e.EvaluateParameter += delegate(string name, ParameterArgs args) {
-				if (name.ToLower ().Contains ("h"))
-					args.Result = ParseHex (name);
-				else if (name.ToLower ().Contains ("b"))
-					args.Result =    ParseBin (name);
-				else
-					args.Result =    ParseDec (name);
-
-			};
-			return (int)e.Evaluate ();
-		}
-
+            return n;
+        }
+        private bool contain(string s, ref string t)
+        {
+            if(t.Contains(s.ToUpper()) || t.Contains(s.ToLower()))
+            {
+                t = t.Replace(s.ToUpper(), "").Replace(s.ToLower(), "");
+                return true;
+            }
+            return false;
+        }
 		private int ParseBin(string i)
 		{
 			i = i.ToLower().Replace ("b", "");
@@ -276,7 +359,7 @@ namespace vmasm
 		private int ParseDec(string i)
 		{
 			i = i.ToLower().Replace ("d", "");
-			return int.Parse (i, NumberStyles.None);
+			return int.Parse (i, NumberStyles.Integer);
 		}
 		private int ParseHex(string i)
 		{

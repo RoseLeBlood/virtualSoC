@@ -81,13 +81,19 @@ namespace Vcsos.mm
             m_pOperators.Add(new vmdec());
             m_pOperators.Add(new vmsto());
             m_pOperators.Add(new vminv());
+            m_pOperators.Add(new vmvariable());
         }
-		internal  bool ParseAndRun(int pos)
+
+       internal  bool ParseAndRun(int pos)
 		{
-			Instruction c = m_pInstructions [pos];
+            Instruction c;
+            if (pos == Instructions.VariableCode)
+                c = Instructions.VariableIns;
+            else
+                c = m_pInstructions[pos];
 
 			#if DEBUG
-			Console.WriteLine ("Core-{4} {3} [{2}] {0} {1}", pos, c.OpCode, 
+			Console.WriteLine ("Core{4}: {3} [{2}] {0} {1}", pos, c.OpCode, 
 				VM.Instance.CurrentCore.Register.ip, VM.Instance.CurrentCore.Ticks,
                 VM.Instance.CPU.CurrentCoreID);
 			#endif
@@ -114,7 +120,7 @@ namespace Vcsos.mm
 		{
 			return (InstructionParam2)VM.Instance.Ram [VM.Instance.CurrentCore.Register.ip + ipa];
 		}
-
+        
         public override string ToString()
         {
             StringBuilder result = new StringBuilder();

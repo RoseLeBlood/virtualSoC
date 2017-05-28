@@ -56,7 +56,8 @@ namespace vmcli
 		}
 		private void View()
 		{
-            this.Size = new Size(m_pInfo.Width, m_pInfo.Height);
+            this.ClientSize = new Size(m_pInfo.Width, m_pInfo.Height);
+            
 			GL.Viewport (0, 0, m_pInfo.Width, m_pInfo.Height);
 			GL.MatrixMode (MatrixMode.Projection);
 			GL.LoadIdentity ();
@@ -106,7 +107,7 @@ namespace vmcli
 		}*/
 		private void InitFrameBuffer(FrameBufferInfo buffer)
 		{
-			Size = new Size (buffer.Width, buffer.Height);
+			ClientSize = new Size (buffer.Width, buffer.Height);
 			m_pInfo = buffer;
 
 			Title = buffer.ToString ();

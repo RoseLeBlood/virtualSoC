@@ -163,10 +163,12 @@ namespace Vcsos
                 // Wenn m_bIsAlive true ist dann
                 if (m_bIsAlive)
                 {
-                    m_pTimer[VM.Instance.CPU.CurrentCoreID].Start(); // starte den Server neu
+                    m_pTimer[VM.Instance.CPU.CurrentCoreID].Start(); // starte den Core neu
                 } 
                 else
                 {
+                    // Current : stop all cores when core 0 Halt - in the future all cores halt by
+                    // CHLT ALL 
                     if(VM.Instance.CPU.CurrentCoreID == 0)
                     {
                         foreach (var item in m_pTimer)

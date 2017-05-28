@@ -37,7 +37,10 @@ namespace Vcsos.mm
 
 			string r = VM.Instance.Ram.ToString();
 			Console.WriteLine(r);
-			Console.WriteLine(VM.Instance.CurrentCore.Register.ToString());
+            for (int i = 0; i < VM.Instance.CPU.Cores; i++)
+            {
+                Console.WriteLine("Core{0}: {1}", i, VM.Instance.CPU[i].Register.ToString());
+            }
 			#endif
 			return false;
 		}

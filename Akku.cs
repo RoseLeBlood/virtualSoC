@@ -334,6 +334,7 @@ namespace Vcsos.Komponent
 
 				int s = (int)(n1 ^ n2 ^ carry); //sum of bits
 				carry = (carry==0) ? (n1&n2): (n1 | n2); //calculate the carry for next step
+                
 				result = result | (s<<(i)); //calculate resultant bit
 			}
 			return (A > result || B > result);

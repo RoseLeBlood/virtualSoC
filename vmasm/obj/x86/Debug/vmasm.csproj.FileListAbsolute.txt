@@ -6,3 +6,5 @@ D:\annas\Documents\GitHub\bin\Debug\vmasm.exe
 D:\annas\Documents\GitHub\bin\Debug\vmasm.pdb
 D:\annas\Documents\GitHub\virtualSoC\vmasm\obj\x86\Debug\vmasm.exe
 D:\annas\Documents\GitHub\virtualSoC\vmasm\obj\x86\Debug\vmasm.pdb
+D:\annas\Documents\GitHub\bin\Debug\vmasm.exe.CodeAnalysisLog.xml
+D:\annas\Documents\GitHub\bin\Debug\vmasm.exe.lastcodeanalysissucceeded

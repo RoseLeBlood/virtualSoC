@@ -34,17 +34,21 @@ namespace vminst
         /// </summary>
 		Register = 0,
         /// <summary>
-        /// Nachfolgene Bits ist eine Value
+        /// Nachfolgene Bits ist eine Value (#)
         /// </summary>
 		Value = 1,
         /// <summary>
-        /// Nachfolgene Bits ist ein zeiger
+        /// Nachfolgene Bits ist ein zeiger (@)
         /// </summary>
 		Pointer = 2,
         /// <summary>
-        /// Nachfolgene Bits ist ein Label
+        /// Nachfolgene Bits ist ein Label (.)
         /// </summary>
 		Lable = 3,
+        /// <summary>
+        /// Nachfolgene Bits ist ein Variable verweis  (%)
+        /// </summary>
+        Variable = 4,
 		No = 9
 	}
     /// <summary>
@@ -87,7 +91,10 @@ namespace vminst
     /// </summary>
 	public class Instructions : System.Collections.Generic.List<Instruction>
 	{
-		public Instructions()
+        public const int VariableCode = -4;
+        public static readonly Instruction VariableIns = new Instruction("DIM", 8, 9); //OP(4) V(4) {data(N)}
+
+        public Instructions()
 		{
 			Add (new Instruction (	"NOP", 	4, 	 0)); // OP(4)
 			Add (new Instruction ( 	"PUSH",	9,   1)); // OP (4) R@#(2) 3(4)

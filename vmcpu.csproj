@@ -55,6 +55,7 @@
     <Compile Include="mm\vmmlr.cs" />
     <Compile Include="mm\vmsbr.cs" />
     <Compile Include="mm\vmsto.cs" />
+    <Compile Include="mm\vmvariable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Komponent\Memory.cs" />
     <Compile Include="Komponent\Core.cs" />
