@@ -46,26 +46,26 @@ namespace Vcsos.Komponent
 			byte[] _l = new byte[4];
 
 			for (int i = 0; i < 4; i++) {
-				_l[i] = VM.Instance.Ram [VM.Instance.MasterCore.Register.sp+1+i];
+				_l[i] = VM.Instance.Ram [VM.Instance.CurrentCore.Register.sp+1+i];
 			}
 
 			return _l.ToInt ();
 		}
 		public void Push(byte data)
 		{
-			VM.Instance.Ram [VM.Instance.MasterCore.Register.sp] = data;
-			VM.Instance.MasterCore.Register.sp -= 1;
+			VM.Instance.Ram [VM.Instance.CurrentCore.Register.sp] = data;
+			VM.Instance.CurrentCore.Register.sp -= 1;
 		}
 		public byte Pop()
 		{
-			byte b = VM.Instance.Ram [VM.Instance.MasterCore.Register.sp+1];
-			VM.Instance.Ram [VM.Instance.MasterCore.Register.sp + 1] = 0;
-			VM.Instance.MasterCore.Register.sp += 1;
+			byte b = VM.Instance.Ram [VM.Instance.CurrentCore.Register.sp+1];
+			VM.Instance.Ram [VM.Instance.CurrentCore.Register.sp + 1] = 0;
+			VM.Instance.CurrentCore.Register.sp += 1;
 			return b;
 		}
 		public byte Peek()
 		{
-			return VM.Instance.Ram [VM.Instance.MasterCore.Register.sp+1];
+			return VM.Instance.Ram [VM.Instance.CurrentCore.Register.sp+1];
 		}
 		public override string ToString ()
 		{
@@ -135,7 +135,7 @@ namespace Vcsos.Komponent
 			byte[] _l = new byte[4];
 
 			for (int i = 0; i < 4; i++) {
-				_l[i] = VM.Instance.Ram [VM.Instance.MasterCore.Register.sp+1+i];
+				_l[i] = VM.Instance.Ram [VM.Instance.CurrentCore.Register.sp+1+i];
 			}
 
 			return _l.ToInt ();

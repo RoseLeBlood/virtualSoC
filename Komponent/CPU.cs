@@ -10,24 +10,24 @@ namespace Vcsos.Komponent
     {
         protected CacheStack m_pCacheStack; // L1 IPC  
         private List<Core> m_lstCores;
+        private int m_iCurCore;
 
         public CacheStack Ipc
         {
             get { return m_pCacheStack; }
         }
-        public Core MasterCore
+        public int CurrentCoreID
         {
-            get { return m_lstCores[0]; }
+            get { return m_iCurCore; }
+            set { if (this[value].Running) { m_iCurCore = value; } }
         }
-        public Core[] SlaveCores
+        
+
+        public Core CurrentCore
         {
-            get
-            {
-                Core[] temp = new Core[m_lstCores.Count - 1];
-                m_lstCores.CopyTo(temp.ToArray(), 1);
-                return temp;
-            }
+            get { return m_lstCores[m_iCurCore]; }
         }
+
         public Core this[int index]
         {
             get { return m_lstCores[index]; }
@@ -38,8 +38,9 @@ namespace Vcsos.Komponent
             m_lstCores = new List<Core>();
 
             for (int i = 0; i < coreNumbers; i++)
-                m_lstCores.Add(new Core(i));
+                m_lstCores.Add(new Core(i, true));
             m_pCacheStack = new CacheStack(256, "CPU-IPC ");
+            m_iCurCore = 0;
         }
         
     }

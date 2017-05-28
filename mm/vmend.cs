@@ -37,7 +37,7 @@ namespace Vcsos.mm
 
 			string r = VM.Instance.Ram.ToString();
 			Console.WriteLine(r);
-			Console.WriteLine(VM.Instance.MasterCore.Register.ToString());
+			Console.WriteLine(VM.Instance.CurrentCore.Register.ToString());
 			#endif
 			return false;
 		}

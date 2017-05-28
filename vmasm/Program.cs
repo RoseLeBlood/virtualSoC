@@ -39,8 +39,8 @@ namespace vmasm
 		{
 			CommandLineArgs cmd = new CommandLineArgs();
 
-			cmd.RegisterArgument( "i", new OptionArgument( "test.asm", false ) { HelpMessage="inputfile" } );
-			cmd.RegisterArgument( "o", new OptionArgument( "a.bin", false )  { HelpMessage="write output to an outfile" });
+			cmd.RegisterArgument( "i", new OptionArgument( "test.asm", true ) { HelpMessage="inputfile" } );
+			cmd.RegisterArgument( "o", new OptionArgument( "a", false )  { HelpMessage="write output to an outfile" });
 			cmd.RegisterArgument( "t", new OptionArgument( "raw", false) { HelpMessage=" select an output format raw,gz,deflate" } );
 
             FlagArgument arg = new FlagArgument();
@@ -77,7 +77,7 @@ namespace vmasm
 
         private static void PrintAssembler()
         {
-            string res = (new Vcsos.Assembler()).ToString();
+            string res = (new Vcsos.Assembler(1)).ToString();
             Console.WriteLine(res);
         }
 

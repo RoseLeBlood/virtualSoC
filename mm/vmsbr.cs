@@ -36,38 +36,38 @@ namespace Vcsos.mm
         public bool ParseAndRun(ParserFactory factory)
         {
             InstructionParam2 param1 = factory.getParam(4); // 101 4 105
-            int param1V = VM.Instance.Ram.Read32(VM.Instance.MasterCore.Register.ip + 5); //106
+            int param1V = VM.Instance.Ram.Read32(VM.Instance.CurrentCore.Register.ip + 5); //106
 
             InstructionParam2 param2 = factory.getParam(9); // 110 4 114
-            int param2V = VM.Instance.Ram.Read32(VM.Instance.MasterCore.Register.ip + 10); //115 
+            int param2V = VM.Instance.Ram.Read32(VM.Instance.CurrentCore.Register.ip + 10); //115 
 
             InstructionParam2 param3 = factory.getParam(14); // 119 4 123 
-            int param3V = VM.Instance.Ram.Read32(VM.Instance.MasterCore.Register.ip + 15);
+            int param3V = VM.Instance.Ram.Read32(VM.Instance.CurrentCore.Register.ip + 15);
 
 
             if (param2 == InstructionParam2.Value)
-                VM.Instance.MasterCore.Register.Stack.Push32(param2V);
+                VM.Instance.CurrentCore.Register.Stack.Push32(param2V);
             else if (param2 == InstructionParam2.Register)
             {
-                VM.Instance.MasterCore.Register.Stack.Push32(VM.Instance.MasterCore.Register.Get(factory.m_pRegisters[param2V].Name));
+                VM.Instance.CurrentCore.Register.Stack.Push32(VM.Instance.CurrentCore.Register.Get(factory.m_pRegisters[param2V].Name));
             }
             else if (param2 == InstructionParam2.Pointer)
-                VM.Instance.MasterCore.Register.Stack.Push32(MemoryMap.Read32(param2V));
+                VM.Instance.CurrentCore.Register.Stack.Push32(MemoryMap.Read32(param2V));
             ///
             if (param3 == InstructionParam2.Value)
-                VM.Instance.MasterCore.Register.Stack.Push32(param3V);
+                VM.Instance.CurrentCore.Register.Stack.Push32(param3V);
             else if (param3 == InstructionParam2.Register)
             {
-                VM.Instance.MasterCore.Register.Stack.Push32(VM.Instance.MasterCore.Register.Get(factory.m_pRegisters[param3V].Name));
+                VM.Instance.CurrentCore.Register.Stack.Push32(VM.Instance.CurrentCore.Register.Get(factory.m_pRegisters[param3V].Name));
             }
             else if (param3 == InstructionParam2.Pointer)
-                VM.Instance.MasterCore.Register.Stack.Push32(MemoryMap.Read32(param3V));
+                VM.Instance.CurrentCore.Register.Stack.Push32(MemoryMap.Read32(param3V));
             ///
             if (param1 == InstructionParam2.Pointer)
                 MemoryMap.Write(
-                    VM.Instance.MasterCore.Akku.Sub(VM.Instance.MasterCore.Register.Stack.Pop32(), VM.Instance.MasterCore.Register.Stack.Pop32()), (uint)param1V);
+                    VM.Instance.CurrentCore.Akku.Sub(VM.Instance.CurrentCore.Register.Stack.Pop32(), VM.Instance.CurrentCore.Register.Stack.Pop32()), (uint)param1V);
             else if (param1 == InstructionParam2.Register)
-                VM.Instance.MasterCore.Register.Set(factory.m_pRegisters[param1V].Name, VM.Instance.MasterCore.Akku.Sub(VM.Instance.MasterCore.Register.Stack.Pop32(), VM.Instance.MasterCore.Register.Stack.Pop32()));
+                VM.Instance.CurrentCore.Register.Set(factory.m_pRegisters[param1V].Name, VM.Instance.CurrentCore.Akku.Sub(VM.Instance.CurrentCore.Register.Stack.Pop32(), VM.Instance.CurrentCore.Register.Stack.Pop32()));
 
             return true;
         }

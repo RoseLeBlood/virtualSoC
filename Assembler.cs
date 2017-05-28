@@ -29,12 +29,19 @@ namespace Vcsos
 	public enum VMExecptionType : int
 	{
 		Error,
-		Hardware
+		Hardware,
+        Core
 	}
 
     public class VMExections : Exception
     {
         public int ErrorCode { get; set; }
+        public VMExecptionType Type { get; set; }
+    }
+    public class NamedTimer : System.Timers.Timer
+    {
+        public int ID { get; private set; }
+        public NamedTimer(double interval, int id) : base(interval) { ID = id; }
     }
     /// <summary>
     /// Assembler Klasse. Diese Klasse führt die Bearbeitzng aus
@@ -44,11 +51,13 @@ namespace Vcsos
         /// <summary>
         /// Timer der Sincronisation und Takt gabe 
         /// </summary>
-		private System.Timers.Timer m_pTimer;
+		private System.Collections.Generic.List<NamedTimer> m_pTimer;
         /// <summary>
         /// Lebt das System noch
         /// </summary>
 		private bool m_bIsAlive;
+
+        private object m_objLock;
 
         /// <summary>
         /// Gewählter Parser
@@ -60,14 +69,21 @@ namespace Vcsos
         /// </summary>
 		public bool IsAlive { get { return m_bIsAlive; } }
 
-		public Assembler ()
+		public Assembler (int numCores)
 		{
-			// bischen drlsseln des Timers
-			m_pTimer = new System.Timers.Timer (1000.0 / (Core.BaudMhz));
-            // weise dem Timer event Elapsed die Function TimerElapsed zu
-            m_pTimer.Elapsed += TimerElapsed;
-            // Setze Timer AutoRest zu false (aus)
-			m_pTimer.AutoReset = false;
+            m_pTimer = new System.Collections.Generic.List<NamedTimer>();
+            m_objLock = new object();
+
+            for (int i = 0; i < numCores; i++)
+            {
+                m_pTimer.Add( new NamedTimer(1000.0 / (Core.BaudMhz), i) );
+
+
+                // weise dem Timer event Elapsed die Function TimerElapsed zu
+                m_pTimer[i].Elapsed += TimerElapsed;
+                // Setze Timer AutoRest zu false (aus)
+                m_pTimer[i].AutoReset = false;                
+            }
 
             // Erstelle die Parser Faktory
 			m_pParser = new ParserFactory ();
@@ -80,8 +96,12 @@ namespace Vcsos
         /// </summary>
 		public void Start()
 		{
+            foreach (var item in m_pTimer)
+            {
+                item.Start();
+            }
             // Starte den Timer somit das System
-			m_pTimer.Start ();
+			//m_pTimer[0].Start ();
 		}
         /// <summary>
         /// Timer Elapsed event
@@ -90,44 +110,72 @@ namespace Vcsos
         /// <param name="e"></param>
 		void TimerElapsed (object sender, System.Timers.ElapsedEventArgs e)
 		{
-			try // versuche ...
-			{
-                // weise op, den Aktuellen OpCode zu aus der Position  im RAM
-                // Position: Register IP
-				int op = VM.Instance.Ram.Read32 (VM.Instance.MasterCore.Register.ip);
+            
+            lock (m_objLock)
+            {
+                if (sender is NamedTimer)
+                {
+                    NamedTimer p = sender as NamedTimer;
+                    VM.Instance.CPU.CurrentCoreID = p.ID;
+                }
+               
+                
 
-                // Wandele und Führe den OpCode aus 
-                // weise den rückgabe wert m_bIsAlive zu
-                m_bIsAlive = m_pParser.ParseAndRun (op);
-                // Führe die Funktion CPU.Tick() aus
-				VM.Instance.MasterCore.Tick ();
+                try // versuche ...
+                {
+                    // weise op, den Aktuellen OpCode zu aus der Position  im RAM
+                    // Position: Register IP
+                    int op = VM.Instance.Ram.Read32(VM.Instance.CurrentCore.Register.ip);
 
-			}
-            // bei fehler
-			catch(System.Exception ex) {
-				int errCode = -1; // dekkariere errCode und weise der Variable -1 zu
-				if (ex is VMExections) // ist die Exception eine VMExections dann..
-                    errCode = (ex as VMExections).ErrorCode; // weuse errCode die VMExections.errCode zu
+                    // Wandele und Führe den OpCode aus 
+                    // weise den rückgabe wert m_bIsAlive zu
+                    m_bIsAlive = m_pParser.ParseAndRun(op);
+                    // Führe die Funktion CPU.Tick() aus
+                    VM.Instance.CurrentCore.Tick();
+                    
+                }
+                // bei fehler
+                catch (System.Exception ex)
+                {
+                    int errCode = -1; // dekkariere errCode und weise der Variable -1 zu
+                    if (ex is VMExections) // ist die Exception eine VMExections dann..
+                        errCode = (ex as VMExections).ErrorCode; // weuse errCode die VMExections.errCode zu
 
-                // Ist Exceptions Flg gesetzt dann... 
-                if (VM.Instance.MasterCore.Register.Exections) { 
-                    // Push Register IP auf den Stack
-					VM.Instance.MasterCore.Stack.Push32 (VM.Instance.MasterCore.Register.ip);
-                    // Push errCode auf den Szack
-					VM.Instance.MasterCore.Register.Stack.Push32 (errCode);
-                    // Push VMExecptionType.Error auf dem Stack
-                    VM.Instance.MasterCore.Register.Stack.Push32 ((int)VMExecptionType.Error);
-                    // Setze den Register IP auf 4
-					VM.Instance.MasterCore.Register.ip = 4;
-				} else { // wenn Exception nicht aktiviert sind...
-                    // dann schalte das system auf tot und gib den Fehler auf die Console aus
-					Console.WriteLine (ex.ToString ());
-					m_bIsAlive = false;
-				}	
-			}
-            // Wenn m_bIsAlive true ist dann
-            if (m_bIsAlive)
-				m_pTimer.Start (); // starte den Server neu
+                    // Ist Exceptions Flg gesetzt dann... 
+                    if (VM.Instance.CurrentCore.Register.Exections)
+                    {
+                        // Push Register IP auf den Stack
+                        VM.Instance.CurrentCore.Stack.Push32(VM.Instance.CurrentCore.Register.ip);
+                        // Push errCode auf den Szack
+                        VM.Instance.CurrentCore.Register.Stack.Push32(errCode);
+                        // Push VMExecptionType.Error auf dem Stack
+                        VM.Instance.CurrentCore.Register.Stack.Push32((int)VMExecptionType.Error);
+                        // Setze den Register IP auf 4
+                        VM.Instance.CurrentCore.Register.ip = 4;
+                    }
+                    else
+                    { // wenn Exception nicht aktiviert sind...
+                      // dann schalte das system auf tot und gib den Fehler auf die Console aus
+                        Console.WriteLine(ex.ToString());
+                        m_bIsAlive = false;
+                    }
+                }
+                // Wenn m_bIsAlive true ist dann
+                if (m_bIsAlive)
+                {
+                    m_pTimer[VM.Instance.CPU.CurrentCoreID].Start(); // starte den Server neu
+                } 
+                else
+                {
+                    if(VM.Instance.CPU.CurrentCoreID == 0)
+                    {
+                        foreach (var item in m_pTimer)
+                        {
+                            item.Stop();
+                        }
+                    }
+                }
+            }
 		}
         public override string ToString()
         {

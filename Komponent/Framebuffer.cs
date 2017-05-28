@@ -141,8 +141,8 @@ namespace Vcsos.Komponent
 		// ASM FBI // FrameBuffer Init
 		public void Init()
 		{
-			int colorRef = VM.Instance.MasterCore.Register.Stack.Pop32 ();
-			int mode = VM.Instance.MasterCore.Register.Stack.Pop32 ();
+			int colorRef = VM.Instance.CurrentCore.Register.Stack.Pop32 ();
+			int mode = VM.Instance.CurrentCore.Register.Stack.Pop32 ();
 
 			m_pInfo = new FrameBufferInfo (mode);// = new Size (w, h);
 			m_pMemory = new Memory(m_pInfo.Size, "FrameBuffer");

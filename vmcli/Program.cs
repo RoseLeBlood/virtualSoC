@@ -19,8 +19,9 @@ namespace vmcli
 			cmd.RegisterArgument( "r", new OptionArgument( "512b" )  { HelpMessage="Ram size. [> 0]" });
 			cmd.RegisterArgument( "t", new OptionArgument( "raw", true) { HelpMessage="Image type: gz,raw" } );
 			cmd.RegisterArgument( "o", new OptionArgument( "console", false) { HelpMessage="Debug output" } );
+            cmd.RegisterArgument( "c", new OptionArgument( "2") { HelpMessage = "Number of CPU Cores" });
 
-			cmd.SetDefaultArgument( "i" );
+            cmd.SetDefaultArgument( "i" );
 			cmd.RegisterHelpArgument();
 
 			if( !cmd.Validate(args) )
@@ -31,11 +32,13 @@ namespace vmcli
 			string imageFile;
 			string debugFile;
 			UInt32 ramSize =10;
+            uint numCores =  1;
 			try
 			{
 				imageFile = cmd.GetValue<string>( "i" );
 				ramSize = GetValueFromArg(cmd, "r" );
 				debugFile = cmd.GetValue<string>("o");
+                numCores = GetValueFromArg(cmd, "c");
 			}
 			catch {
 				cmd.PrintHelp();
@@ -46,7 +49,7 @@ namespace vmcli
 				Console.SetOut (new System.IO.StreamWriter (debugFile));
 			}
 
-			VM.Instance.CreateVM (ramSize);
+			VM.Instance.CreateVM (ramSize, (int)numCores);
 			FramebufferForm form = new FramebufferForm ();
 
 			byte[] data = InputFactory.GetInputClass (cmd).LoadFromFile (imageFile);

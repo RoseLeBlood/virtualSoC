@@ -112,11 +112,12 @@ namespace Vcsos.Komponent
 			get { return m_pMemRegister.Read32(16); }
 			set	{ m_pMemRegister.Write(value,16); }
 		}
-		public int pid
+		public int lck
 		{
 			get { return m_pMemRegister.Read32(24); }
 			set	{ m_pMemRegister.Write(value,24); }
 		}
+
 		public Register (int stackAddr = -1)
 		{
 			m_pMemRegister = new Memory (28, "Register");
@@ -130,7 +131,7 @@ namespace Vcsos.Komponent
 			OverFlow = false;
 			UnderFlow = false;
 			Exections = false;
-			pid = 0;
+			lck = 0;
 			m_pStack = new Stack ();
 		}
 		public override string ToString ()
@@ -150,7 +151,7 @@ namespace Vcsos.Komponent
 			case "IP":
 				return ip;
 			case "TIK":
-				return (int)Core.Ticks;
+				return (int)VM.Instance.CurrentCore.Ticks;
 			default:
 				throw new Exception ("Register/Flag with Name: " + name + " not found");
 			}

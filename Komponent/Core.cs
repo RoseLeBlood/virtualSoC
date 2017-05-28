@@ -29,9 +29,10 @@ namespace Vcsos.Komponent
 		private Register	 m_pRegister; 	// L2 Current Register
         private int          m_iCoreNumber;
 		protected Akku 		 m_pAkku;
+        protected bool       m_bStarted;
 		public const float 	 BaudMhz = 22.1184f;
 
-		public static ulong   Ticks { get; private set; }
+		public ulong   Ticks { get; private set; }
 
 
 		public Akku Akku
@@ -39,8 +40,14 @@ namespace Vcsos.Komponent
 			get { return m_pAkku; }
 			set { m_pAkku = value; }
 		}
-		
-		public Register Register
+		public bool Running
+        {
+            get { return m_bStarted; }
+        }
+
+        
+
+        public Register Register
 		{
 			get { return m_pRegister; }
 			set { m_pRegister = value; }
@@ -53,20 +60,24 @@ namespace Vcsos.Komponent
         {
             get { return m_iCoreNumber; }
         }
-		public Core (int number) : base("Referenz Core " + number.ToString(), "Anna-Sophia Schroeck")
+		public Core (int number, bool running=false) : base("Referenz Core " + number.ToString(), "Anna-Sophia Schroeck")
 		{
             m_iCoreNumber = number;
             m_pRegister = new Register ();
 			m_pAkku = new Akku (this);
 			
 			m_pCallStack = new CacheStack  (135, "Core-Register" + number.ToString()); // 32 Unterprogramme
-		}
-		public virtual void Run()
-		{
+            m_bStarted = running;
+            m_pRegister.ip = 7;
 
-		}
+        }
+        /*public virtual void startCore()
+        {
+            Register.ip = VM.Instance.CPU.Ipc.Pop32();
+            m_bStarted = true;
+        }*/ 
 
-		public int And(int v1, int v2)
+        public int And(int v1, int v2)
 		{
 			return v1 & v2;
 		}

@@ -33,8 +33,8 @@ namespace Vcsos.Komponent
 		}
 		public void Create()
 		{
-			m_pTimer.Interval =  VM.Instance.MasterCore.Register.Stack.Pop32();
-			m_pTimer.AutoReset = VM.Instance.MasterCore.Register.Stack.Pop32() == 1;
+			m_pTimer.Interval =  VM.Instance.CurrentCore.Register.Stack.Pop32();
+			m_pTimer.AutoReset = VM.Instance.CurrentCore.Register.Stack.Pop32() == 1;
 			m_pTimer.Elapsed += TimerElapsed;
 
 		}
@@ -44,14 +44,14 @@ namespace Vcsos.Komponent
 		}
 		void TimerElapsed (object sender, System.Timers.ElapsedEventArgs e)
 		{
-			if (VM.Instance.MasterCore.Register.Exections) {
-				VM.Instance.MasterCore.Stack.Push32 (VM.Instance.MasterCore.Register.ip);
+			if (VM.Instance.CurrentCore.Register.Exections) {
+				VM.Instance.CurrentCore.Stack.Push32 (VM.Instance.CurrentCore.Register.ip);
 
-				VM.Instance.MasterCore.Register.Stack.Push32 (0); // TimerCode
-				VM.Instance.MasterCore.Register.Stack.Push32 ((int)VMExecptionType.Hardware); // Hardware Exeption
+				VM.Instance.CurrentCore.Register.Stack.Push32 (0); // TimerCode
+				VM.Instance.CurrentCore.Register.Stack.Push32 ((int)VMExecptionType.Hardware); // Hardware Exeption
 
 
-				VM.Instance.MasterCore.Register.ip = 4;
+				VM.Instance.CurrentCore.Register.ip = 4;
 			}
 		}
 	}

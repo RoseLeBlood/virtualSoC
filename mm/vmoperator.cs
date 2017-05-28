@@ -87,12 +87,13 @@ namespace Vcsos.mm
 			Instruction c = m_pInstructions [pos];
 
 			#if DEBUG
-			Console.WriteLine ("{3} [{2}] {0} {1}", pos, c.OpCode, 
-				VM.Instance.MasterCore.Register.ip, Core.Ticks);
+			Console.WriteLine ("Core-{4} {3} [{2}] {0} {1}", pos, c.OpCode, 
+				VM.Instance.CurrentCore.Register.ip, VM.Instance.CurrentCore.Ticks,
+                VM.Instance.CPU.CurrentCoreID);
 			#endif
 
 			bool ret = getOperator (c).ParseAndRun (this);
-			VM.Instance.MasterCore.Register.ip += c.OpParam1;
+			VM.Instance.CurrentCore.Register.ip += c.OpParam1;
 			//ip += c.OpParam1;
 
 			return ret;
@@ -111,7 +112,7 @@ namespace Vcsos.mm
 
 		internal InstructionParam2 getParam(int ipa)
 		{
-			return (InstructionParam2)VM.Instance.Ram [VM.Instance.MasterCore.Register.ip + ipa];
+			return (InstructionParam2)VM.Instance.Ram [VM.Instance.CurrentCore.Register.ip + ipa];
 		}
 
         public override string ToString()

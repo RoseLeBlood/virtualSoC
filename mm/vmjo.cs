@@ -36,23 +36,23 @@ namespace Vcsos.mm
         public bool ParseAndRun(ParserFactory factory)
         {
             InstructionParam2 param1 = factory.getParam(4);
-            int param1V = VM.Instance.Ram.Read32(VM.Instance.MasterCore.Register.ip + 5);
+            int param1V = VM.Instance.Ram.Read32(VM.Instance.CurrentCore.Register.ip + 5);
 
-            if (VM.Instance.MasterCore.Register.OverFlow)
+            if (VM.Instance.CurrentCore.Register.OverFlow)
             {
                 if (param1 == InstructionParam2.Value || param1 == InstructionParam2.Lable)
-                    VM.Instance.MasterCore.Register.Set("IP", param1V);
+                    VM.Instance.CurrentCore.Register.Set("IP", param1V);
                 else if (param1 == InstructionParam2.Register)
                 {
-                    VM.Instance.MasterCore.Register.Set("IP", VM.Instance.MasterCore.Register.Get(factory.m_pRegisters[param1V].Name));
+                    VM.Instance.CurrentCore.Register.Set("IP", VM.Instance.CurrentCore.Register.Get(factory.m_pRegisters[param1V].Name));
                 }
                 else if (param1 == InstructionParam2.Pointer)
                 {
-                    VM.Instance.MasterCore.Register.Set("IP", MemoryMap.Read32(param1V));
+                    VM.Instance.CurrentCore.Register.Set("IP", MemoryMap.Read32(param1V));
                 }
             }
             else
-                VM.Instance.MasterCore.Register.Set("IP", VM.Instance.MasterCore.Register.ip + 9);
+                VM.Instance.CurrentCore.Register.Set("IP", VM.Instance.CurrentCore.Register.ip + 9);
             return true;
         }
     }

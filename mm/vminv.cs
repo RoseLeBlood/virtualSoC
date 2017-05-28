@@ -36,7 +36,7 @@ namespace Vcsos.mm
         public bool ParseAndRun(ParserFactory factory)
         {
             InstructionParam2 param1 = factory.getParam(4);
-            int param1V = VM.Instance.Ram.Read32(VM.Instance.MasterCore.Register.ip + 5);
+            int param1V = VM.Instance.Ram.Read32(VM.Instance.CurrentCore.Register.ip + 5);
 
             if (param1 == InstructionParam2.Pointer)
             {
@@ -44,8 +44,8 @@ namespace Vcsos.mm
             }
             else if (param1 == InstructionParam2.Register)
             {
-                VM.Instance.MasterCore.Register.Set(factory.m_pRegisters[param1V].Name,
-                    ~(VM.Instance.MasterCore.Register.Get(factory.m_pRegisters[param1V].Name)));
+                VM.Instance.CurrentCore.Register.Set(factory.m_pRegisters[param1V].Name,
+                    ~(VM.Instance.CurrentCore.Register.Get(factory.m_pRegisters[param1V].Name)));
             }
 
             return true;

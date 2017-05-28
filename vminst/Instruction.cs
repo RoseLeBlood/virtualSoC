@@ -130,7 +130,13 @@ namespace vminst
             Add (new Instruction("JL", 19, 0)); // Jump less OP(2) T(1)V(4) < T(1)V(4) T(1)V(4) 
             Add (new Instruction("JLE", 19, 0)); // Jump less equel OP(2) T(1)V(4) <= T(1)V(4) T(1)V(4) 
 
-           
+
+            Add(new Instruction("CSC", 9, 1)); // SwitchCore OP(4) T(1)V(4)
+            Add(new Instruction("CSP", 14, 1)); // StartCore Prozess  OP(4) T(1)V(4) T(1)V(4) - CSP CoreID IP 
+            Add(new Instruction("CPU", 9, 1)); // Push to IPC OP(4) T(1)V(4)
+            Add(new Instruction("CPO", 9, 1)); // Pop to IPC OP(4) T(1)V(4)
+            Add(new Instruction("CEX", 19, 1)); // Send Exception CEX ExID {User daten} (push to IPC and stopp cC)
+            
 
             Add(new Instruction (  "FBI",   4,   0));
 			Add (new Instruction (  "FBSET",19,   3));

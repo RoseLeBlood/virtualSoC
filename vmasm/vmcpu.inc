@@ -37,6 +37,9 @@ FBI ; Create FrameBuffer and Write Info To Ram
 RET
 DestroyFramebuffer:
 RET
+; Basic IP for other Cores
+ORG 0x7
+JMP $
 
 ; Start Address is 0x10
 ORG 0x10

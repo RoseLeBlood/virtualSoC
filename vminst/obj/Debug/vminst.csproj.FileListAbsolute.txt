@@ -1,0 +1,4 @@
+D:\annas\Documents\GitHub\bin\Debug\vminst.dll
+D:\annas\Documents\GitHub\bin\Debug\vminst.pdb
+D:\annas\Documents\GitHub\virtualSoC\vminst\obj\Debug\vminst.dll
+D:\annas\Documents\GitHub\virtualSoC\vminst\obj\Debug\vminst.pdb

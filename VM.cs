@@ -42,7 +42,8 @@ namespace Vcsos
         /// </summary>
 		private Assembler m_pAssembler;
 
-		public Core 	MasterCore		{ get { return ((CPU)this[1]).MasterCore; } }
+		public Core 	CurrentCore		{ get { return ((CPU)this[1]).CurrentCore; } }
+        public CPU      CPU             { get { return (CPU)this[1]; } }
      
 		public Memory Ram				{ get { return (Memory)this[0]; } }
 		public Framebuffer FBdev		{ get { return (Framebuffer)this[2]; } }
@@ -61,23 +62,24 @@ namespace Vcsos
         /// </summary>
 		internal VM()
 		{
-			m_pAssembler = new Assembler ();
+			
 
 		}
         /// <summary>
         /// Erstellt die Virtuale Maschine
         /// </summary>
         /// <param name="ramSize">Größe des Arbeitsspeicher</param>
-		public void CreateVM(UInt32 ramSize)
+		public void CreateVM(UInt32 ramSize, int iNumCores)
 		{
-			int newMemorySize = ramSize.ToBoundary(4);
+            m_pAssembler = new Assembler(iNumCores);
+            int newMemorySize = ramSize.ToBoundary(4);
 			Add( new Memory (newMemorySize, "RAM"));
 
 			if (newMemorySize != ramSize) 
 				Console.WriteLine("VM: Memory was expanded from {0} bytes to {1} bytes to a page boundary." + System.Environment.NewLine,
 					ramSize, newMemorySize);
 
-			Add (new CPU (4));
+			Add (new CPU (iNumCores));
 			Add (new Framebuffer ());
 			Add (new Timer ());
 			
@@ -90,15 +92,14 @@ namespace Vcsos
 		public bool Start(byte[] data)
 		{
 			if (data.Length >= Ram.Size) {
-
+                return false;
 			} else {
 				Ram.Write (data);
 
-				MasterCore.Register.ip = 16;
+				CPU[0].Register.ip = 16;
 				m_pAssembler.Start ();
 				return true;
 			}
-			return false;
 		}
 	}
 
