@@ -1,0 +1,76 @@
+.TH "Vcsos" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Vcsos
+.SH SYNOPSIS
+.br
+.PP
+.SS "Namespaces"
+
+.in +1c
+.ti -1c
+.RI "namespace \fBKomponent\fP"
+.br
+.ti -1c
+.RI "namespace \fBmm\fP"
+.br
+.in -1c
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBAssembler\fP"
+.br
+.RI "\fBAssembler\fP Klasse\&. Diese Klasse führt die Bearbeitzng aus "
+.ti -1c
+.RI "class \fBMemoryMap\fP"
+.br
+.RI "Memory Helper der SoC - Ram, Serial, Framebuffer "
+.ti -1c
+.RI "class \fBNamedTimer\fP"
+.br
+.ti -1c
+.RI "class \fBUtils\fP"
+.br
+.RI "Mathematische helper classe "
+.ti -1c
+.RI "class \fBVM\fP"
+.br
+.RI "Diese Klasse beschreibt die Virtualle Maschine und ist eine zusammenstellung der verwendete Komponenten "
+.ti -1c
+.RI "class \fBVMExections\fP"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBVMExecptionType\fP : int { \fBVMExecptionType\&.Error\fP, \fBVMExecptionType\&.Hardware\fP, \fBVMExecptionType\&.Core\fP }"
+.br
+.in -1c
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBVcsos\&.VMExecptionType\fP : int\fC [strong]\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIError \fP\fP
+.TP
+\fB\fIHardware \fP\fP
+.TP
+\fB\fICore \fP\fP
+.PP
+.nf
+29                                 : int
+30     {
+31         Error,
+32         Hardware,
+33         Core
+34     }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

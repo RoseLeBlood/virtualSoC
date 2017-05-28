@@ -1,0 +1,65 @@
+.TH "Vcsos.mm.vmunknown" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Vcsos.mm.vmunknown
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits \fBVcsos\&.mm\&.vmoperator\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBvmunknown\fP (\fBInstruction\fP c)"
+.br
+.ti -1c
+.RI "bool \fBParseAndRun\fP (\fBParserFactory\fP factory)"
+.br
+.in -1c
+.SS "Properties"
+
+.in +1c
+.ti -1c
+.RI "string \fBName\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "string \fBInfo\fP\fC [get]\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Vcsos\&.mm\&.vmunknown\&.vmunknown (\fBInstruction\fP c)"
+
+.PP
+.nf
+30         {
+31             m_pc = c;
+32         }
+.fi
+.SH "Member Function Documentation"
+.PP 
+.SS "bool Vcsos\&.mm\&.vmunknown\&.ParseAndRun (\fBParserFactory\fP factory)"
+
+.PP
+Implements \fBVcsos\&.mm\&.vmoperator\fP\&.
+.PP
+.nf
+41         {
+42             Console\&.WriteLine ("Unknown instruction: {0}", m_pc);
+43             return false;
+44         }
+.fi
+.SH "Property Documentation"
+.PP 
+.SS "string Vcsos\&.mm\&.vmunknown\&.Info\fC [get]\fP"
+
+.SS "string Vcsos\&.mm\&.vmunknown\&.Name\fC [get]\fP"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

@@ -1,0 +1,178 @@
+.TH "Vcsos.Komponent.Register" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Vcsos.Komponent.Register
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBRegister\fP (int stackAddr=\-1)"
+.br
+.ti -1c
+.RI "override string \fBToString\fP ()"
+.br
+.ti -1c
+.RI "int \fBGet\fP (string name)"
+.br
+.ti -1c
+.RI "void \fBSet\fP (string name, int v)"
+.br
+.in -1c
+.SS "Properties"
+
+.in +1c
+.ti -1c
+.RI "\fBStack\fP \fBStack\fP\fC [get, set]\fP"
+.br
+.ti -1c
+.RI "bool \fBSignFlag\fP\fC [get, set]\fP"
+.br
+.ti -1c
+.RI "bool \fBZeroFlag\fP\fC [get, set]\fP"
+.br
+.ti -1c
+.RI "bool \fBOverFlow\fP\fC [get, set]\fP"
+.br
+.ti -1c
+.RI "bool \fBCarryFlag\fP\fC [get, set]\fP"
+.br
+.ti -1c
+.RI "bool \fBUnderFlow\fP\fC [get, set]\fP"
+.br
+.ti -1c
+.RI "bool \fBDivByZero\fP\fC [get, set]\fP"
+.br
+.ti -1c
+.RI "int \fBsp\fP\fC [get, set]\fP"
+.br
+.ti -1c
+.RI "int \fBip\fP\fC [get, set]\fP"
+.br
+.ti -1c
+.RI "int \fBax\fP\fC [get, set]\fP"
+.br
+.ti -1c
+.RI "int \fBbx\fP\fC [get, set]\fP"
+.br
+.ti -1c
+.RI "int \fBcx\fP\fC [get, set]\fP"
+.br
+.ti -1c
+.RI "int \fBlck\fP\fC [get, set]\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Vcsos\&.Komponent\&.Register\&.Register (int stackAddr = \fC\-1\fP)"
+
+.PP
+.nf
+122         {
+123             m_pMemRegister = new Memory (28, "Register");
+124 
+125             sp = (stackAddr == -1 ? VM\&.Instance\&.Ram\&.Size - 1 : stackAddr);
+126             ip = 0;
+127             ax = ax\&.RandR ();
+128             bx = bx\&.RandR ();
+129 
+130             DivByZero = false;
+131             OverFlow = false;
+132             UnderFlow = false;
+133             Exections = false;
+134             lck = 0;
+135             m_pStack = new Stack ();
+136         }
+.fi
+.SH "Member Function Documentation"
+.PP 
+.SS "int Vcsos\&.Komponent\&.Register\&.Get (string name)"
+
+.PP
+.nf
+143         {
+144             switch (name) {
+145             case "AX":
+146                 return ax;
+147             case "BX":
+148                 return bx;
+149             case "SP":
+150                 return sp;
+151             case "IP":
+152                 return ip;
+153             case "TIK":
+154                 return (int)VM\&.Instance\&.CurrentCore\&.Ticks;
+155             default:
+156                 throw new Exception ("Register/Flag with Name: " + name + " not found");
+157             }
+158         }
+.fi
+.SS "void Vcsos\&.Komponent\&.Register\&.Set (string name, int v)"
+
+.PP
+.nf
+160         {
+161             switch (name) {
+162             case "AX":
+163                 ax = v;
+164                 break;
+165             case "BX":
+166                 bx = v;
+167                 break;
+168             case "SP":
+169                 sp = v;
+170                 break;
+171             case "IP":
+172                 ip = v;
+173                 break;
+174             default:
+175                 throw new Exception ("Register/Flag with Name: " + name + " not found");
+176             }
+177         }
+.fi
+.SS "override string Vcsos\&.Komponent\&.Register\&.ToString ()"
+
+.PP
+.nf
+138         {
+139             return string\&.Format ("[Register: SignFlag={0}, ZeroFlag={1}, OverFlow={2}, CarryFlag={3}, UnderFlow={4}, DivByZero={5}, " +
+140                 "sp={6}, ip={7}, ax={8}, bx={9}, cx={10}]", SignFlag, ZeroFlag, OverFlow, CarryFlag, UnderFlow, DivByZero, sp, ip, ax, bx, cx);
+141         }
+.fi
+.SH "Property Documentation"
+.PP 
+.SS "int Vcsos\&.Komponent\&.Register\&.ax\fC [get]\fP, \fC [set]\fP"
+
+.SS "int Vcsos\&.Komponent\&.Register\&.bx\fC [get]\fP, \fC [set]\fP"
+
+.SS "bool Vcsos\&.Komponent\&.Register\&.CarryFlag\fC [get]\fP, \fC [set]\fP"
+
+.SS "int Vcsos\&.Komponent\&.Register\&.cx\fC [get]\fP, \fC [set]\fP"
+
+.SS "bool Vcsos\&.Komponent\&.Register\&.DivByZero\fC [get]\fP, \fC [set]\fP"
+
+.SS "int Vcsos\&.Komponent\&.Register\&.ip\fC [get]\fP, \fC [set]\fP"
+
+.SS "int Vcsos\&.Komponent\&.Register\&.lck\fC [get]\fP, \fC [set]\fP"
+
+.SS "bool Vcsos\&.Komponent\&.Register\&.OverFlow\fC [get]\fP, \fC [set]\fP"
+
+.SS "bool Vcsos\&.Komponent\&.Register\&.SignFlag\fC [get]\fP, \fC [set]\fP"
+
+.SS "int Vcsos\&.Komponent\&.Register\&.sp\fC [get]\fP, \fC [set]\fP"
+
+.SS "\fBStack\fP Vcsos\&.Komponent\&.Register\&.Stack\fC [get]\fP, \fC [set]\fP"
+
+.SS "bool Vcsos\&.Komponent\&.Register\&.UnderFlow\fC [get]\fP, \fC [set]\fP"
+
+.SS "bool Vcsos\&.Komponent\&.Register\&.ZeroFlag\fC [get]\fP, \fC [set]\fP"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

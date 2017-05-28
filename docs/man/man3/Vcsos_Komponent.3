@@ -1,0 +1,118 @@
+.TH "Vcsos.Komponent" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Vcsos.Komponent
+.SH SYNOPSIS
+.br
+.PP
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBAkku\fP"
+.br
+.RI "\fBAkku\fP des Virtualen SoCs "
+.ti -1c
+.RI "class \fBCacheStack\fP"
+.br
+.ti -1c
+.RI "class \fBCore\fP"
+.br
+.ti -1c
+.RI "class \fBCPU\fP"
+.br
+.ti -1c
+.RI "class \fBFramebuffer\fP"
+.br
+.ti -1c
+.RI "struct \fBFrameBufferInfo\fP"
+.br
+.ti -1c
+.RI "interface \fBIVMKomponente\fP"
+.br
+.ti -1c
+.RI "class \fBMemory\fP"
+.br
+.ti -1c
+.RI "class \fBRegister\fP"
+.br
+.ti -1c
+.RI "class \fBStack\fP"
+.br
+.ti -1c
+.RI "class \fBTimer\fP"
+.br
+.ti -1c
+.RI "class \fBvmKomponente\fP"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBFrameBufferOrientation\fP : byte { \fBFrameBufferOrientation\&.Portrait\fP = 0, \fBFrameBufferOrientation\&.Landscape\fP = 1 }"
+.br
+.ti -1c
+.RI "enum \fBFrameBufferSize\fP { \fBFrameBufferSize\&.VMFB_720x480x32\fP = 2, \fBFrameBufferSize\&.VMFB_720x240x32\fP = 4, \fBFrameBufferSize\&.VMFB_360x480x32\fP = 6, \fBFrameBufferSize\&.VMFB_800x600x32\fP = 8, \fBFrameBufferSize\&.VMFB_1280x720x32\fP = 10 }"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "delegate void \fBInitFrameBuffer\fP (\fBFrameBufferInfo\fP buffer)"
+.br
+.in -1c
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBVcsos\&.Komponent\&.FrameBufferOrientation\fP : byte\fC [strong]\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIPortrait \fP\fP
+.TP
+\fB\fILandscape \fP\fP
+.PP
+.nf
+28                                        : byte
+29     {
+30         Portrait = 0,
+31         Landscape = 1,
+32     }
+.fi
+.SS "enum \fBVcsos\&.Komponent\&.FrameBufferSize\fP\fC [strong]\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIVMFB_720x480x32 \fP\fP
+.TP
+\fB\fIVMFB_720x240x32 \fP\fP
+.TP
+\fB\fIVMFB_360x480x32 \fP\fP
+.TP
+\fB\fIVMFB_800x600x32 \fP\fP
+.TP
+\fB\fIVMFB_1280x720x32 \fP\fP
+.PP
+.nf
+34     {
+35         VMFB_720x480x32 = 2, 
+36         VMFB_720x240x32 = 4,
+37         VMFB_360x480x32 = 6,
+38 
+39         VMFB_800x600x32 = 8,
+40         VMFB_1280x720x32 = 10
+41     }
+.fi
+.SH "Function Documentation"
+.PP 
+.SS "delegate void Vcsos\&.Komponent\&.InitFrameBuffer (\fBFrameBufferInfo\fP buffer)"
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

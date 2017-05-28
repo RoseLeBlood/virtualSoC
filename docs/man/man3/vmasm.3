@@ -1,0 +1,73 @@
+.TH "vmasm" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vmasm
+.SH SYNOPSIS
+.br
+.PP
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBAssembler\fP"
+.br
+.ti -1c
+.RI "class \fBDefinesDef\fP"
+.br
+.ti -1c
+.RI "class \fBDeflateOutput\fP"
+.br
+.ti -1c
+.RI "class \fBGzipOutput\fP"
+.br
+.ti -1c
+.RI "interface \fBIModuleOutput\fP"
+.br
+.ti -1c
+.RI "class \fBInstructionNotFoundException\fP"
+.br
+.ti -1c
+.RI "class \fBMainClass\fP"
+.br
+.ti -1c
+.RI "class \fBModuleOutputFactory\fP"
+.br
+.ti -1c
+.RI "class \fBRawOutput\fP"
+.br
+.ti -1c
+.RI "class \fBUtils\fP"
+.br
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBModuleOutputType\fP { \fBModuleOutputType\&.RAW\fP, \fBModuleOutputType\&.GZIP\fP, \fBModuleOutputType\&.Deflate\fP }"
+.br
+.in -1c
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBvmasm\&.ModuleOutputType\fP\fC [strong]\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIRAW \fP\fP
+.TP
+\fB\fIGZIP \fP\fP
+.TP
+\fB\fIDeflate \fP\fP
+.PP
+.nf
+26     {
+27         RAW,
+28         GZIP,
+29         Deflate
+30     }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

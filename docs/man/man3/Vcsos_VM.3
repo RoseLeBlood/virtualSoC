@@ -1,0 +1,131 @@
+.TH "Vcsos.VM" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Vcsos.VM \- Diese Klasse beschreibt die Virtualle Maschine und ist eine zusammenstellung der verwendete Komponenten  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits List< IVMKomponente >\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBCreateVM\fP (UInt32 ramSize, int iNumCores)"
+.br
+.RI "Erstellt die Virtuale Maschine "
+.ti -1c
+.RI "bool \fBStart\fP (byte[] data)"
+.br
+.RI "Startet die Virtualle Maschine "
+.in -1c
+.SS "Properties"
+
+.in +1c
+.ti -1c
+.RI "\fBCore\fP \fBCurrentCore\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "\fBCPU\fP \fBCPU\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "\fBMemory\fP \fBRam\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "\fBFramebuffer\fP \fBFBdev\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "bool \fBIsAlive\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "static \fBVM\fP \fBInstance\fP\fC [get]\fP"
+.br
+.RI "Gibt die Singleton Instance zzrück "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Diese Klasse beschreibt die Virtualle Maschine und ist eine zusammenstellung der verwendete Komponenten 
+
+
+.SH "Member Function Documentation"
+.PP 
+.SS "void Vcsos\&.VM\&.CreateVM (UInt32 ramSize, int iNumCores)"
+
+.PP
+Erstellt die Virtuale Maschine 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIramSize\fP Größe des Arbeitsspeicher
+.RE
+.PP
+
+.PP
+.nf
+73         {
+74             m_pAssembler = new Assembler(iNumCores);
+75             int newMemorySize = ramSize\&.ToBoundary(4);
+76             Add( new Memory (newMemorySize, "RAM"));
+77 
+78             if (newMemorySize != ramSize) 
+79                 Console\&.WriteLine("VM: Memory was expanded from {0} bytes to {1} bytes to a page boundary\&." + System\&.Environment\&.NewLine,
+80                     ramSize, newMemorySize);
+81 
+82             Add (new CPU (iNumCores));
+83             Add (new Framebuffer ());
+84             Add (new Timer ());
+85             
+86         }
+.fi
+.SS "bool Vcsos\&.VM\&.Start (byte [] data)"
+
+.PP
+Startet die Virtualle Maschine 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdata\fP Programm code 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+rückgabe true bei keinen ausführ fehler
+.RE
+.PP
+
+.PP
+.nf
+93         {
+94             if (data\&.Length >= Ram\&.Size) {
+95                 return false;
+96             } else {
+97                 Ram\&.Write (data);
+98 
+99                 CPU[0]\&.Register\&.ip = 16;
+100                 m_pAssembler\&.Start ();
+101                 return true;
+102             }
+103         }
+.fi
+.SH "Property Documentation"
+.PP 
+.SS "\fBCPU\fP Vcsos\&.VM\&.CPU\fC [get]\fP"
+
+.SS "\fBCore\fP Vcsos\&.VM\&.CurrentCore\fC [get]\fP"
+
+.SS "\fBFramebuffer\fP Vcsos\&.VM\&.FBdev\fC [get]\fP"
+
+.SS "\fBVM\fP Vcsos\&.VM\&.Instance\fC [static]\fP, \fC [get]\fP"
+
+.PP
+Gibt die Singleton Instance zzrück 
+.SS "bool Vcsos\&.VM\&.IsAlive\fC [get]\fP"
+
+.SS "\fBMemory\fP Vcsos\&.VM\&.Ram\fC [get]\fP"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

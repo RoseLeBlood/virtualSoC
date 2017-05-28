@@ -1,0 +1,53 @@
+.TH "Vcsos.mm.vmret" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Vcsos.mm.vmret
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits \fBVcsos\&.mm\&.vmoperator\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "bool \fBParseAndRun\fP (\fBParserFactory\fP factory)"
+.br
+.in -1c
+.SS "Properties"
+
+.in +1c
+.ti -1c
+.RI "string \fBName\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "string \fBInfo\fP\fC [get]\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Member Function Documentation"
+.PP 
+.SS "bool Vcsos\&.mm\&.vmret\&.ParseAndRun (\fBParserFactory\fP factory)"
+
+.PP
+Implements \fBVcsos\&.mm\&.vmoperator\fP\&.
+.PP
+.nf
+36         {
+37             VM\&.Instance\&.CurrentCore\&.Register\&.Set ("IP", VM\&.Instance\&.CurrentCore\&.Stack\&.Pop32 ());
+38 
+39             return true;
+40         }
+.fi
+.SH "Property Documentation"
+.PP 
+.SS "string Vcsos\&.mm\&.vmret\&.Info\fC [get]\fP"
+
+.SS "string Vcsos\&.mm\&.vmret\&.Name\fC [get]\fP"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

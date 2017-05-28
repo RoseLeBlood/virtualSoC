@@ -1,0 +1,96 @@
+.TH "vmasm.Assembler" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vmasm.Assembler
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "byte [] \fBComp\fP ()"
+.br
+.in -1c
+.SS "Properties"
+
+.in +1c
+.ti -1c
+.RI "string [] \fBl\fP\fC [get, set]\fP"
+.br
+.ti -1c
+.RI "string \fBInstructionsList\fP\fC [get]\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Member Function Documentation"
+.PP 
+.SS "byte [] vmasm\&.Assembler\&.Comp ()"
+
+.PP
+.nf
+52         {
+53             m_pLabels = new System\&.Collections\&.Generic\&.Dictionary<string, int> ();
+54             m_pDefines = new DefinesDef();
+55             MemoryStream Stream = new MemoryStream ();
+56             //string[] l = System\&.IO\&.File\&.ReadAllLines (inPutFile);
+57             var writer = new BinaryWriter (Stream);
+58             {
+59                 for (int i = 0; i < l\&.Length; i++) {
+60                     string l0 = l [i];
+61                     string l1 = l0\&.Split (';') [0]\&.Trim();
+62 
+63                     if (l1 == string\&.Empty)
+64                         continue;
+65 
+66                     if (m_pDefines\&.isLineADefine (l1))
+67                         continue;
+68 
+69                     if (l1\&.ToUpper ()\&.Contains ("ORG")) {
+70                         int Org = this\&.ParseNumber(l1\&.Split (' ')[1] );
+71                         Console\&.WriteLine ("[ORG] {0}", Org);
+72                         writer\&.BaseStream\&.Seek (Org, SeekOrigin\&.Begin);
+73                         continue;
+74                     } else if (l1\&.Contains (":")) {
+75                         // LABEL
+76                         CompLabel(l1,writer);
+77                         continue;
+78                     } else if (l1[0] == 'L' && l1[1] == 'B') { // Label vordifinieren
+79 
+80                         string ll = l1\&.Split(' ')[1];
+81                         if (!m_pLabels\&.ContainsKey ("\&." + ll)) {
+82                             m_pLabels\&.Add ("\&." + ll, int\&.Parse (l1\&.Split (' ') [2]));
+83                         }
+84 
+85                     }
+86                     else if (l1\&.Contains("\&.dim")) { // variable
+87                         
+88                         CompVariable(l1, false, writer);
+89                     }
+90                     else {
+91                         if (!CompLine (l1, writer))
+92                             return null;
+93                     }
+94                 }
+95 
+96 
+97                 
+98             }
+99             Stream\&.Position = 0;
+100             byte[] date = new byte[Stream\&.Length];
+101             Stream\&.Read (date, 0, date\&.Length);
+102             return date;
+103         }
+.fi
+.SH "Property Documentation"
+.PP 
+.SS "string vmasm\&.Assembler\&.InstructionsList\fC [get]\fP"
+
+.SS "string [] vmasm\&.Assembler\&.l\fC [get]\fP, \fC [set]\fP"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

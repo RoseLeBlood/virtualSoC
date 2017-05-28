@@ -1,0 +1,67 @@
+.TH "vmasm.MainClass" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vmasm.MainClass
+.SH SYNOPSIS
+.br
+.PP
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static void \fBMain\fP (string[] args)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Member Function Documentation"
+.PP 
+.SS "static void vmasm\&.MainClass\&.Main (string [] args)\fC [static]\fP"
+
+.PP
+.nf
+39         {
+40             CommandLineArgs cmd = new CommandLineArgs();
+41 
+42             cmd\&.RegisterArgument( "i", new OptionArgument( "test\&.asm", true ) { HelpMessage="inputfile" } );
+43             cmd\&.RegisterArgument( "o", new OptionArgument( "a", false )  { HelpMessage="write output to an outfile" });
+44             cmd\&.RegisterArgument( "t", new OptionArgument( "raw", false) { HelpMessage=" select an output format raw,gz,deflate" } );
+45 
+46             FlagArgument arg = new FlagArgument();
+47             arg\&.Processor = (v) => PrintAssembler();
+48             arg\&.HelpMessage = "list all mnemonic";
+49 
+50             cmd\&.RegisterArgument("lsall", arg);
+51 
+52             cmd\&.SetDefaultArgument( "i" );
+53             cmd\&.RegisterHelpArgument();
+54 
+55             if( !cmd\&.Validate(args) )
+56             {
+57                 cmd\&.PrintHelp();
+58                 return;
+59             }
+60             else if(cmd\&.GetValue<bool>("lsall"))
+61             {
+62                 PrintAssembler();
+63                 return;
+64             }
+65 
+66             string input = cmd\&.GetValue<string> ("i");
+67             string output = cmd\&.GetValue<string> ("o");
+68             
+69             Console\&.WriteLine ("Input File: {0} -> output: {1}", input, output);
+70 
+71             Assembler asm = new Assembler ();
+72             asm\&.l = PreProcess (input);
+73             byte[] data = asm\&.Comp ();
+74 
+75             ModuleOutputFactory\&.WriteToFile (data, output, cmd\&.GetValue<string> ("t"));
+76         }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

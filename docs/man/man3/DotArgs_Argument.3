@@ -1,0 +1,374 @@
+.TH "DotArgs.Argument" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+DotArgs.Argument \- Base class for an argument that can be registered with a \fBCommandLineArgs\fP \&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherited by \fBDotArgs\&.AliasArgument\fP, \fBDotArgs\&.AliasArgument\fP, \fBDotArgs\&.AliasArgument\fP, \fBDotArgs\&.FlagArgument\fP, \fBDotArgs\&.FlagArgument\fP, \fBDotArgs\&.FlagArgument\fP, \fBDotArgs\&.OptionArgument\fP, \fBDotArgs\&.OptionArgument\fP, and \fBDotArgs\&.OptionArgument\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBArgument\fP (object defaultValue, bool required=false)"
+.br
+.RI "Initializes a new instance of the \fBArgument\fP class\&."
+.ti -1c
+.RI "virtual object \fBGetValue\fP ()"
+.br
+.RI "Gets the value of this argument\&."
+.ti -1c
+.RI "virtual void \fBReset\fP ()"
+.br
+.RI "Resets this argument\&."
+.ti -1c
+.RI "virtual void \fBSetValue\fP (object value)"
+.br
+.RI "Sets the value for this argument\&."
+.ti -1c
+.RI "\fBArgument\fP (object defaultValue, bool required=false)"
+.br
+.RI "Initializes a new instance of the \fBArgument\fP class\&."
+.ti -1c
+.RI "virtual object \fBGetValue\fP ()"
+.br
+.RI "Gets the value of this argument\&."
+.ti -1c
+.RI "virtual void \fBReset\fP ()"
+.br
+.RI "Resets this argument\&."
+.ti -1c
+.RI "virtual void \fBSetValue\fP (object value)"
+.br
+.RI "Sets the value for this argument\&."
+.ti -1c
+.RI "\fBArgument\fP (object defaultValue, bool required=false)"
+.br
+.RI "Initializes a new instance of the \fBArgument\fP class\&."
+.ti -1c
+.RI "virtual object \fBGetValue\fP ()"
+.br
+.RI "Gets the value of this argument\&."
+.ti -1c
+.RI "virtual void \fBReset\fP ()"
+.br
+.RI "Resets this argument\&."
+.ti -1c
+.RI "virtual void \fBSetValue\fP (object value)"
+.br
+.RI "Sets the value for this argument\&."
+.in -1c
+.SS "Properties"
+
+.in +1c
+.ti -1c
+.RI "object \fBDefaultValue\fP\fC [get, set]\fP"
+.br
+.RI "The default value that will be used if no value was passed on the command line\&. "
+.ti -1c
+.RI "string \fBHelpMessage\fP\fC [get, set]\fP"
+.br
+.RI "The message that will be displayed in the help page for your program\&."
+.ti -1c
+.RI "string \fBHelpPlaceholder\fP\fC [get, set]\fP"
+.br
+.RI "Value that will be shown (in upper case) in the usage page for this argument\&. Setting this to \fCnull\fP will display the default value (i\&.e\&. OPTION, COLLECTION, etc\&.)\&. "
+.ti -1c
+.RI "bool \fBIsRequired\fP\fC [get, protected set]\fP"
+.br
+.RI "Flag indicating whether this argument is required, i\&.e\&. must be provided via the command line\&. "
+.ti -1c
+.RI "bool \fBNeedsValue\fP\fC [get, protected set]\fP"
+.br
+.RI "Indicates whether this argument requires an explicit option\&."
+.ti -1c
+.RI "Action< object > \fBProcessor\fP\fC [get, set]\fP"
+.br
+.RI "A method that can be executed when the command line arguments are processed\&."
+.ti -1c
+.RI "bool \fBSupportsMultipleValues\fP\fC [get, protected set]\fP"
+.br
+.RI "Flag indicating whether multplie calls to \fBSetValue\fP will add a value or overwrite the existing one\&. "
+.ti -1c
+.RI "Func< object, bool > \fBValidator\fP\fC [get, set]\fP"
+.br
+.RI "A method that can be used to validate a value for this argument\&."
+.in -1c
+.SH "Detailed Description"
+.PP 
+Base class for an argument that can be registered with a \fBCommandLineArgs\fP \&. 
+
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "DotArgs\&.Argument\&.Argument (object defaultValue, bool required = \fCfalse\fP)"
+
+.PP
+Initializes a new instance of the \fBArgument\fP class\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdefaultValue\fP The default value\&.
+.br
+\fIrequired\fP Flag indicating whether this argument is required\&.
+.RE
+.PP
+
+.PP
+.nf
+92         {
+93             DefaultValue = defaultValue;
+94             IsRequired = required;
+95             SupportsMultipleValues = false;
+96 
+97             if( IsRequired )
+98             {
+99                 DefaultValue = null;
+100             }
+101         }
+.fi
+.SS "DotArgs\&.Argument\&.Argument (object defaultValue, bool required = \fCfalse\fP)"
+
+.PP
+Initializes a new instance of the \fBArgument\fP class\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdefaultValue\fP The default value\&.
+.br
+\fIrequired\fP Flag indicating whether this argument is required\&.
+.RE
+.PP
+
+.PP
+.nf
+92         {
+93             DefaultValue = defaultValue;
+94             IsRequired = required;
+95             SupportsMultipleValues = false;
+96 
+97             if( IsRequired )
+98             {
+99                 DefaultValue = null;
+100             }
+101         }
+.fi
+.SS "DotArgs\&.Argument\&.Argument (object defaultValue, bool required = \fCfalse\fP)"
+
+.PP
+Initializes a new instance of the \fBArgument\fP class\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdefaultValue\fP The default value\&.
+.br
+\fIrequired\fP Flag indicating whether this argument is required\&.
+.RE
+.PP
+
+.PP
+.nf
+92         {
+93             DefaultValue = defaultValue;
+94             IsRequired = required;
+95             SupportsMultipleValues = false;
+96 
+97             if( IsRequired )
+98             {
+99                 DefaultValue = null;
+100             }
+101         }
+.fi
+.SH "Member Function Documentation"
+.PP 
+.SS "virtual object DotArgs\&.Argument\&.GetValue ()\fC [virtual]\fP"
+
+.PP
+Gets the value of this argument\&.
+.PP
+\fBReturns:\fP
+.RS 4
+The argument's value\&.
+.RE
+.PP
+
+.PP
+Reimplemented in \fBDotArgs\&.CollectionArgument\fP, \fBDotArgs\&.CollectionArgument\fP, \fBDotArgs\&.CollectionArgument\fP, \fBDotArgs\&.AliasArgument\fP, \fBDotArgs\&.AliasArgument\fP, and \fBDotArgs\&.AliasArgument\fP\&.
+.PP
+.nf
+106         {
+107             return Value;
+108         }
+.fi
+.SS "virtual object DotArgs\&.Argument\&.GetValue ()\fC [virtual]\fP"
+
+.PP
+Gets the value of this argument\&.
+.PP
+\fBReturns:\fP
+.RS 4
+The argument's value\&.
+.RE
+.PP
+
+.PP
+Reimplemented in \fBDotArgs\&.CollectionArgument\fP, \fBDotArgs\&.CollectionArgument\fP, \fBDotArgs\&.CollectionArgument\fP, \fBDotArgs\&.AliasArgument\fP, \fBDotArgs\&.AliasArgument\fP, and \fBDotArgs\&.AliasArgument\fP\&.
+.PP
+.nf
+106         {
+107             return Value;
+108         }
+.fi
+.SS "virtual object DotArgs\&.Argument\&.GetValue ()\fC [virtual]\fP"
+
+.PP
+Gets the value of this argument\&.
+.PP
+\fBReturns:\fP
+.RS 4
+The argument's value\&.
+.RE
+.PP
+
+.PP
+Reimplemented in \fBDotArgs\&.CollectionArgument\fP, \fBDotArgs\&.CollectionArgument\fP, \fBDotArgs\&.CollectionArgument\fP, \fBDotArgs\&.AliasArgument\fP, \fBDotArgs\&.AliasArgument\fP, and \fBDotArgs\&.AliasArgument\fP\&.
+.PP
+.nf
+106         {
+107             return Value;
+108         }
+.fi
+.SS "virtual void DotArgs\&.Argument\&.Reset ()\fC [virtual]\fP"
+
+.PP
+Resets this argument\&.
+.PP
+Reimplemented in \fBDotArgs\&.CollectionArgument\fP, \fBDotArgs\&.CollectionArgument\fP, and \fBDotArgs\&.CollectionArgument\fP\&.
+.PP
+.nf
+112         {
+113             Value = DefaultValue;
+114         }
+.fi
+.SS "virtual void DotArgs\&.Argument\&.Reset ()\fC [virtual]\fP"
+
+.PP
+Resets this argument\&.
+.PP
+Reimplemented in \fBDotArgs\&.CollectionArgument\fP, \fBDotArgs\&.CollectionArgument\fP, and \fBDotArgs\&.CollectionArgument\fP\&.
+.PP
+.nf
+112         {
+113             Value = DefaultValue;
+114         }
+.fi
+.SS "virtual void DotArgs\&.Argument\&.Reset ()\fC [virtual]\fP"
+
+.PP
+Resets this argument\&.
+.PP
+Reimplemented in \fBDotArgs\&.CollectionArgument\fP, \fBDotArgs\&.CollectionArgument\fP, and \fBDotArgs\&.CollectionArgument\fP\&.
+.PP
+.nf
+112         {
+113             Value = DefaultValue;
+114         }
+.fi
+.SS "virtual void DotArgs\&.Argument\&.SetValue (object value)\fC [virtual]\fP"
+
+.PP
+Sets the value for this argument\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIvalue\fP The value to set\&.
+.RE
+.PP
+
+.PP
+Reimplemented in \fBDotArgs\&.CollectionArgument\fP, \fBDotArgs\&.CollectionArgument\fP, \fBDotArgs\&.CollectionArgument\fP, \fBDotArgs\&.AliasArgument\fP, \fBDotArgs\&.AliasArgument\fP, and \fBDotArgs\&.AliasArgument\fP\&.
+.PP
+.nf
+119         {
+120             Value = value;
+121         }
+.fi
+.SS "virtual void DotArgs\&.Argument\&.SetValue (object value)\fC [virtual]\fP"
+
+.PP
+Sets the value for this argument\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIvalue\fP The value to set\&.
+.RE
+.PP
+
+.PP
+Reimplemented in \fBDotArgs\&.CollectionArgument\fP, \fBDotArgs\&.CollectionArgument\fP, \fBDotArgs\&.CollectionArgument\fP, \fBDotArgs\&.AliasArgument\fP, \fBDotArgs\&.AliasArgument\fP, and \fBDotArgs\&.AliasArgument\fP\&.
+.PP
+.nf
+119         {
+120             Value = value;
+121         }
+.fi
+.SS "virtual void DotArgs\&.Argument\&.SetValue (object value)\fC [virtual]\fP"
+
+.PP
+Sets the value for this argument\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIvalue\fP The value to set\&.
+.RE
+.PP
+
+.PP
+Reimplemented in \fBDotArgs\&.CollectionArgument\fP, \fBDotArgs\&.CollectionArgument\fP, \fBDotArgs\&.CollectionArgument\fP, \fBDotArgs\&.AliasArgument\fP, \fBDotArgs\&.AliasArgument\fP, and \fBDotArgs\&.AliasArgument\fP\&.
+.PP
+.nf
+119         {
+120             Value = value;
+121         }
+.fi
+.SH "Property Documentation"
+.PP 
+.SS "object DotArgs\&.Argument\&.DefaultValue\fC [get]\fP, \fC [set]\fP"
+
+.PP
+The default value that will be used if no value was passed on the command line\&. Using this when \fBIsRequired\fP is set will have no effect\&.
+.SS "string DotArgs\&.Argument\&.HelpMessage\fC [get]\fP, \fC [set]\fP"
+
+.PP
+The message that will be displayed in the help page for your program\&.
+.SS "string DotArgs\&.Argument\&.HelpPlaceholder\fC [get]\fP, \fC [set]\fP"
+
+.PP
+Value that will be shown (in upper case) in the usage page for this argument\&. Setting this to \fCnull\fP will display the default value (i\&.e\&. OPTION, COLLECTION, etc\&.)\&. 
+.SS "bool DotArgs\&.Argument\&.IsRequired\fC [get]\fP, \fC [protected set]\fP"
+
+.PP
+Flag indicating whether this argument is required, i\&.e\&. must be provided via the command line\&. 
+.SS "bool DotArgs\&.Argument\&.NeedsValue\fC [get]\fP, \fC [protected set]\fP"
+
+.PP
+Indicates whether this argument requires an explicit option\&.
+.SS "Action< object > DotArgs\&.Argument\&.Processor\fC [get]\fP, \fC [set]\fP"
+
+.PP
+A method that can be executed when the command line arguments are processed\&.
+.SS "bool DotArgs\&.Argument\&.SupportsMultipleValues\fC [get]\fP, \fC [protected set]\fP"
+
+.PP
+Flag indicating whether multplie calls to \fBSetValue\fP will add a value or overwrite the existing one\&. 
+.SS "Func< object, bool > DotArgs\&.Argument\&.Validator\fC [get]\fP, \fC [set]\fP"
+
+.PP
+A method that can be used to validate a value for this argument\&.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

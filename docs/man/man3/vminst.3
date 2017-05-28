@@ -1,0 +1,100 @@
+.TH "vminst" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vminst
+.SH SYNOPSIS
+.br
+.PP
+.SS "Classes"
+
+.in +1c
+.ti -1c
+.RI "class \fBInstruction\fP"
+.br
+.RI "Basis Klasse jeder \fBInstruction\fP "
+.ti -1c
+.RI "class \fBInstructions\fP"
+.br
+.RI "Liste aller vorhandenen Instructionen "
+.ti -1c
+.RI "class \fBRegister\fP"
+.br
+.RI "Item der \fBRegisters\fP Liste "
+.ti -1c
+.RI "class \fBRegisters\fP"
+.br
+.RI "Liste aller vorhandenen \fBRegister\fP "
+.in -1c
+.SS "Enumerations"
+
+.in +1c
+.ti -1c
+.RI "enum \fBInstructionParam2\fP : int { \fBInstructionParam2\&.Register\fP = 0, \fBInstructionParam2\&.Value\fP = 1, \fBInstructionParam2\&.Pointer\fP = 2, \fBInstructionParam2\&.Lable\fP = 3, \fBInstructionParam2\&.Variable\fP = 4, \fBInstructionParam2\&.No\fP = 9 }
+.RI "Typ arten eines Parameter ""
+.br
+.ti -1c
+.RI "enum \fBRegisterType\fP : int { \fBRegisterType\&.Cpu\fP = 0, \fBRegisterType\&.Flags\fP = 2, \fBRegisterType\&.Cache\fP = 3 }"
+.br
+.in -1c
+.SH "Enumeration Type Documentation"
+.PP 
+.SS "enum \fBvminst\&.InstructionParam2\fP : int\fC [strong]\fP"
+
+.PP
+Typ arten eines Parameter 
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIRegister \fP\fP
+Nachfolgene Bits ist ein Adresse zu einen \fBRegister\fP 
+.TP
+\fB\fIValue \fP\fP
+Nachfolgene Bits ist eine Value (#) 
+.TP
+\fB\fIPointer \fP\fP
+Nachfolgene Bits ist ein zeiger (@) 
+.TP
+\fB\fILable \fP\fP
+Nachfolgene Bits ist ein Label (\&.) 
+.TP
+\fB\fIVariable \fP\fP
+Nachfolgene Bits ist ein Variable verweis (%) 
+.TP
+\fB\fINo \fP\fP
+.PP
+.nf
+30                                   : int
+31     {
+35         Register = 0,
+39         Value = 1,
+43         Pointer = 2,
+47         Lable = 3,
+51         Variable = 4,
+52         No = 9
+53     }
+.fi
+.SS "enum \fBvminst\&.RegisterType\fP : int\fC [strong]\fP"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fICpu \fP\fP
+.TP
+\fB\fIFlags \fP\fP
+.TP
+\fB\fICache \fP\fP
+.PP
+.nf
+152                              : int
+153     {
+154         Cpu = 0,
+155         Flags = 2,
+156         Cache = 3
+157     }
+.fi
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

@@ -1,0 +1,78 @@
+.TH "vmcli.MainClass" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vmcli.MainClass
+.SH SYNOPSIS
+.br
+.PP
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static void \fBMain\fP (string[] args)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Member Function Documentation"
+.PP 
+.SS "static void vmcli\&.MainClass\&.Main (string [] args)\fC [static]\fP"
+
+.PP
+.nf
+14         {
+15             CommandLineArgs cmd = new CommandLineArgs();
+16 
+17 
+18             cmd\&.RegisterArgument( "i", new OptionArgument( "test\&.bin", true ) { HelpMessage="The image file\&." } );
+19             cmd\&.RegisterArgument( "r", new OptionArgument( "512b" )  { HelpMessage="Ram size\&. [> 0]" });
+20             cmd\&.RegisterArgument( "t", new OptionArgument( "raw", true) { HelpMessage="Image type: gz,raw" } );
+21             cmd\&.RegisterArgument( "o", new OptionArgument( "console", false) { HelpMessage="Debug output" } );
+22             cmd\&.RegisterArgument( "c", new OptionArgument( "2") { HelpMessage = "Number of CPU Cores" });
+23 
+24             cmd\&.SetDefaultArgument( "i" );
+25             cmd\&.RegisterHelpArgument();
+26 
+27             if( !cmd\&.Validate(args) )
+28             {
+29                 cmd\&.PrintHelp();
+30                 return;
+31             }
+32             string imageFile;
+33             string debugFile;
+34             UInt32 ramSize =10;
+35             uint numCores =  1;
+36             try
+37             {
+38                 imageFile = cmd\&.GetValue<string>( "i" );
+39                 ramSize = GetValueFromArg(cmd, "r" );
+40                 debugFile = cmd\&.GetValue<string>("o");
+41                 numCores = GetValueFromArg(cmd, "c");
+42             }
+43             catch {
+44                 cmd\&.PrintHelp();
+45                 return;
+46             }
+47 
+48             if (debugFile != "console") {
+49                 Console\&.SetOut (new System\&.IO\&.StreamWriter (debugFile));
+50             }
+51 
+52             VM\&.Instance\&.CreateVM (ramSize, (int)numCores);
+53             FramebufferForm form = new FramebufferForm ();
+54 
+55             byte[] data = InputFactory\&.GetInputClass (cmd)\&.LoadFromFile (imageFile);
+56 
+57             if (!VM\&.Instance\&.Start (data)) {
+58                 Console\&.WriteLine ("Not enough bytes to load this image\&.");
+59                 return;
+60             }
+61             form\&.Run ();
+62         }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

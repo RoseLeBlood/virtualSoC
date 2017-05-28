@@ -1,0 +1,1304 @@
+.TH "DotArgs.CommandLineArgs" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+DotArgs.CommandLineArgs \- Class for defining, validating and processing command line arguments\&. 
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBCommandLineArgs\fP ()"
+.br
+.RI "Initializes a new instance of the \fBCommandLineArgs\fP class\&."
+.ti -1c
+.RI "void \fBAddExample\fP (string description, string commandLine)"
+.br
+.RI "Adds an example that will be displayed on the help page\&."
+.ti -1c
+.RI "T \fBGetValue< T >\fP (string name)"
+.br
+.RI "Gets the value of an argument\&."
+.ti -1c
+.RI "void \fBPrintHelp\fP (string errorMessage=null)"
+.br
+.RI "Prints a help message describing the effects of all available options\&."
+.ti -1c
+.RI "void \fBProcess\fP ()"
+.br
+.RI "Processes all registered arguments that have their \fBArgument\&.Processor\fP set\&. "
+.ti -1c
+.RI "void \fBRegisterAlias\fP (string originalName, string alias)"
+.br
+.RI "Registers an alias for an existing entry\&."
+.ti -1c
+.RI "void \fBRegisterArgument\fP (string name, \fBArgument\fP arg)"
+.br
+.RI "Registers a new argument\&."
+.ti -1c
+.RI "void \fBRegisterHelpArgument\fP (string name='help')"
+.br
+.RI "Registers a help argument that will display the help page for the program if set by the user\&. "
+.ti -1c
+.RI "void \fBSetDefaultArgument\fP (string argument)"
+.br
+.RI "Sets the default argument that will be filled when no argument name is given\&. "
+.ti -1c
+.RI "bool \fBValidate\fP (string[] args, \fBOptionalOut\fP< string[]> outErrors=null)"
+.br
+.RI "Processes a set of command line arguments\&."
+.ti -1c
+.RI "bool \fBValidate\fP (string args, \fBOptionalOut\fP< string[]> outErrors=null)"
+.br
+.RI "Processes a set of command line arguments\&."
+.ti -1c
+.RI "\fBCommandLineArgs\fP ()"
+.br
+.RI "Initializes a new instance of the \fBCommandLineArgs\fP class\&."
+.ti -1c
+.RI "void \fBAddExample\fP (string description, string commandLine)"
+.br
+.RI "Adds an example that will be displayed on the help page\&."
+.ti -1c
+.RI "T \fBGetValue< T >\fP (string name)"
+.br
+.RI "Gets the value of an argument\&."
+.ti -1c
+.RI "void \fBPrintHelp\fP (string errorMessage=null)"
+.br
+.RI "Prints a help message describing the effects of all available options\&."
+.ti -1c
+.RI "void \fBProcess\fP ()"
+.br
+.RI "Processes all registered arguments that have their \fBArgument\&.Processor\fP set\&. "
+.ti -1c
+.RI "void \fBRegisterAlias\fP (string originalName, string alias)"
+.br
+.RI "Registers an alias for an existing entry\&."
+.ti -1c
+.RI "void \fBRegisterArgument\fP (string name, \fBArgument\fP arg)"
+.br
+.RI "Registers a new argument\&."
+.ti -1c
+.RI "void \fBRegisterHelpArgument\fP (string name='help')"
+.br
+.RI "Registers a help argument that will display the help page for the program if set by the user\&. "
+.ti -1c
+.RI "void \fBSetDefaultArgument\fP (string argument)"
+.br
+.RI "Sets the default argument that will be filled when no argument name is given\&. "
+.ti -1c
+.RI "bool \fBValidate\fP (string[] args, \fBOptionalOut\fP< string[]> outErrors=null)"
+.br
+.RI "Processes a set of command line arguments\&."
+.ti -1c
+.RI "bool \fBValidate\fP (string args, \fBOptionalOut\fP< string[]> outErrors=null)"
+.br
+.RI "Processes a set of command line arguments\&."
+.ti -1c
+.RI "\fBCommandLineArgs\fP ()"
+.br
+.RI "Initializes a new instance of the \fBCommandLineArgs\fP class\&."
+.ti -1c
+.RI "void \fBAddExample\fP (string description, string commandLine)"
+.br
+.RI "Adds an example that will be displayed on the help page\&."
+.ti -1c
+.RI "T \fBGetValue< T >\fP (string name)"
+.br
+.RI "Gets the value of an argument\&."
+.ti -1c
+.RI "void \fBPrintHelp\fP (string errorMessage=null)"
+.br
+.RI "Prints a help message describing the effects of all available options\&."
+.ti -1c
+.RI "void \fBProcess\fP ()"
+.br
+.RI "Processes all registered arguments that have their \fBArgument\&.Processor\fP set\&. "
+.ti -1c
+.RI "void \fBRegisterAlias\fP (string originalName, string alias)"
+.br
+.RI "Registers an alias for an existing entry\&."
+.ti -1c
+.RI "void \fBRegisterArgument\fP (string name, \fBArgument\fP arg)"
+.br
+.RI "Registers a new argument\&."
+.ti -1c
+.RI "void \fBRegisterHelpArgument\fP (string name='help')"
+.br
+.RI "Registers a help argument that will display the help page for the program if set by the user\&. "
+.ti -1c
+.RI "void \fBSetDefaultArgument\fP (string argument)"
+.br
+.RI "Sets the default argument that will be filled when no argument name is given\&. "
+.ti -1c
+.RI "bool \fBValidate\fP (string[] args, \fBOptionalOut\fP< string[]> outErrors=null)"
+.br
+.RI "Processes a set of command line arguments\&."
+.ti -1c
+.RI "bool \fBValidate\fP (string args, \fBOptionalOut\fP< string[]> outErrors=null)"
+.br
+.RI "Processes a set of command line arguments\&."
+.in -1c
+.SS "Properties"
+
+.in +1c
+.ti -1c
+.RI "string \fBApplicationInfo\fP\fC [get, set]\fP"
+.br
+.RI "Information about the application that will be displayed in the usage page\&."
+.ti -1c
+.RI "string \fBExecuteableName\fP\fC [get, set]\fP"
+.br
+.RI "Name of the executeable that will be displayed in the usage page\&."
+.ti -1c
+.RI "TextWriter \fBOutputWriter\fP\fC [get, set]\fP"
+.br
+.RI "The TextWriter that is used to write the output\&. The default value is to use Console\&.Out "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Class for defining, validating and processing command line arguments\&.
+
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "DotArgs\&.CommandLineArgs\&.CommandLineArgs ()"
+
+.PP
+Initializes a new instance of the \fBCommandLineArgs\fP class\&.
+.PP
+.nf
+208         {
+209             OutputWriter = Console\&.Out;
+210             ExecuteableName = Path\&.GetFileNameWithoutExtension( Assembly\&.GetCallingAssembly()\&.Location );
+211         }
+.fi
+.SS "DotArgs\&.CommandLineArgs\&.CommandLineArgs ()"
+
+.PP
+Initializes a new instance of the \fBCommandLineArgs\fP class\&.
+.PP
+.nf
+208         {
+209             OutputWriter = Console\&.Out;
+210             ExecuteableName = Path\&.GetFileNameWithoutExtension( Assembly\&.GetCallingAssembly()\&.Location );
+211         }
+.fi
+.SS "DotArgs\&.CommandLineArgs\&.CommandLineArgs ()"
+
+.PP
+Initializes a new instance of the \fBCommandLineArgs\fP class\&.
+.PP
+.nf
+208         {
+209             OutputWriter = Console\&.Out;
+210             ExecuteableName = Path\&.GetFileNameWithoutExtension( Assembly\&.GetCallingAssembly()\&.Location );
+211         }
+.fi
+.SH "Member Function Documentation"
+.PP 
+.SS "void DotArgs\&.CommandLineArgs\&.AddExample (string description, string commandLine)"
+
+.PP
+Adds an example that will be displayed on the help page\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdescription\fP The name or description for this example\&.
+.br
+\fIcommandLine\fP The command line to display for this example\&.
+.RE
+.PP
+
+.PP
+.nf
+217         {
+218             Examples\&.Add( description, commandLine );
+219         }
+.fi
+.SS "void DotArgs\&.CommandLineArgs\&.AddExample (string description, string commandLine)"
+
+.PP
+Adds an example that will be displayed on the help page\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdescription\fP The name or description for this example\&.
+.br
+\fIcommandLine\fP The command line to display for this example\&.
+.RE
+.PP
+
+.PP
+.nf
+217         {
+218             Examples\&.Add( description, commandLine );
+219         }
+.fi
+.SS "void DotArgs\&.CommandLineArgs\&.AddExample (string description, string commandLine)"
+
+.PP
+Adds an example that will be displayed on the help page\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdescription\fP The name or description for this example\&.
+.br
+\fIcommandLine\fP The command line to display for this example\&.
+.RE
+.PP
+
+.PP
+.nf
+217         {
+218             Examples\&.Add( description, commandLine );
+219         }
+.fi
+.SS "T DotArgs\&.CommandLineArgs\&.GetValue< T > (string name)"
+
+.PP
+Gets the value of an argument\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP Name of the argument to read\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The effective value of the argument\&. If the argument was omitted in the arguments, the default value will be returned\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fISystem\&.Collections\&.Generic\&.KeyNotFoundException\fP An argument with the name \fIname\fP  was not registered\&. 
+.RE
+.PP
+
+.PP
+.nf
+231         {
+232             if( !Arguments\&.ContainsKey( name ) )
+233             {
+234                 throw new KeyNotFoundException( string\&.Format( "An collection with the name {0} was not registered\&.", name ) );
+235             }
+236 
+237             Argument entry = Arguments[name];
+238             return (T)entry\&.GetValue();
+239         }
+.fi
+.SS "T DotArgs\&.CommandLineArgs\&.GetValue< T > (string name)"
+
+.PP
+Gets the value of an argument\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP Name of the argument to read\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The effective value of the argument\&. If the argument was omitted in the arguments, the default value will be returned\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fISystem\&.Collections\&.Generic\&.KeyNotFoundException\fP An argument with the name \fIname\fP  was not registered\&. 
+.RE
+.PP
+
+.PP
+.nf
+231         {
+232             if( !Arguments\&.ContainsKey( name ) )
+233             {
+234                 throw new KeyNotFoundException( string\&.Format( "An collection with the name {0} was not registered\&.", name ) );
+235             }
+236 
+237             Argument entry = Arguments[name];
+238             return (T)entry\&.GetValue();
+239         }
+.fi
+.SS "T DotArgs\&.CommandLineArgs\&.GetValue< T > (string name)"
+
+.PP
+Gets the value of an argument\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP Name of the argument to read\&.
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The effective value of the argument\&. If the argument was omitted in the arguments, the default value will be returned\&. 
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fISystem\&.Collections\&.Generic\&.KeyNotFoundException\fP An argument with the name \fIname\fP  was not registered\&. 
+.RE
+.PP
+
+.PP
+.nf
+231         {
+232             if( !Arguments\&.ContainsKey( name ) )
+233             {
+234                 throw new KeyNotFoundException( string\&.Format( "An collection with the name {0} was not registered\&.", name ) );
+235             }
+236 
+237             Argument entry = Arguments[name];
+238             return (T)entry\&.GetValue();
+239         }
+.fi
+.SS "void DotArgs\&.CommandLineArgs\&.PrintHelp (string errorMessage = \fCnull\fP)"
+
+.PP
+Prints a help message describing the effects of all available options\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIerrorMessage\fP Optional error message to display\&.
+.RE
+.PP
+
+.PP
+.nf
+244         {
+245             string argList = string\&.Join( " ", Arguments\&.OrderBy( k => k\&.Key )\&.Select( a => ArgumentToArgList( a\&.Key, a\&.Value ) ) );
+246 
+247             OutputWriter\&.WriteLine( ApplicationInfo );
+248             OutputWriter\&.WriteLine();
+249             if( !string\&.IsNullOrWhiteSpace( errorMessage ) )
+250             {
+251                 OutputWriter\&.WriteLine( errorMessage );
+252                 OutputWriter\&.WriteLine();
+253             }
+254             OutputWriter\&.WriteLine( "Usage:" );
+255             OutputWriter\&.WriteLine( "{0} {1}", ExecuteableName, argList );
+256 
+257             foreach( KeyValuePair<string, Argument> kvp in Arguments\&.OrderBy( k => k\&.Key ) )
+258             {
+259                 OutputWriter\&.WriteLine();
+260                 OutputWriter\&.WriteLine( "{0,-10}{1}", kvp\&.Key, kvp\&.Value\&.HelpMessage );
+261                 OutputWriter\&.WriteLine( "{0,-10}{1}", "", GetArgumentInfo( kvp\&.Value ) );
+262             }
+263 
+264             if( Examples\&.Any() )
+265             {
+266                 OutputWriter\&.WriteLine();
+267                 OutputWriter\&.WriteLine( "Examples:" );
+268 
+269                 foreach( KeyValuePair<string, string> kvp in Examples\&.OrderBy( k => k\&.Key ) )
+270                 {
+271                     OutputWriter\&.WriteLine();
+272                     OutputWriter\&.WriteLine( kvp\&.Key );
+273                     OutputWriter\&.WriteLine( kvp\&.Value );
+274                 }
+275             }
+276         }
+.fi
+.SS "void DotArgs\&.CommandLineArgs\&.PrintHelp (string errorMessage = \fCnull\fP)"
+
+.PP
+Prints a help message describing the effects of all available options\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIerrorMessage\fP Optional error message to display\&.
+.RE
+.PP
+
+.PP
+.nf
+244         {
+245             string argList = string\&.Join( " ", Arguments\&.OrderBy( k => k\&.Key )\&.Select( a => ArgumentToArgList( a\&.Key, a\&.Value ) ) );
+246 
+247             OutputWriter\&.WriteLine( ApplicationInfo );
+248             OutputWriter\&.WriteLine();
+249             if( !string\&.IsNullOrWhiteSpace( errorMessage ) )
+250             {
+251                 OutputWriter\&.WriteLine( errorMessage );
+252                 OutputWriter\&.WriteLine();
+253             }
+254             OutputWriter\&.WriteLine( "Usage:" );
+255             OutputWriter\&.WriteLine( "{0} {1}", ExecuteableName, argList );
+256 
+257             foreach( KeyValuePair<string, Argument> kvp in Arguments\&.OrderBy( k => k\&.Key ) )
+258             {
+259                 OutputWriter\&.WriteLine();
+260                 OutputWriter\&.WriteLine( "{0,-10}{1}", kvp\&.Key, kvp\&.Value\&.HelpMessage );
+261                 OutputWriter\&.WriteLine( "{0,-10}{1}", "", GetArgumentInfo( kvp\&.Value ) );
+262             }
+263 
+264             if( Examples\&.Any() )
+265             {
+266                 OutputWriter\&.WriteLine();
+267                 OutputWriter\&.WriteLine( "Examples:" );
+268 
+269                 foreach( KeyValuePair<string, string> kvp in Examples\&.OrderBy( k => k\&.Key ) )
+270                 {
+271                     OutputWriter\&.WriteLine();
+272                     OutputWriter\&.WriteLine( kvp\&.Key );
+273                     OutputWriter\&.WriteLine( kvp\&.Value );
+274                 }
+275             }
+276         }
+.fi
+.SS "void DotArgs\&.CommandLineArgs\&.PrintHelp (string errorMessage = \fCnull\fP)"
+
+.PP
+Prints a help message describing the effects of all available options\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIerrorMessage\fP Optional error message to display\&.
+.RE
+.PP
+
+.PP
+.nf
+244         {
+245             string argList = string\&.Join( " ", Arguments\&.OrderBy( k => k\&.Key )\&.Select( a => ArgumentToArgList( a\&.Key, a\&.Value ) ) );
+246 
+247             OutputWriter\&.WriteLine( ApplicationInfo );
+248             OutputWriter\&.WriteLine();
+249             if( !string\&.IsNullOrWhiteSpace( errorMessage ) )
+250             {
+251                 OutputWriter\&.WriteLine( errorMessage );
+252                 OutputWriter\&.WriteLine();
+253             }
+254             OutputWriter\&.WriteLine( "Usage:" );
+255             OutputWriter\&.WriteLine( "{0} {1}", ExecuteableName, argList );
+256 
+257             foreach( KeyValuePair<string, Argument> kvp in Arguments\&.OrderBy( k => k\&.Key ) )
+258             {
+259                 OutputWriter\&.WriteLine();
+260                 OutputWriter\&.WriteLine( "{0,-10}{1}", kvp\&.Key, kvp\&.Value\&.HelpMessage );
+261                 OutputWriter\&.WriteLine( "{0,-10}{1}", "", GetArgumentInfo( kvp\&.Value ) );
+262             }
+263 
+264             if( Examples\&.Any() )
+265             {
+266                 OutputWriter\&.WriteLine();
+267                 OutputWriter\&.WriteLine( "Examples:" );
+268 
+269                 foreach( KeyValuePair<string, string> kvp in Examples\&.OrderBy( k => k\&.Key ) )
+270                 {
+271                     OutputWriter\&.WriteLine();
+272                     OutputWriter\&.WriteLine( kvp\&.Key );
+273                     OutputWriter\&.WriteLine( kvp\&.Value );
+274                 }
+275             }
+276         }
+.fi
+.SS "void DotArgs\&.CommandLineArgs\&.Process ()"
+
+.PP
+Processes all registered arguments that have their \fBArgument\&.Processor\fP set\&. 
+.PP
+.nf
+282         {
+283             foreach( Argument arg in Arguments\&.Values\&.Where( a => !( a is AliasArgument ) ) )
+284             {
+285                 if( arg\&.Processor != null )
+286                 {
+287                     arg\&.Processor( arg\&.GetValue() );
+288                 }
+289             }
+290         }
+.fi
+.SS "void DotArgs\&.CommandLineArgs\&.Process ()"
+
+.PP
+Processes all registered arguments that have their \fBArgument\&.Processor\fP set\&. 
+.PP
+.nf
+282         {
+283             foreach( Argument arg in Arguments\&.Values\&.Where( a => !( a is AliasArgument ) ) )
+284             {
+285                 if( arg\&.Processor != null )
+286                 {
+287                     arg\&.Processor( arg\&.GetValue() );
+288                 }
+289             }
+290         }
+.fi
+.SS "void DotArgs\&.CommandLineArgs\&.Process ()"
+
+.PP
+Processes all registered arguments that have their \fBArgument\&.Processor\fP set\&. 
+.PP
+.nf
+282         {
+283             foreach( Argument arg in Arguments\&.Values\&.Where( a => !( a is AliasArgument ) ) )
+284             {
+285                 if( arg\&.Processor != null )
+286                 {
+287                     arg\&.Processor( arg\&.GetValue() );
+288                 }
+289             }
+290         }
+.fi
+.SS "void DotArgs\&.CommandLineArgs\&.RegisterAlias (string originalName, string alias)"
+
+.PP
+Registers an alias for an existing entry\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIoriginalName\fP Name of the original option\&.
+.br
+\fIalias\fP The alias to add for the option\&.
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fISystem\&.Collections\&.Generic\&.KeyNotFoundException\fP An entry with the name \fIoriginalName\fP  was not registered\&. 
+.RE
+.PP
+
+.PP
+.nf
+299         {
+300             if( !Arguments\&.ContainsKey( originalName ) )
+301             {
+302                 throw new KeyNotFoundException( string\&.Format( "An entry with the name {0} was not registered\&.", originalName ) );
+303             }
+304 
+305             AliasArgument entry = new AliasArgument( Arguments[originalName] );
+306             Arguments[alias] = entry;
+307         }
+.fi
+.SS "void DotArgs\&.CommandLineArgs\&.RegisterAlias (string originalName, string alias)"
+
+.PP
+Registers an alias for an existing entry\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIoriginalName\fP Name of the original option\&.
+.br
+\fIalias\fP The alias to add for the option\&.
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fISystem\&.Collections\&.Generic\&.KeyNotFoundException\fP An entry with the name \fIoriginalName\fP  was not registered\&. 
+.RE
+.PP
+
+.PP
+.nf
+299         {
+300             if( !Arguments\&.ContainsKey( originalName ) )
+301             {
+302                 throw new KeyNotFoundException( string\&.Format( "An entry with the name {0} was not registered\&.", originalName ) );
+303             }
+304 
+305             AliasArgument entry = new AliasArgument( Arguments[originalName] );
+306             Arguments[alias] = entry;
+307         }
+.fi
+.SS "void DotArgs\&.CommandLineArgs\&.RegisterAlias (string originalName, string alias)"
+
+.PP
+Registers an alias for an existing entry\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIoriginalName\fP Name of the original option\&.
+.br
+\fIalias\fP The alias to add for the option\&.
+.RE
+.PP
+\fBExceptions:\fP
+.RS 4
+\fISystem\&.Collections\&.Generic\&.KeyNotFoundException\fP An entry with the name \fIoriginalName\fP  was not registered\&. 
+.RE
+.PP
+
+.PP
+.nf
+299         {
+300             if( !Arguments\&.ContainsKey( originalName ) )
+301             {
+302                 throw new KeyNotFoundException( string\&.Format( "An entry with the name {0} was not registered\&.", originalName ) );
+303             }
+304 
+305             AliasArgument entry = new AliasArgument( Arguments[originalName] );
+306             Arguments[alias] = entry;
+307         }
+.fi
+.SS "void DotArgs\&.CommandLineArgs\&.RegisterArgument (string name, \fBArgument\fP arg)"
+
+.PP
+Registers a new argument\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP Name of the argument to register\&.
+.br
+\fIarg\fP The argument's configuration\&.
+.RE
+.PP
+
+.PP
+.nf
+313         {
+314             Arguments[name] = arg;
+315         }
+.fi
+.SS "void DotArgs\&.CommandLineArgs\&.RegisterArgument (string name, \fBArgument\fP arg)"
+
+.PP
+Registers a new argument\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP Name of the argument to register\&.
+.br
+\fIarg\fP The argument's configuration\&.
+.RE
+.PP
+
+.PP
+.nf
+313         {
+314             Arguments[name] = arg;
+315         }
+.fi
+.SS "void DotArgs\&.CommandLineArgs\&.RegisterArgument (string name, \fBArgument\fP arg)"
+
+.PP
+Registers a new argument\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP Name of the argument to register\&.
+.br
+\fIarg\fP The argument's configuration\&.
+.RE
+.PP
+
+.PP
+.nf
+313         {
+314             Arguments[name] = arg;
+315         }
+.fi
+.SS "void DotArgs\&.CommandLineArgs\&.RegisterHelpArgument (string name = \fC'help'\fP)"
+
+.PP
+Registers a help argument that will display the help page for the program if set by the user\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP Name of the flag\&. The default value is 'help'\&.
+.RE
+.PP
+
+.PP
+.nf
+322         {
+323             FlagArgument arg = new FlagArgument();
+324             arg\&.Processor = ( v ) => PrintHelp();
+325             arg\&.HelpMessage = "Displays this help\&.";
+326 
+327             RegisterArgument( name, arg );
+328         }
+.fi
+.SS "void DotArgs\&.CommandLineArgs\&.RegisterHelpArgument (string name = \fC'help'\fP)"
+
+.PP
+Registers a help argument that will display the help page for the program if set by the user\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP Name of the flag\&. The default value is 'help'\&.
+.RE
+.PP
+
+.PP
+.nf
+322         {
+323             FlagArgument arg = new FlagArgument();
+324             arg\&.Processor = ( v ) => PrintHelp();
+325             arg\&.HelpMessage = "Displays this help\&.";
+326 
+327             RegisterArgument( name, arg );
+328         }
+.fi
+.SS "void DotArgs\&.CommandLineArgs\&.RegisterHelpArgument (string name = \fC'help'\fP)"
+
+.PP
+Registers a help argument that will display the help page for the program if set by the user\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP Name of the flag\&. The default value is 'help'\&.
+.RE
+.PP
+
+.PP
+.nf
+322         {
+323             FlagArgument arg = new FlagArgument();
+324             arg\&.Processor = ( v ) => PrintHelp();
+325             arg\&.HelpMessage = "Displays this help\&.";
+326 
+327             RegisterArgument( name, arg );
+328         }
+.fi
+.SS "void DotArgs\&.CommandLineArgs\&.SetDefaultArgument (string argument)"
+
+.PP
+Sets the default argument that will be filled when no argument name is given\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargument\fP Name of the argument to use as the default\&.
+.RE
+.PP
+
+.PP
+.nf
+335         {
+336             if( !Arguments\&.ContainsKey( argument ) )
+337             {
+338                 throw new ArgumentException( string\&.Format( "Argument {0} was not registered", argument ), "argument" );
+339             }
+340 
+341             DefaultArgument = argument;
+342         }
+.fi
+.SS "void DotArgs\&.CommandLineArgs\&.SetDefaultArgument (string argument)"
+
+.PP
+Sets the default argument that will be filled when no argument name is given\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargument\fP Name of the argument to use as the default\&.
+.RE
+.PP
+
+.PP
+.nf
+335         {
+336             if( !Arguments\&.ContainsKey( argument ) )
+337             {
+338                 throw new ArgumentException( string\&.Format( "Argument {0} was not registered", argument ), "argument" );
+339             }
+340 
+341             DefaultArgument = argument;
+342         }
+.fi
+.SS "void DotArgs\&.CommandLineArgs\&.SetDefaultArgument (string argument)"
+
+.PP
+Sets the default argument that will be filled when no argument name is given\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargument\fP Name of the argument to use as the default\&.
+.RE
+.PP
+
+.PP
+.nf
+335         {
+336             if( !Arguments\&.ContainsKey( argument ) )
+337             {
+338                 throw new ArgumentException( string\&.Format( "Argument {0} was not registered", argument ), "argument" );
+339             }
+340 
+341             DefaultArgument = argument;
+342         }
+.fi
+.SS "bool DotArgs\&.CommandLineArgs\&.Validate (string [] args, \fBOptionalOut\fP< string[]> outErrors = \fCnull\fP)"
+
+.PP
+Processes a set of command line arguments\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargs\fP Command line arguments to process\&. This is usally coming from your Main method\&. 
+.br
+\fIoutErrors\fP Optional 'out' parameter that holds error strings for every encountered error\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCtrue\fP if the arguments in \fIargs\fP  are valid; otherwise \fCfalse\fP \&. 
+.RE
+.PP
+
+.PP
+.nf
+356         {
+357             return Validate( string\&.Join( " ", args ), outErrors );
+358         }
+.fi
+.SS "bool DotArgs\&.CommandLineArgs\&.Validate (string [] args, \fBOptionalOut\fP< string[]> outErrors = \fCnull\fP)"
+
+.PP
+Processes a set of command line arguments\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargs\fP Command line arguments to process\&. This is usally coming from your Main method\&. 
+.br
+\fIoutErrors\fP Optional 'out' parameter that holds error strings for every encountered error\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCtrue\fP if the arguments in \fIargs\fP  are valid; otherwise \fCfalse\fP \&. 
+.RE
+.PP
+
+.PP
+.nf
+356         {
+357             return Validate( string\&.Join( " ", args ), outErrors );
+358         }
+.fi
+.SS "bool DotArgs\&.CommandLineArgs\&.Validate (string [] args, \fBOptionalOut\fP< string[]> outErrors = \fCnull\fP)"
+
+.PP
+Processes a set of command line arguments\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargs\fP Command line arguments to process\&. This is usally coming from your Main method\&. 
+.br
+\fIoutErrors\fP Optional 'out' parameter that holds error strings for every encountered error\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCtrue\fP if the arguments in \fIargs\fP  are valid; otherwise \fCfalse\fP \&. 
+.RE
+.PP
+
+.PP
+.nf
+356         {
+357             return Validate( string\&.Join( " ", args ), outErrors );
+358         }
+.fi
+.SS "bool DotArgs\&.CommandLineArgs\&.Validate (string args, \fBOptionalOut\fP< string[]> outErrors = \fCnull\fP)"
+
+.PP
+Processes a set of command line arguments\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargs\fP Command line arguments to process\&. This is usally coming from your Main method\&. 
+.br
+\fIoutErrors\fP Optional 'out' parameter that holds error strings for every encountered error\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCtrue\fP if the arguments in \fIargs\fP  are valid; otherwise \fCfalse\fP \&. 
+.RE
+.PP
+
+.PP
+.nf
+372         {
+373             Reset();
+374 
+375             bool ignoreAlreadyHandled = false;
+376             if( DefaultArgument != null )
+377             {
+378                 ignoreAlreadyHandled = Arguments[DefaultArgument]\&.SupportsMultipleValues;
+379             }
+380 
+381             bool handledDefault = false;
+382             bool errors = false;
+383             List<string> errorList = new List<string>();
+384 
+385             List<string> parts = SplitCommandLine( args );
+386             for( int i = 0; i < parts\&.Count; ++i )
+387             {
+388                 string arg = GetArgName( parts[i] );
+389                 if( !IsArgumentName( parts[i] ) )
+390                 {
+391                     if( !handledDefault || ignoreAlreadyHandled )
+392                     {
+393                         parts[i] = string\&.Format( "/{0}={1}", DefaultArgument, arg );
+394                         arg = DefaultArgument;
+395 
+396                         handledDefault = true;
+397                     }
+398                 }
+399 
+400                 if( !Arguments\&.ContainsKey( arg ) )
+401                 {
+402                     if( DefaultArgument != null && ( !handledDefault || ignoreAlreadyHandled ) )
+403                     {
+404                         parts[i] = string\&.Format( "/{0}={1}", DefaultArgument, arg );
+405                         arg = DefaultArgument;
+406 
+407                         handledDefault = true;
+408                     }
+409                     else
+410                     {
+411                         errorList\&.Add( string\&.Format( "Unknown option: '{0}'", arg ) );
+412 
+413                         errors = true;
+414                         continue;
+415                     }
+416                 }
+417 
+418                 Argument entry = Arguments[arg];
+419 
+420                 if( entry\&.NeedsValue )
+421                 {
+422                     // Not so simple cases: Collection and Option
+423                     string value = ExtractValueFromArg( parts[i] );
+424 
+425                     if( value == null && i < parts\&.Count - 1 )
+426                     {
+427                         value = parts[i + 1];
+428 
+429                         if( Arguments\&.ContainsKey( GetArgName( value ) ) )
+430                         {
+431                             value = null;
+432                         }
+433                         else
+434                         {
+435                             i++;
+436                         }
+437                     }
+438 
+439                     if( value != null )
+440                     {
+441                         entry\&.SetValue( value );
+442                     }
+443                     else
+444                     {
+445                         // Missing argument
+446                         errorList\&.Add( string\&.Format( "Missing value for option '{0}'", arg ) );
+447                         errors = true;
+448                     }
+449                 }
+450                 else // Simple case: a flag
+451                 {
+452                     entry\&.SetValue( true );
+453                 }
+454             }
+455 
+456             foreach( KeyValuePair<string, Argument> kvp in Arguments )
+457             {
+458                 Argument entry = kvp\&.Value;
+459                 object value = entry\&.GetValue();
+460 
+461                 if( entry\&.IsRequired && value == null )
+462                 {
+463                     errorList\&.Add( string\&.Format( "Missing value for option '{0}'", kvp\&.Key ) );
+464                     errors = true;
+465                 }
+466 
+467                 if( !entry\&.Validate( value ) )
+468                 {
+469                     errorList\&.Add( string\&.Format( "{0}: Invalid value {1}", kvp\&.Key, value ) );
+470                     errors = true;
+471                 }
+472             }
+473 
+474             if( outErrors != null )
+475             {
+476                 outErrors\&.Result = errorList\&.Distinct()\&.ToArray();
+477             }
+478 
+479             return !errors;
+480         }
+.fi
+.SS "bool DotArgs\&.CommandLineArgs\&.Validate (string args, \fBOptionalOut\fP< string[]> outErrors = \fCnull\fP)"
+
+.PP
+Processes a set of command line arguments\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargs\fP Command line arguments to process\&. This is usally coming from your Main method\&. 
+.br
+\fIoutErrors\fP Optional 'out' parameter that holds error strings for every encountered error\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCtrue\fP if the arguments in \fIargs\fP  are valid; otherwise \fCfalse\fP \&. 
+.RE
+.PP
+
+.PP
+.nf
+372         {
+373             Reset();
+374 
+375             bool ignoreAlreadyHandled = false;
+376             if( DefaultArgument != null )
+377             {
+378                 ignoreAlreadyHandled = Arguments[DefaultArgument]\&.SupportsMultipleValues;
+379             }
+380 
+381             bool handledDefault = false;
+382             bool errors = false;
+383             List<string> errorList = new List<string>();
+384 
+385             List<string> parts = SplitCommandLine( args );
+386             for( int i = 0; i < parts\&.Count; ++i )
+387             {
+388                 string arg = GetArgName( parts[i] );
+389                 if( !IsArgumentName( parts[i] ) )
+390                 {
+391                     if( !handledDefault || ignoreAlreadyHandled )
+392                     {
+393                         parts[i] = string\&.Format( "/{0}={1}", DefaultArgument, arg );
+394                         arg = DefaultArgument;
+395 
+396                         handledDefault = true;
+397                     }
+398                 }
+399 
+400                 if( !Arguments\&.ContainsKey( arg ) )
+401                 {
+402                     if( DefaultArgument != null && ( !handledDefault || ignoreAlreadyHandled ) )
+403                     {
+404                         parts[i] = string\&.Format( "/{0}={1}", DefaultArgument, arg );
+405                         arg = DefaultArgument;
+406 
+407                         handledDefault = true;
+408                     }
+409                     else
+410                     {
+411                         errorList\&.Add( string\&.Format( "Unknown option: '{0}'", arg ) );
+412 
+413                         errors = true;
+414                         continue;
+415                     }
+416                 }
+417 
+418                 Argument entry = Arguments[arg];
+419 
+420                 if( entry\&.NeedsValue )
+421                 {
+422                     // Not so simple cases: Collection and Option
+423                     string value = ExtractValueFromArg( parts[i] );
+424 
+425                     if( value == null && i < parts\&.Count - 1 )
+426                     {
+427                         value = parts[i + 1];
+428 
+429                         if( Arguments\&.ContainsKey( GetArgName( value ) ) )
+430                         {
+431                             value = null;
+432                         }
+433                         else
+434                         {
+435                             i++;
+436                         }
+437                     }
+438 
+439                     if( value != null )
+440                     {
+441                         entry\&.SetValue( value );
+442                     }
+443                     else
+444                     {
+445                         // Missing argument
+446                         errorList\&.Add( string\&.Format( "Missing value for option '{0}'", arg ) );
+447                         errors = true;
+448                     }
+449                 }
+450                 else // Simple case: a flag
+451                 {
+452                     entry\&.SetValue( true );
+453                 }
+454             }
+455 
+456             foreach( KeyValuePair<string, Argument> kvp in Arguments )
+457             {
+458                 Argument entry = kvp\&.Value;
+459                 object value = entry\&.GetValue();
+460 
+461                 if( entry\&.IsRequired && value == null )
+462                 {
+463                     errorList\&.Add( string\&.Format( "Missing value for option '{0}'", kvp\&.Key ) );
+464                     errors = true;
+465                 }
+466 
+467                 if( !entry\&.Validate( value ) )
+468                 {
+469                     errorList\&.Add( string\&.Format( "{0}: Invalid value {1}", kvp\&.Key, value ) );
+470                     errors = true;
+471                 }
+472             }
+473 
+474             if( outErrors != null )
+475             {
+476                 outErrors\&.Result = errorList\&.Distinct()\&.ToArray();
+477             }
+478 
+479             return !errors;
+480         }
+.fi
+.SS "bool DotArgs\&.CommandLineArgs\&.Validate (string args, \fBOptionalOut\fP< string[]> outErrors = \fCnull\fP)"
+
+.PP
+Processes a set of command line arguments\&.
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargs\fP Command line arguments to process\&. This is usally coming from your Main method\&. 
+.br
+\fIoutErrors\fP Optional 'out' parameter that holds error strings for every encountered error\&. 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+\fCtrue\fP if the arguments in \fIargs\fP  are valid; otherwise \fCfalse\fP \&. 
+.RE
+.PP
+
+.PP
+.nf
+372         {
+373             Reset();
+374 
+375             bool ignoreAlreadyHandled = false;
+376             if( DefaultArgument != null )
+377             {
+378                 ignoreAlreadyHandled = Arguments[DefaultArgument]\&.SupportsMultipleValues;
+379             }
+380 
+381             bool handledDefault = false;
+382             bool errors = false;
+383             List<string> errorList = new List<string>();
+384 
+385             List<string> parts = SplitCommandLine( args );
+386             for( int i = 0; i < parts\&.Count; ++i )
+387             {
+388                 string arg = GetArgName( parts[i] );
+389                 if( !IsArgumentName( parts[i] ) )
+390                 {
+391                     if( !handledDefault || ignoreAlreadyHandled )
+392                     {
+393                         parts[i] = string\&.Format( "/{0}={1}", DefaultArgument, arg );
+394                         arg = DefaultArgument;
+395 
+396                         handledDefault = true;
+397                     }
+398                 }
+399 
+400                 if( !Arguments\&.ContainsKey( arg ) )
+401                 {
+402                     if( DefaultArgument != null && ( !handledDefault || ignoreAlreadyHandled ) )
+403                     {
+404                         parts[i] = string\&.Format( "/{0}={1}", DefaultArgument, arg );
+405                         arg = DefaultArgument;
+406 
+407                         handledDefault = true;
+408                     }
+409                     else
+410                     {
+411                         errorList\&.Add( string\&.Format( "Unknown option: '{0}'", arg ) );
+412 
+413                         errors = true;
+414                         continue;
+415                     }
+416                 }
+417 
+418                 Argument entry = Arguments[arg];
+419 
+420                 if( entry\&.NeedsValue )
+421                 {
+422                     // Not so simple cases: Collection and Option
+423                     string value = ExtractValueFromArg( parts[i] );
+424 
+425                     if( value == null && i < parts\&.Count - 1 )
+426                     {
+427                         value = parts[i + 1];
+428 
+429                         if( Arguments\&.ContainsKey( GetArgName( value ) ) )
+430                         {
+431                             value = null;
+432                         }
+433                         else
+434                         {
+435                             i++;
+436                         }
+437                     }
+438 
+439                     if( value != null )
+440                     {
+441                         entry\&.SetValue( value );
+442                     }
+443                     else
+444                     {
+445                         // Missing argument
+446                         errorList\&.Add( string\&.Format( "Missing value for option '{0}'", arg ) );
+447                         errors = true;
+448                     }
+449                 }
+450                 else // Simple case: a flag
+451                 {
+452                     entry\&.SetValue( true );
+453                 }
+454             }
+455 
+456             foreach( KeyValuePair<string, Argument> kvp in Arguments )
+457             {
+458                 Argument entry = kvp\&.Value;
+459                 object value = entry\&.GetValue();
+460 
+461                 if( entry\&.IsRequired && value == null )
+462                 {
+463                     errorList\&.Add( string\&.Format( "Missing value for option '{0}'", kvp\&.Key ) );
+464                     errors = true;
+465                 }
+466 
+467                 if( !entry\&.Validate( value ) )
+468                 {
+469                     errorList\&.Add( string\&.Format( "{0}: Invalid value {1}", kvp\&.Key, value ) );
+470                     errors = true;
+471                 }
+472             }
+473 
+474             if( outErrors != null )
+475             {
+476                 outErrors\&.Result = errorList\&.Distinct()\&.ToArray();
+477             }
+478 
+479             return !errors;
+480         }
+.fi
+.SH "Property Documentation"
+.PP 
+.SS "string DotArgs\&.CommandLineArgs\&.ApplicationInfo\fC [get]\fP, \fC [set]\fP"
+
+.PP
+Information about the application that will be displayed in the usage page\&.MyCoolProgram v1\&.2 Copyright (C) John Smith <smith@example.com>
+.SS "string DotArgs\&.CommandLineArgs\&.ExecuteableName\fC [get]\fP, \fC [set]\fP"
+
+.PP
+Name of the executeable that will be displayed in the usage page\&.The default value for this is the name of the assembly containing the code that created this object\&. 
+.SS "TextWriter DotArgs\&.CommandLineArgs\&.OutputWriter\fC [get]\fP, \fC [set]\fP"
+
+.PP
+The TextWriter that is used to write the output\&. The default value is to use Console\&.Out 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

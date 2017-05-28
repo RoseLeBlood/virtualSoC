@@ -1,0 +1,196 @@
+.TH "Vcsos.Komponent.Core" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Vcsos.Komponent.Core
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits \fBVcsos\&.Komponent\&.vmKomponente\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBCore\fP (int number, bool running=false)"
+.br
+.ti -1c
+.RI "int \fBAnd\fP (int v1, int v2)"
+.br
+.ti -1c
+.RI "int \fBOr\fP (int v1, int v2)"
+.br
+.ti -1c
+.RI "int \fBXor\fP (int v1, int v2)"
+.br
+.ti -1c
+.RI "int \fBNeg\fP (int v1)"
+.br
+.ti -1c
+.RI "int \fBXNor\fP (int v1, int v2)"
+.br
+.ti -1c
+.RI "int \fBNor\fP (int v1, int v2)"
+.br
+.ti -1c
+.RI "int \fBNand\fP (int v1, int v2)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "const float \fBBaudMhz\fP = 22\&.1184f"
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBCacheStack\fP \fBm_pCallStack\fP"
+.br
+.ti -1c
+.RI "\fBAkku\fP \fBm_pAkku\fP"
+.br
+.ti -1c
+.RI "bool \fBm_bStarted\fP"
+.br
+.in -1c
+.SS "Properties"
+
+.in +1c
+.ti -1c
+.RI "ulong \fBTicks\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "\fBAkku\fP \fBAkku\fP\fC [get, set]\fP"
+.br
+.ti -1c
+.RI "bool \fBRunning\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "\fBRegister\fP \fBRegister\fP\fC [get, set]\fP"
+.br
+.ti -1c
+.RI "\fBCacheStack\fP \fBStack\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "int \fBCoreNumber\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "string \fBName\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "string \fBAuthor\fP\fC [get]\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Vcsos\&.Komponent\&.Core\&.Core (int number, bool running = \fCfalse\fP)"
+
+.PP
+.nf
+63                                                      : base("Referenz Core " + number\&.ToString(), "Anna-Sophia Schroeck")
+64         {
+65             m_iCoreNumber = number;
+66             m_pRegister = new Register ();
+67             m_pAkku = new Akku (this);
+68             
+69             m_pCallStack = new CacheStack  (135, "Core-Register" + number\&.ToString()); // 32 Unterprogramme
+70             m_bStarted = running;
+71             m_pRegister\&.ip = 7;
+72 
+73         }
+.fi
+.SH "Member Function Documentation"
+.PP 
+.SS "int Vcsos\&.Komponent\&.Core\&.And (int v1, int v2)"
+
+.PP
+.nf
+81         {
+82             return v1 & v2;
+83         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Core\&.Nand (int v1, int v2)"
+
+.PP
+.nf
+105         {
+106             return -(v1 & v2);
+107         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Core\&.Neg (int v1)"
+
+.PP
+.nf
+93         {
+94             return -v1;
+95         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Core\&.Nor (int v1, int v2)"
+
+.PP
+.nf
+101         {
+102             return -(v1 | v2);
+103         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Core\&.Or (int v1, int v2)"
+
+.PP
+.nf
+85         {
+86             return v1 | v2;
+87         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Core\&.XNor (int v1, int v2)"
+
+.PP
+.nf
+97         {
+98             return -(v1 ^ v2);
+99         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Core\&.Xor (int v1, int v2)"
+
+.PP
+.nf
+89         {
+90             return v1 ^ v2;
+91         }
+.fi
+.SH "Member Data Documentation"
+.PP 
+.SS "const float Vcsos\&.Komponent\&.Core\&.BaudMhz = 22\&.1184f"
+
+.SS "bool Vcsos\&.Komponent\&.Core\&.m_bStarted\fC [protected]\fP"
+
+.SS "\fBAkku\fP Vcsos\&.Komponent\&.Core\&.m_pAkku\fC [protected]\fP"
+
+.SS "\fBCacheStack\fP Vcsos\&.Komponent\&.Core\&.m_pCallStack\fC [protected]\fP"
+
+.SH "Property Documentation"
+.PP 
+.SS "\fBAkku\fP Vcsos\&.Komponent\&.Core\&.Akku\fC [get]\fP, \fC [set]\fP"
+
+.SS "string Vcsos\&.Komponent\&.vmKomponente\&.Author\fC [get]\fP, \fC [inherited]\fP"
+
+.SS "int Vcsos\&.Komponent\&.Core\&.CoreNumber\fC [get]\fP"
+
+.SS "string Vcsos\&.Komponent\&.vmKomponente\&.Name\fC [get]\fP, \fC [inherited]\fP"
+
+.SS "\fBRegister\fP Vcsos\&.Komponent\&.Core\&.Register\fC [get]\fP, \fC [set]\fP"
+
+.SS "bool Vcsos\&.Komponent\&.Core\&.Running\fC [get]\fP"
+
+.SS "\fBCacheStack\fP Vcsos\&.Komponent\&.Core\&.Stack\fC [get]\fP"
+
+.SS "ulong Vcsos\&.Komponent\&.Core\&.Ticks\fC [get]\fP"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

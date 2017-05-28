@@ -1,0 +1,164 @@
+.TH "Vcsos.Komponent.CacheStack" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Vcsos.Komponent.CacheStack
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBCacheStack\fP (int size, string name)"
+.br
+.ti -1c
+.RI "void \fBPush\fP (byte data)"
+.br
+.ti -1c
+.RI "byte \fBPop\fP ()"
+.br
+.ti -1c
+.RI "void \fBPush32\fP (int value)"
+.br
+.ti -1c
+.RI "int \fBPop32\fP ()"
+.br
+.ti -1c
+.RI "byte \fBPeek\fP ()"
+.br
+.ti -1c
+.RI "int \fBPeek32\fP ()"
+.br
+.ti -1c
+.RI "override string \fBToString\fP ()"
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBMemory\fP \fBm_pCache\fP"
+.br
+.in -1c
+.SS "Properties"
+
+.in +1c
+.ti -1c
+.RI "int \fBMaxAdress\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "short \fBSP\fP\fC [get, set]\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Vcsos\&.Komponent\&.CacheStack\&.CacheStack (int size, string name)"
+
+.PP
+.nf
+89         {
+90             m_pCache = new Memory (size, name);
+91             m_pCache\&.Write ((ushort)(m_pCache\&.Size-1), 0); // Current Adress
+92             m_pCache\&.Write ((ushort)(m_pCache\&.Size-1), 2); // Max Adresse
+93         }
+.fi
+.SH "Member Function Documentation"
+.PP 
+.SS "byte Vcsos\&.Komponent\&.CacheStack\&.Peek ()"
+
+.PP
+.nf
+130         {
+131             return m_pCache [(int)(SP + 1)];
+132         }
+.fi
+.SS "int Vcsos\&.Komponent\&.CacheStack\&.Peek32 ()"
+
+.PP
+.nf
+134         {
+135             byte[] _l = new byte[4];
+136 
+137             for (int i = 0; i < 4; i++) {
+138                 _l[i] = VM\&.Instance\&.Ram [VM\&.Instance\&.CurrentCore\&.Register\&.sp+1+i];
+139             }
+140 
+141             return _l\&.ToInt ();
+142         }
+.fi
+.SS "byte Vcsos\&.Komponent\&.CacheStack\&.Pop ()"
+
+.PP
+.nf
+103         {
+104             if (SP != MaxAdress) {
+105                 byte b = m_pCache [(int)(++SP)];
+106                 m_pCache [(int)SP] = 0;
+107                 return b;
+108             } else {
+109                 // INTERRUPT
+110                 return 0;
+111             }
+112         }
+.fi
+.SS "int Vcsos\&.Komponent\&.CacheStack\&.Pop32 ()"
+
+.PP
+.nf
+122         {
+123             byte[] _l = new byte[4];
+124             for (int i = 0; i < 4; i++)
+125                 _l [i] = Pop ();
+126 
+127             return _l\&.ToInt ();
+128         }
+.fi
+.SS "void Vcsos\&.Komponent\&.CacheStack\&.Push (byte data)"
+
+.PP
+.nf
+95         {
+96             if (SP > 7) {
+97                 m_pCache [(int)SP] = data; SP = (short)(SP - 1);
+98             } else {
+99                 // INTERRUPT
+100             }
+101         }
+.fi
+.SS "void Vcsos\&.Komponent\&.CacheStack\&.Push32 (int value)"
+
+.PP
+.nf
+114         {
+115             byte[] _l = value\&.ToBytes ();
+116             Array\&.Reverse (_l);
+117             for (int i = 0; i < _l\&.Length; i++)
+118                 Push (_l [i]);
+119             //Push (0);
+120         }
+.fi
+.SS "override string Vcsos\&.Komponent\&.CacheStack\&.ToString ()"
+
+.PP
+.nf
+144         {
+145             return m_pCache\&.ToString ();
+146         }
+.fi
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBMemory\fP Vcsos\&.Komponent\&.CacheStack\&.m_pCache\fC [protected]\fP"
+
+.SH "Property Documentation"
+.PP 
+.SS "int Vcsos\&.Komponent\&.CacheStack\&.MaxAdress\fC [get]\fP"
+
+.SS "short Vcsos\&.Komponent\&.CacheStack\&.SP\fC [get]\fP, \fC [set]\fP"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

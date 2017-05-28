@@ -1,0 +1,54 @@
+.TH "vmasm.DeflateOutput" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vmasm.DeflateOutput
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits \fBvmasm\&.IModuleOutput\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "bool \fBWriteToFile\fP (byte[] asmdata, string file)"
+.br
+.in -1c
+.SS "Properties"
+
+.in +1c
+.ti -1c
+.RI "string \fBName\fP\fC [get]\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Member Function Documentation"
+.PP 
+.SS "bool vmasm\&.DeflateOutput\&.WriteToFile (byte [] asmdata, string file)"
+
+.PP
+Implements \fBvmasm\&.IModuleOutput\fP\&.
+.PP
+.nf
+33         {
+34 
+35             file = file\&.Contains("bin\&.df") ? file : file  + "bin\&.df";
+36 
+37             using(var sfile = new System\&.IO\&.FileStream(file, System\&.IO\&.FileMode\&.Create))
+38             {
+39                 using(DeflateStream gStream = new DeflateStream(sfile, CompressionMode\&.Compress))
+40                     gStream\&.Write (asmdata, 0, asmdata\&.Length);
+41             }
+42             return true;
+43         }
+.fi
+.SH "Property Documentation"
+.PP 
+.SS "string vmasm\&.DeflateOutput\&.Name\fC [get]\fP"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

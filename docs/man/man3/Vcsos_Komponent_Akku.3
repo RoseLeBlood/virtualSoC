@@ -1,0 +1,516 @@
+.TH "Vcsos.Komponent.Akku" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Vcsos.Komponent.Akku \- \fBAkku\fP des Virtualen SoCs  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBAkku\fP (\fBCore\fP pCpu)"
+.br
+.RI "Konstruktor des Akkus "
+.ti -1c
+.RI "void \fBMoveAX\fP (Int32 data)"
+.br
+.RI "Weist dem CPU-Register AX ein wert zu "
+.ti -1c
+.RI "int \fBMoveFromAX\fP ()"
+.br
+.RI "lese die Daten aus dem \fBRegister\fP AX "
+.ti -1c
+.RI "int \fBMoveFromBX\fP ()"
+.br
+.RI "lese die Daten aus dem \fBRegister\fP BX "
+.ti -1c
+.RI "int \fBAdd\fP (int data)"
+.br
+.RI "Addiere den Wert aus Parameter mit dem \fBRegister\fP AX "
+.ti -1c
+.RI "int \fBDec\fP (int data)"
+.br
+.RI "Decriment der Daten "
+.ti -1c
+.RI "int \fBInc\fP (int data)"
+.br
+.RI "Increnent "
+.ti -1c
+.RI "int \fBCmplTwo\fP (int data)"
+.br
+.RI "Berechne das 2er Kompliment "
+.ti -1c
+.RI "int \fBMul\fP (int data)"
+.br
+.RI "Multipliziere Data mit \fBRegister\fP AX "
+.ti -1c
+.RI "int \fBMul\fP (int a, int data)"
+.br
+.ti -1c
+.RI "int \fBDiv\fP (int data)"
+.br
+.ti -1c
+.RI "int \fBDiv\fP (int a, int data)"
+.br
+.ti -1c
+.RI "int \fBSub\fP (int data)"
+.br
+.RI "Subtration vom \fBRegister\fP AX "
+.ti -1c
+.RI "int \fBSub\fP (int a, int b)"
+.br
+.ti -1c
+.RI "int \fBAdd\fP (int A, int B)"
+.br
+.RI "Addition zweier Zahlen (32bit) "
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fBAkku\fP des Virtualen SoCs 
+
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Vcsos\&.Komponent\&.Akku\&.Akku (\fBCore\fP pCpu)"
+
+.PP
+Konstruktor des Akkus 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIpCpu\fP Der zu verwendene \fBCPU\fP
+.RE
+.PP
+
+.PP
+.nf
+41         {
+42             m_pCpu = pCpu;
+43         }
+.fi
+.SH "Member Function Documentation"
+.PP 
+.SS "int Vcsos\&.Komponent\&.Akku\&.Add (int data)"
+
+.PP
+Addiere den Wert aus Parameter mit dem \fBRegister\fP AX 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdata\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Die Summe der Addition
+.RE
+.PP
+
+.PP
+.nf
+74         {
+75             int result = 0;
+76             int carry = (int)(m_pCpu\&.Register\&.CarryFlag ? 1 : 0);
+77 
+78             m_pCpu\&.Register\&.OverFlow = Add (m_pCpu\&.Register\&.ax, data, ref carry, ref result);
+79             m_pCpu\&.Register\&.ax = result;
+80             m_pCpu\&.Register\&.CarryFlag = carry == 1;
+81             m_pCpu\&.Register\&.UnderFlow = false;
+82 
+83             return result;
+84         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Akku\&.Add (int A, int B)"
+
+.PP
+Addition zweier Zahlen (32bit) 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIA\fP Erster Summand der Addition
+.br
+\fIB\fP Zweiter Summand der Addition
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Ergebniss der Addition von A und B
+.RE
+.PP
+
+.PP
+.nf
+312         {
+313             int result = 0;
+314             int carry = (int)(m_pCpu\&.Register\&.CarryFlag ? 1 : 0);
+315 
+316             m_pCpu\&.Register\&.OverFlow = Add (A, B, ref carry, ref result);
+317             m_pCpu\&.Register\&.CarryFlag = carry == 1;
+318             return result;
+319         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Akku\&.CmplTwo (int data)"
+
+.PP
+Berechne das 2er Kompliment 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdata\fP Die Daten von denen das 2er Kompliment erstellt werden soll
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Das 2er Kompliment
+.RE
+.PP
+
+.PP
+.nf
+109         {
+110             return ~data + 1;
+111         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Akku\&.Dec (int data)"
+
+.PP
+Decriment der Daten 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdata\fP Die zu Decrimente Zahl
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Das ergebniss
+.RE
+.PP
+
+.PP
+.nf
+91         {
+92             return Add (data, -1);
+93         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Akku\&.Div (int data)"
+
+.PP
+Dividiere \fBRegister\fP AX mit data 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdata\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Das ergebniss der Operation
+.RE
+.PP
+
+.PP
+.nf
+174         {
+175             if (m_pCpu\&.Register\&.ax == 0) // Ist Register AX gleich 0\&.\&.\&.
+176             {
+177                 // Setze Flag DivByZero
+178                 m_pCpu\&.Register\&.DivByZero = true;
+179                 // gebe null zurück
+180                 return 0;
+181             }
+182             // Ist data positive dann setze AkkuHelp auf true
+183             m_pCpu\&.Register\&.AkkuHelp = (data > 0);
+184             // weise data zu - Ist AkkuHelp true dann das 2er Kompliment sonst data
+185             data = (!m_pCpu\&.Register\&.AkkuHelp) ? CmplTwo(data) : data;
+186 
+187             // Weise dem Register CX den Wert aus Register AX zu
+188             m_pCpu\&.Register\&.cx = m_pCpu\&.Register\&.ax;
+189             // Weise dem Register BX zu - Ist Register AX negative das 2er Kompliment von Register AX
+190             // sonst den Wert aus Register AX
+191             m_pCpu\&.Register\&.bx = (m_pCpu\&.Register\&.ax < 0) ? 
+192                 CmplTwo(m_pCpu\&.Register\&.ax) : m_pCpu\&.Register\&.ax;
+193             // Weise dem Register AX null zu
+194             m_pCpu\&.Register\&.ax = 0;
+195 
+196             // Führe die Division als Addition durch 
+197             while (m_pCpu\&.Register\&.bx >= data) { // solange wie Register BX größer data ist 
+198                 // Weise dem Register BX das Ergebniss aus der Addition von Register BX und
+199                 // dem 2er Kompliment von data zu
+200                 m_pCpu\&.Register\&.bx = Add(m_pCpu\&.Register\&.bx, ~data + 1);
+201                 // Weise dem Carry Flag false zu
+202                 m_pCpu\&.Register\&.CarryFlag = false;
+203                 // Addiere auf Register AX eine 1 
+204                 Add(1);
+205             }
+206             // Weise dem Register AX das Ergebniss der Division zu
+207             m_pCpu\&.Register\&.ax = (!m_pCpu\&.Register\&.AkkuHelp ^ !(m_pCpu\&.Register\&.cx > 0)) ? CmplTwo( m_pCpu\&.Register\&.ax) 
+208                 : m_pCpu\&.Register\&.ax;
+209             
+210             // Gebe das Ergebniss aus dem Register AX zurück
+211             return m_pCpu\&.Register\&.ax;
+212         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Akku\&.Div (int a, int data)"
+
+.PP
+.nf
+214         {
+215             if (a == 0) // Ist a gleich 0\&.\&.\&.
+216             {
+217                 // Setze Flag DivByZero
+218                 m_pCpu\&.Register\&.DivByZero = true;
+219                 // gebe null zurück
+220                 return 0;
+221             }
+222             // Ist data positive dann setze AkkuHelp auf true
+223             m_pCpu\&.Register\&.AkkuHelp = (data > 0);
+224             // weise data zu - Ist AkkuHelp true dann das 2er Kompliment sonst data
+225             data = (!m_pCpu\&.Register\&.AkkuHelp) ? CmplTwo(data) : data;
+226 
+227             // Weise dem Register CX den Wert a zu
+228             m_pCpu\&.Register\&.cx = a;
+229             // Weise dem Register BX zu - Ist a negative das 2er Kompliment von a
+230             // sonst a
+231             m_pCpu\&.Register\&.bx = (a < 0) ?
+232                 CmplTwo(a) : a;
+233             // Weise dem Register a null zu
+234             a = 0;
+235 
+236             // Führe die Division als Addition durch 
+237             while (m_pCpu\&.Register\&.bx >= data)
+238             { // solange wie Register BX größer data ist 
+239               // Weise dem Register BX das Ergebniss aus der Addition von Register BX und
+240               // dem 2er Kompliment von data zu
+241                 m_pCpu\&.Register\&.bx = Add(m_pCpu\&.Register\&.bx, ~data + 1);
+242                 // Weise dem Carry Flag false zu
+243                 m_pCpu\&.Register\&.CarryFlag = false;
+244                 // Addiere auf a eine 1 
+245                 Add(a, 1);
+246             }
+247             // gibt das Ergebniss der Division zu
+248             return (!m_pCpu\&.Register\&.AkkuHelp ^ !(m_pCpu\&.Register\&.cx > 0)) ? CmplTwo(a) : a;
+249         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Akku\&.Inc (int data)"
+
+.PP
+Increnent 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdata\fP die zu Incremierende Daten
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+.RE
+.PP
+
+.PP
+.nf
+100         {
+101             return Add (data, +1);
+102         }
+.fi
+.SS "void Vcsos\&.Komponent\&.Akku\&.MoveAX (Int32 data)"
+
+.PP
+Weist dem CPU-Register AX ein wert zu 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdata\fP 
+.RE
+.PP
+
+.PP
+.nf
+49         {
+50             m_pCpu\&.Register\&.ax = data;
+51         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Akku\&.MoveFromAX ()"
+
+.PP
+lese die Daten aus dem \fBRegister\fP AX 
+.PP
+\fBReturns:\fP
+.RS 4
+Daten aus dem \fBRegister\fP AX
+.RE
+.PP
+
+.PP
+.nf
+57         {
+58             return m_pCpu\&.Register\&.ax;
+59         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Akku\&.MoveFromBX ()"
+
+.PP
+lese die Daten aus dem \fBRegister\fP BX 
+.PP
+\fBReturns:\fP
+.RS 4
+Daten aus dem \fBRegister\fP BX
+.RE
+.PP
+
+.PP
+.nf
+65         {
+66             return m_pCpu\&.Register\&.bx;
+67         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Akku\&.Mul (int data)"
+
+.PP
+Multipliziere Data mit \fBRegister\fP AX 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdata\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Das Ergebniss der Multiplikation
+.RE
+.PP
+
+.PP
+.nf
+118         {
+119             //AkkuHelp Flag (intern) zuweisen
+120             m_pCpu\&.Register\&.AkkuHelp = (data > 0);
+121             // Testen ob AkkuHelp true ist dann erstelle das 2er Kompliment von data und weise
+122             // es data zu (2er Kompliment wenn data eine positive zahl enthält)
+123             data = (!m_pCpu\&.Register\&.AkkuHelp) ? CmplTwo(data) : data;
+124 
+125             // Weise dem Register BX den Wert aus dem Register BX zu
+126             m_pCpu\&.Register\&.bx = m_pCpu\&.Register\&.ax;
+127         
+128             // Addiere Register AX mit Register BX per Schleife (data-1)
+129             for (uint i = 0; i < data -1; i++) {
+130                 m_pCpu\&.Register\&.ax = Add (m_pCpu\&.Register\&.bx, m_pCpu\&.Register\&.ax);
+131             }
+132             // Wenn Register AX kleiner als Register BX ist dann liegt ein Overflow vor
+133             m_pCpu\&.Register\&.OverFlow = (m_pCpu\&.Register\&.ax < m_pCpu\&.Register\&.bx);
+134             // Wenn Register AkkuHelp false ist erstelle das 2er Compliment vom Register AX 
+135             // und weise dies Register AX ist sonst Weise Register AX Revister AX zu
+136             m_pCpu\&.Register\&.ax = (!m_pCpu\&.Register\&.AkkuHelp) ? CmplTwo( m_pCpu\&.Register\&.ax) 
+137                 : m_pCpu\&.Register\&.ax;
+138             
+139             // Return das Etgebnoss der Multiplikation
+140             return m_pCpu\&.Register\&.ax;
+141         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Akku\&.Mul (int a, int data)"
+
+.PP
+.nf
+145         {
+146             //AkkuHelp Flag (intern) zuweisen
+147             m_pCpu\&.Register\&.AkkuHelp = (data > 0);
+148             // Testen ob AkkuHelp true ist dann erstelle das 2er Kompliment von data und weise
+149             // es data zu (2er Kompliment wenn data eine positive zahl enthält)
+150             data = (!m_pCpu\&.Register\&.AkkuHelp) ? CmplTwo(data) : data;
+151 
+152             // Weise dem Register BX den Wert aus dem Register BX zu
+153             m_pCpu\&.Register\&.bx = a;
+154 
+155             // Addiere Register AX mit Register BX per Schleife (data-1)
+156             for (uint i = 0; i < data - 1; i++)
+157             {
+158                 a = Add(m_pCpu\&.Register\&.bx, a);
+159             }
+160             // Wenn Register AX kleiner als Register BX ist dann liegt ein Overflow vor
+161             m_pCpu\&.Register\&.OverFlow = (a < m_pCpu\&.Register\&.bx);
+162             // Wenn Register AkkuHelp false ist erstelle das 2er Compliment vom Register AX 
+163             // und weise dies Register AX ist sonst Weise Register AX Revister AX zu
+164             return (!m_pCpu\&.Register\&.AkkuHelp) ? CmplTwo(a)
+165                 : a;
+166         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Akku\&.Sub (int data)"
+
+.PP
+Subtration vom \fBRegister\fP AX 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdata\fP Die Zahl die von AX subrrahiert werden soll
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Ergebniss der Subtration
+.RE
+.PP
+
+.PP
+.nf
+256         {
+257             int result = 0; // result : speichern des Ergebnisses
+258             int carry = (int)(m_pCpu\&.Register\&.CarryFlag ? 1 : 0); // carry : carry-flag als int from bool
+259 
+260             // Subtraction per Zweiterkompliment und Addition
+261             // benutze old carry und speichere das ergebniss in result
+262             m_pCpu\&.Register\&.OverFlow = Add (m_pCpu\&.Register\&.ax, ~data + 1, ref carry, ref result);
+263             // speichern des Ergebnisses der Addition in den Register AX
+264             m_pCpu\&.Register\&.ax = result;
+265             // speichern des Carry Flags
+266             m_pCpu\&.Register\&.CarryFlag = carry == 1;
+267 
+268             // ist OverFlow (OF) flag gesetzt\&.\&.\&.
+269             if (m_pCpu\&.Register\&.OverFlow) {
+270                 // Dann löscbe das Flag
+271                 m_pCpu\&.Register\&.OverFlow = false;
+272             }
+273             else
+274                 // Wenn nicht dann schaue ob underflow vorliegt (TODO)
+275                 m_pCpu\&.Register\&.UnderFlow = (result <= int\&.MaxValue);
+276 
+277             // rückgabe der variable result
+278             return result;
+279         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Akku\&.Sub (int a, int b)"
+
+.PP
+.nf
+281         {
+282             int result = 0; // result : speichern des Ergebnisses
+283             int carry = (int)(m_pCpu\&.Register\&.CarryFlag ? 1 : 0); // carry : carry-flag als int from bool
+284 
+285             // Subtraction per Zweiterkompliment und Addition
+286             // benutze old carry und speichere das ergebniss in result
+287             m_pCpu\&.Register\&.OverFlow = Add(a, ~b + 1, ref carry, ref result);
+288 
+289             // speichern des Carry Flags
+290             m_pCpu\&.Register\&.CarryFlag = carry == 1;
+291 
+292             // ist OverFlow (OF) flag gesetzt\&.\&.\&.
+293             if (m_pCpu\&.Register\&.OverFlow)
+294             {
+295                 // Dann löscbe das Flag
+296                 m_pCpu\&.Register\&.OverFlow = false;
+297             }
+298             else
+299                 // Wenn nicht dann schaue ob underflow vorliegt (TODO)
+300                 m_pCpu\&.Register\&.UnderFlow = (result <= int\&.MaxValue);
+301 
+302             // rückgabe der variable result
+303             return result;
+304         }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

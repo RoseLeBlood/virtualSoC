@@ -1,0 +1,90 @@
+.TH "vmasm.DefinesDef" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vmasm.DefinesDef
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits Dictionary< string, string >\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBDefinesDef\fP ()"
+.br
+.ti -1c
+.RI "bool \fBisLineADefine\fP (string line)"
+.br
+.ti -1c
+.RI "string \fBGetOld\fP (string key)"
+.br
+.ti -1c
+.RI "string \fBGet\fP (string l1)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "vmasm\&.DefinesDef\&.DefinesDef ()"
+
+.PP
+.nf
+28         {
+29         }
+.fi
+.SH "Member Function Documentation"
+.PP 
+.SS "string vmasm\&.DefinesDef\&.Get (string l1)"
+
+.PP
+.nf
+54         {
+55             // MOV FB+1, #34
+56             // L1= FB+1
+57             foreach (var item in this) {
+58                 if (l1\&.Contains (item\&.Key)) {
+59                     l1 = l1\&.Replace (item\&.Key, item\&.Value);
+60                 }
+61             }
+62 
+63             return l1;
+64         }
+.fi
+.SS "string vmasm\&.DefinesDef\&.GetOld (string key)"
+
+.PP
+.nf
+47         {
+48             if (this\&.ContainsKey (key)) {
+49                 this\&.TryGetValue (key, out key);
+50             }
+51             return key;
+52         }
+.fi
+.SS "bool vmasm\&.DefinesDef\&.isLineADefine (string line)"
+
+.PP
+.nf
+32         {
+33             if (line\&.Contains ("#define")) {
+34 
+35                 string[] def = line\&.Split (' ');
+36                 // 0 define
+37                 // 1 KEY
+38                 // 2 Value
+39 
+40                 Add (def [1], Get(def [2]));
+41 
+42                 return true;
+43             }
+44             return false;
+45         }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

@@ -1,0 +1,118 @@
+.TH "Vcsos.Komponent.FrameBufferInfo" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Vcsos.Komponent.FrameBufferInfo
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBFrameBufferInfo\fP (int typ)"
+.br
+.ti -1c
+.RI "override string \fBToString\fP ()"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "int \fBphysbase\fP"
+.br
+.ti -1c
+.RI "byte \fBBitsPerPixel\fP"
+.br
+.ti -1c
+.RI "int \fBWidth\fP"
+.br
+.ti -1c
+.RI "int \fBHeight\fP"
+.br
+.ti -1c
+.RI "int \fBSize\fP"
+.br
+.ti -1c
+.RI "\fBFrameBufferOrientation\fP \fBOrientation\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Vcsos\&.Komponent\&.FrameBufferInfo\&.FrameBufferInfo (int typ)"
+
+.PP
+.nf
+62         {
+63             physbase = 0xB000;
+64             Orientation = ( typ % 2 == 0 ) ? FrameBufferOrientation\&.Landscape :
+65                 FrameBufferOrientation\&.Portrait;
+66             typ = ( typ % 2 == 0 ) ? typ : typ - 1;
+67 
+68             switch ((FrameBufferSize)typ) {
+69             case FrameBufferSize\&.VMFB_360x480x32:
+70                 Width = 360;
+71                 Height = 480;
+72                 break;
+73             case FrameBufferSize\&.VMFB_720x240x32:
+74                 Width = 720;
+75                 Height = 240;
+76                 break;
+77             case FrameBufferSize\&.VMFB_800x600x32:
+78                 Width = 800;
+79                 Height = 600;
+80                 break;
+81             case FrameBufferSize\&.VMFB_1280x720x32:
+82                 Width = 1280;
+83                 Height = 720;
+84                 break;
+85             case FrameBufferSize\&.VMFB_720x480x32:
+86                 Width = 720;
+87                 Height = 480;
+88                 break;
+89             default:
+90                 Width = 360;
+91                 Height = 480;
+92                 break;
+93             }
+94             if (Orientation == FrameBufferOrientation\&.Portrait) {
+95                 int w = Width;
+96                 Width = Height;
+97                 Height = w;
+98             }
+99             BitsPerPixel = 24;
+100             Size = Width * Height * (BitsPerPixel/8);
+101         }
+.fi
+.SH "Member Function Documentation"
+.PP 
+.SS "override string Vcsos\&.Komponent\&.FrameBufferInfo\&.ToString ()"
+
+.PP
+.nf
+103         {
+104             return string\&.Format ("{0}x{1}-{2} {3} [0x{4:X4}:0x{5:X4}]", Width, Height, BitsPerPixel,
+105                 Orientation, physbase, physbase+Size);
+106         }
+.fi
+.SH "Member Data Documentation"
+.PP 
+.SS "byte Vcsos\&.Komponent\&.FrameBufferInfo\&.BitsPerPixel"
+
+.SS "int Vcsos\&.Komponent\&.FrameBufferInfo\&.Height"
+
+.SS "\fBFrameBufferOrientation\fP Vcsos\&.Komponent\&.FrameBufferInfo\&.Orientation"
+
+.SS "int Vcsos\&.Komponent\&.FrameBufferInfo\&.physbase"
+
+.SS "int Vcsos\&.Komponent\&.FrameBufferInfo\&.Size"
+
+.SS "int Vcsos\&.Komponent\&.FrameBufferInfo\&.Width"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

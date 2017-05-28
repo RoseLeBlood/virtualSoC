@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['width',['Width',['../d9/d80/struct_vcsos_1_1_komponent_1_1_frame_buffer_info.html#a1f8891ad5e83f460eb5a586664a8db7f',1,'Vcsos::Komponent::FrameBufferInfo']]]
+  ['variablecode',['VariableCode',['../d3/dc9/classvminst_1_1_instructions.html#aa87660d14c6482eefdea44ee76530a92',1,'vminst::Instructions']]],
+  ['variableins',['VariableIns',['../d3/dc9/classvminst_1_1_instructions.html#a24a56570dbbeae5670a0a0c443087549',1,'vminst::Instructions']]]
 ];

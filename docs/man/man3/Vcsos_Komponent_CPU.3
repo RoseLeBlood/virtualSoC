@@ -1,0 +1,91 @@
+.TH "Vcsos.Komponent.CPU" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Vcsos.Komponent.CPU
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits \fBVcsos\&.Komponent\&.vmKomponente\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBCPU\fP (int coreNumbers)"
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "\fBCacheStack\fP \fBm_pCacheStack\fP"
+.br
+.in -1c
+.SS "Properties"
+
+.in +1c
+.ti -1c
+.RI "\fBCacheStack\fP \fBIpc\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "int \fBCurrentCoreID\fP\fC [get, set]\fP"
+.br
+.ti -1c
+.RI "\fBCore\fP \fBCurrentCore\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "int \fBCores\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "\fBCore\fP \fBthis[int index]\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "string \fBName\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "string \fBAuthor\fP\fC [get]\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Vcsos\&.Komponent\&.CPU\&.CPU (int coreNumbers)"
+
+.PP
+.nf
+38                                     : base("Referenz CPU", "Anna-Sophia Schroeck")
+39         {
+40             m_lstCores = new List<Core>();
+41 
+42             for (int i = 0; i < coreNumbers; i++)
+43                 m_lstCores\&.Add(new Core(i, true));
+44             m_pCacheStack = new CacheStack(256, "CPU-IPC ");
+45             m_iCurCore = 0;
+46         }
+.fi
+.SH "Member Data Documentation"
+.PP 
+.SS "\fBCacheStack\fP Vcsos\&.Komponent\&.CPU\&.m_pCacheStack\fC [protected]\fP"
+
+.SH "Property Documentation"
+.PP 
+.SS "string Vcsos\&.Komponent\&.vmKomponente\&.Author\fC [get]\fP, \fC [inherited]\fP"
+
+.SS "int Vcsos\&.Komponent\&.CPU\&.Cores\fC [get]\fP"
+
+.SS "\fBCore\fP Vcsos\&.Komponent\&.CPU\&.CurrentCore\fC [get]\fP"
+
+.SS "int Vcsos\&.Komponent\&.CPU\&.CurrentCoreID\fC [get]\fP, \fC [set]\fP"
+
+.SS "\fBCacheStack\fP Vcsos\&.Komponent\&.CPU\&.Ipc\fC [get]\fP"
+
+.SS "string Vcsos\&.Komponent\&.vmKomponente\&.Name\fC [get]\fP, \fC [inherited]\fP"
+
+.SS "\fBCore\fP Vcsos\&.Komponent\&.CPU\&.this[int index]\fC [get]\fP"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

@@ -1,0 +1,77 @@
+.TH "Vcsos.Komponent.Timer" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Vcsos.Komponent.Timer
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits \fBVcsos\&.Komponent\&.vmKomponente\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBTimer\fP ()"
+.br
+.ti -1c
+.RI "void \fBCreate\fP ()"
+.br
+.ti -1c
+.RI "void \fBStart\fP ()"
+.br
+.in -1c
+.SS "Properties"
+
+.in +1c
+.ti -1c
+.RI "string \fBName\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "string \fBAuthor\fP\fC [get]\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Vcsos\&.Komponent\&.Timer\&.Timer ()"
+
+.PP
+.nf
+30                         : base("Timer R0", "Anna-Sophia Schroeck")
+31         {
+32             m_pTimer = new System\&.Timers\&.Timer ();
+33         }
+.fi
+.SH "Member Function Documentation"
+.PP 
+.SS "void Vcsos\&.Komponent\&.Timer\&.Create ()"
+
+.PP
+.nf
+35         {
+36             m_pTimer\&.Interval =  VM\&.Instance\&.CurrentCore\&.Register\&.Stack\&.Pop32();
+37             m_pTimer\&.AutoReset = VM\&.Instance\&.CurrentCore\&.Register\&.Stack\&.Pop32() == 1;
+38             m_pTimer\&.Elapsed += TimerElapsed;
+39 
+40         }
+.fi
+.SS "void Vcsos\&.Komponent\&.Timer\&.Start ()"
+
+.PP
+.nf
+42         {
+43             m_pTimer\&.Start ();
+44         }
+.fi
+.SH "Property Documentation"
+.PP 
+.SS "string Vcsos\&.Komponent\&.vmKomponente\&.Author\fC [get]\fP, \fC [inherited]\fP"
+
+.SS "string Vcsos\&.Komponent\&.vmKomponente\&.Name\fC [get]\fP, \fC [inherited]\fP"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

@@ -1,0 +1,68 @@
+.TH "vmcli.GzipInputType" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vmcli.GzipInputType
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits \fBvmcli\&.IInputType\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "byte [] \fBLoadFromFile\fP (string path)"
+.br
+.ti -1c
+.RI "byte [] \fBLoadFromStream\fP (System\&.IO\&.Stream stream)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Member Function Documentation"
+.PP 
+.SS "byte [] vmcli\&.GzipInputType\&.LoadFromFile (string path)"
+
+.PP
+Implements \fBvmcli\&.IInputType\fP\&.
+.PP
+.nf
+30         {
+31             try
+32             {
+33                 return LoadFromStream (new System\&.IO\&.FileStream (path, System\&.IO\&.FileMode\&.Open));
+34             }
+35             catch {
+36                 throw new Exception ("file not found");
+37             }
+38         }
+.fi
+.SS "byte [] vmcli\&.GzipInputType\&.LoadFromStream (System\&.IO\&.Stream stream)"
+
+.PP
+Implements \fBvmcli\&.IInputType\fP\&.
+.PP
+.nf
+40         {
+41             if (stream == null)
+42                 throw new Exception ("Stream is null");
+43 
+44             byte[] str = null;
+45 
+46             using(GZipStream gStream = new GZipStream (stream, CompressionMode\&.Decompress))
+47             {
+48                 using(MemoryStream mStream = new MemoryStream ())
+49                 {
+50                     gStream\&.CopyTo (mStream);
+51                     str = mStream\&.ToArray ();
+52                 }
+53             }
+54             return str;
+55         }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

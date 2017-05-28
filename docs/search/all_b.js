@@ -1,12 +1,12 @@
 var searchData=
 [
+  ['m_5fbstarted',['m_bStarted',['../d2/d92/class_vcsos_1_1_komponent_1_1_core.html#ade44587566452dfb7cadaa329df4c309',1,'Vcsos::Komponent::Core']]],
   ['m_5fpakku',['m_pAkku',['../d2/d92/class_vcsos_1_1_komponent_1_1_core.html#a37c330325b665df5746232b37deafbbb',1,'Vcsos::Komponent::Core']]],
   ['m_5fpcache',['m_pCache',['../df/d68/class_vcsos_1_1_komponent_1_1_cache_stack.html#a5cec03f94801438290f19a6e24630d62',1,'Vcsos::Komponent::CacheStack']]],
   ['m_5fpcachestack',['m_pCacheStack',['../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html#a01728bb2f0c0de6a1ee6213c9a9c8d54',1,'Vcsos::Komponent::CPU']]],
   ['m_5fpcallstack',['m_pCallStack',['../d2/d92/class_vcsos_1_1_komponent_1_1_core.html#affe0aedd040d646098bec5f204638932',1,'Vcsos::Komponent::Core']]],
   ['main',['Main',['../dd/de3/classvmasm_1_1_main_class.html#a547b8fff419aab005f48c9b2feaa2c84',1,'vmasm.MainClass.Main()'],['../d6/d25/classvmcli_1_1_main_class.html#a29f5f6e302c6ce2ee1aefa1d7f3dc239',1,'vmcli.MainClass.Main()']]],
   ['mainclass',['MainClass',['../dd/de3/classvmasm_1_1_main_class.html',1,'vmasm.MainClass'],['../d6/d25/classvmcli_1_1_main_class.html',1,'vmcli.MainClass']]],
-  ['mastercore',['MasterCore',['../d4/db6/class_vcsos_1_1_komponent_1_1_c_p_u.html#a801b46406140ab1e129fe713b3bd12b4',1,'Vcsos.Komponent.CPU.MasterCore()'],['../d6/dfa/class_vcsos_1_1_v_m.html#a2587a07affc121badfc7906ae621f0a6',1,'Vcsos.VM.MasterCore()']]],
   ['maxadress',['MaxAdress',['../df/d68/class_vcsos_1_1_komponent_1_1_cache_stack.html#a034cc06535ccbd3fb9b00ddc4a070948',1,'Vcsos::Komponent::CacheStack']]],
   ['memory',['Memory',['../dc/d2b/class_vcsos_1_1_komponent_1_1_memory.html',1,'Vcsos.Komponent.Memory'],['../d0/da6/class_vcsos_1_1_komponent_1_1_framebuffer.html#a241d84c5b13ac77e7da246c8a388580a',1,'Vcsos.Komponent.Framebuffer.Memory()'],['../dc/d2b/class_vcsos_1_1_komponent_1_1_memory.html#a9fba920a1c30fd4015e0dea7a480465c',1,'Vcsos.Komponent.Memory.Memory()']]],
   ['memory_2ecs',['Memory.cs',['../d0/d50/_memory_8cs.html',1,'']]],

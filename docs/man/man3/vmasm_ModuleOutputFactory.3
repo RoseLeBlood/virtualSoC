@@ -1,0 +1,62 @@
+.TH "vmasm.ModuleOutputFactory" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vmasm.ModuleOutputFactory
+.SH SYNOPSIS
+.br
+.PP
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static bool \fBWriteToFile\fP (byte[] asmdata, string file, string strType)"
+.br
+.ti -1c
+.RI "static bool \fBWriteToFile\fP (byte[] asmdata, string file, \fBModuleOutputType\fP eType)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Member Function Documentation"
+.PP 
+.SS "static bool vmasm\&.ModuleOutputFactory\&.WriteToFile (byte [] asmdata, string file, string strType)\fC [static]\fP"
+
+.PP
+.nf
+43         {
+44             strType = strType\&.ToUpper ();
+45             return WriteToFile (asmdata, file, (strType == "RAW") ? ModuleOutputType\&.RAW :
+46                 (strType == "GZ") ? ModuleOutputType\&.GZIP : ModuleOutputType\&.Deflate);
+47         }
+.fi
+.SS "static bool vmasm\&.ModuleOutputFactory\&.WriteToFile (byte [] asmdata, string file, \fBModuleOutputType\fP eType)\fC [static]\fP"
+
+.PP
+.nf
+49         {
+50             IModuleOutput output = null;
+51             switch (eType) {
+52             case ModuleOutputType\&.RAW:
+53                 output = new RawOutput ();
+54                 break;
+55             case ModuleOutputType\&.Deflate:
+56                 output = new DeflateOutput ();
+57                 break;
+58             case ModuleOutputType\&.GZIP:
+59                 output = new GzipOutput ();
+60                 break;
+61             default:
+62                 break;
+63             }
+64             if (output != null) {
+65                 return output\&.WriteToFile (asmdata, file);
+66             }
+67             return false;
+68         }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

@@ -1,0 +1,71 @@
+.TH "Vcsos.mm.vmmov" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Vcsos.mm.vmmov
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits \fBVcsos\&.mm\&.vmoperator\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "bool \fBParseAndRun\fP (\fBParserFactory\fP factory)"
+.br
+.in -1c
+.SS "Properties"
+
+.in +1c
+.ti -1c
+.RI "string \fBName\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "string \fBInfo\fP\fC [get]\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Member Function Documentation"
+.PP 
+.SS "bool Vcsos\&.mm\&.vmmov\&.ParseAndRun (\fBParserFactory\fP factory)"
+
+.PP
+Implements \fBVcsos\&.mm\&.vmoperator\fP\&.
+.PP
+.nf
+36         {
+37             // 97 - 110
+38             // OP(97,4) P(101,1) VAL(102 ,4) P(106,1) VAL(107, 4) 111 
+39             InstructionParam2 param1 = factory\&.getParam(4); // 101 4
+40             int param1V = VM\&.Instance\&.Ram\&.Read32 (VM\&.Instance\&.CurrentCore\&.Register\&.ip + 5); //106
+41             InstructionParam2 param2 = factory\&.getParam(9); // 110
+42             int param2V = VM\&.Instance\&.Ram\&.Read32 (VM\&.Instance\&.CurrentCore\&.Register\&.ip + 10); // 111
+43 
+44             if (param2 == InstructionParam2\&.Value)
+45                 VM\&.Instance\&.CurrentCore\&.Register\&.Stack\&.Push32 (param2V);
+46             else if (param2 == InstructionParam2\&.Register) {
+47                 VM\&.Instance\&.CurrentCore\&.Register\&.Stack\&.Push32 (VM\&.Instance\&.CurrentCore\&.Register\&.Get (factory\&.m_pRegisters [param2V]\&.Name));
+48             }
+49             else if(param2 == InstructionParam2\&.Pointer)
+50                 VM\&.Instance\&.CurrentCore\&.Register\&.Stack\&.Push32 (MemoryMap\&.Read32(param2V));
+51 
+52             if (param1 == InstructionParam2\&.Pointer)
+53                 MemoryMap\&.Write (VM\&.Instance\&.CurrentCore\&.Register\&.Stack\&.Pop32 (), (uint)param1V);
+54             else if (param1 == InstructionParam2\&.Register)
+55                 VM\&.Instance\&.CurrentCore\&.Register\&.Set (factory\&.m_pRegisters [param1V]\&.Name, VM\&.Instance\&.CurrentCore\&.Register\&.Stack\&.Pop32 ());
+56 
+57             return true;
+58         }
+.fi
+.SH "Property Documentation"
+.PP 
+.SS "string Vcsos\&.mm\&.vmmov\&.Info\fC [get]\fP"
+
+.SS "string Vcsos\&.mm\&.vmmov\&.Name\fC [get]\fP"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

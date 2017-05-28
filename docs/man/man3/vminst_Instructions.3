@@ -1,0 +1,107 @@
+.TH "vminst.Instructions" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vminst.Instructions \- Liste aller vorhandenen Instructionen  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits List< Instruction >\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBInstructions\fP ()"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "const int \fBVariableCode\fP = \-4"
+.br
+.in -1c
+.SS "Static Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "static readonly \fBInstruction\fP \fBVariableIns\fP = new \fBInstruction\fP('DIM', 8, 9)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Liste aller vorhandenen Instructionen 
+
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "vminst\&.Instructions\&.Instructions ()"
+
+.PP
+.nf
+98         {
+99             Add (new Instruction (  "NOP",  4,   0)); // OP(4)
+100             Add (new Instruction (  "PUSH", 9,   1)); // OP (4) R@#(2) 3(4)
+101             Add (new Instruction (  "POP",  9,   1)); // OP (4) R@#(2) 3(4)
+102             Add (new Instruction (  "PEEK", 9,   1)); // OP (4) R@#(2) 3(4)
+103             Add (new Instruction (  "HLT",  0,   0));
+104             Add (new Instruction (  "JMP",  0,   1)); 
+105             Add (new Instruction (  "LCK",  9,   1)); // not imp
+106             Add (new Instruction (  "UCK",  9,   1)); // not imp 
+107             Add (new Instruction (  "ADD",  9,   1)); 
+108             Add (new Instruction (  "SUB",  9,   1));
+109             Add (new Instruction (  "MUL",  9,   1));
+110             Add (new Instruction (  "DIV",  9,   1));
+111             Add (new Instruction (  "MOV", 14,   2)); // MOV(4) T(1)V(4) T(1)V(4) 
+112             Add (new Instruction (  "CLR",  9,   1)); // register, pointer, flag löschen
+113             Add (new Instruction (  "OR",  19,   3)); //+ OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
+114             Add (new Instruction (  "XOR", 19,   3)); //+ OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
+115             Add (new Instruction (  "AND", 19,   3)); //+ OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
+116             Add (new Instruction (  "NAND",19,   3)); // OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
+117             Add (new Instruction (  "NOR", 19,   3)); //+ OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
+118             Add (new Instruction (  "NXOR",19,   3)); //+ OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
+119             Add (new Instruction (  "NOT", 14,   2)); //+ OP(2) T(1)V(4)  T(1)V(4) 
+120             Add (new Instruction (  "RET",  0,   0));
+121             Add (new Instruction (  "CALL", 0,   1));
+122             Add (new Instruction (  "ADR",  19,   3)); // ADD return to V1 not to AX OP(2) T(1)V(4)  T(1)V(4) T(1)V(4)
+123             Add (new Instruction (  "SBR",  19,   3)); // SUB return to V1 not to AX OP(2) T(1)V(4)  T(1)V(4) T(1)V(4) 
+124             Add (new Instruction (  "MLR",  19,   3)); // MUL return to V1 not to AX OP(2) T(1)V(4)  T(1)V(4) T(1)V(4) 
+125             Add (new Instruction (  "DVR",  19,   3)); // DIV return to V1 not to AX OP(2) T(1)V(4)  T(1)V(4) T(1)V(4) 
+126             Add (new Instruction (  "JC",    0,   0)); // Jump Carry OP(4) T(1)V(4)
+127             Add (new Instruction (  "JNC",   0,   0)); // Jump not carry
+128             Add (new Instruction (  "JO",    0,   0)); // Jump overflow
+129             Add (new Instruction (  "JNO",   0,   0)); // Jump not overflow 
+130             Add (new Instruction (  "INC",   9,   1));
+131             Add (new Instruction (  "DEC",   9,   1));
+132             Add (new Instruction(   "INV",   9,   1)); // register, flags, pointer invetieren
+133             Add (new Instruction(   "STO",   9,   1)); // register, flags, pointer = 1
+134             //
+135             Add (new Instruction("JG", 19, 0)); // Jump greater: o1 o2 addr - OP(2) T(1)V(4) > T(1)V(4) T(1)V(4)
+136             Add (new Instruction("JGE", 19, 0)); // Jump greater equel  OP(2) T(1)V(4) >= T(1)V(4) T(1)V(4) 
+137             Add (new Instruction("JL", 19, 0)); // Jump less OP(2) T(1)V(4) < T(1)V(4) T(1)V(4) 
+138             Add (new Instruction("JLE", 19, 0)); // Jump less equel OP(2) T(1)V(4) <= T(1)V(4) T(1)V(4) 
+139 
+140 
+141             Add(new Instruction("CSC", 9, 1)); // SwitchCore OP(4) T(1)V(4)
+142             Add(new Instruction("CSP", 14, 1)); // StartCore Prozess  OP(4) T(1)V(4) T(1)V(4) - CSP CoreID IP 
+143             Add(new Instruction("CPU", 9, 1)); // Push to IPC OP(4) T(1)V(4)
+144             Add(new Instruction("CPO", 9, 1)); // Pop to IPC OP(4) T(1)V(4)
+145             Add(new Instruction("CEX", 19, 1)); // Send Exception CEX ExID {User daten} (push to IPC and stopp cC)
+146             
+147 
+148             Add(new Instruction (  "FBI",   4,   0));
+149             Add (new Instruction (  "FBSET",19,   3));
+150         }
+.fi
+.SH "Member Data Documentation"
+.PP 
+.SS "const int vminst\&.Instructions\&.VariableCode = \-4"
+
+.SS "readonly \fBInstruction\fP vminst\&.Instructions\&.VariableIns = new \fBInstruction\fP('DIM', 8, 9)\fC [static]\fP"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

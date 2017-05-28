@@ -1,0 +1,114 @@
+.TH "vminst.Registers" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vminst.Registers \- Liste aller vorhandenen \fBRegister\fP  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits List< Register >\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBRegisters\fP ()"
+.br
+.ti -1c
+.RI "bool \fBContains\fP (string str)"
+.br
+.RI "Ist der \fBRegister\fP Name in der Liste vorhanden "
+.ti -1c
+.RI "int \fBIndexOf\fP (string name)"
+.br
+.RI "Index of des gesuchten \fBRegisters\fP "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Liste aller vorhandenen \fBRegister\fP 
+
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "vminst\&.Registers\&.Registers ()"
+
+.PP
+.nf
+185         {
+186             Add (new Register ("SP", 0)); //0 Stack Pointer 
+187             Add (new Register ("IP", 0)); //1 Intrsuction Pointer
+188             Add (new Register ("AX", 0)); //2 Akku A
+189             Add (new Register ("BX", 0)); //3 Akku B
+190             Add (new Register ("TIK", 0)); //4 Current Tik
+191         
+192             Add (new Register ("CF", 2)); //5 Carry Flag
+193             Add (new Register ("ZF", 2)); //6 Zero Flag
+194             Add (new Register ("UF", 2)); //7 Underflow Flag
+195             Add (new Register ("OF", 2)); //8 Overflow Flag
+196             Add (new Register ("SF", 2));  //9 Sign Flag
+197 
+198             Add (new Register ("CSP", 3)); // Cache Stack Pointer
+199             Add (new Register ("CM", 3));  // Cache Max Size 
+200             Add (new Register ("CP", 3));  // Cache Peek
+201         }
+.fi
+.SH "Member Function Documentation"
+.PP 
+.SS "bool vminst\&.Registers\&.Contains (string str)"
+
+.PP
+Ist der \fBRegister\fP Name in der Liste vorhanden 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIstr\fP \fBRegister\fP name der gesucht wird
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+true wenn der Registername in der Liste ist
+.RE
+.PP
+
+.PP
+.nf
+208         {
+209             foreach (var item in this) {
+210                 if (item\&.Name == str)
+211                     return true;
+212             }
+213             return false;
+214         }
+.fi
+.SS "int vminst\&.Registers\&.IndexOf (string name)"
+
+.PP
+Index of des gesuchten \fBRegisters\fP 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIname\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Index des \fBRegisters\fP in der liste
+.RE
+.PP
+
+.PP
+.nf
+221         {
+222             for (int i = 0; i < Count; i++) {
+223                 if (this [i]\&.Name == name\&.ToUpper())
+224                     return i;
+225             }
+226             return -1;
+227         }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

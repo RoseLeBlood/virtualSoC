@@ -1,0 +1,116 @@
+.TH "Vcsos.Komponent.Stack" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Vcsos.Komponent.Stack
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBPush32\fP (int value)"
+.br
+.ti -1c
+.RI "int \fBPop32\fP ()"
+.br
+.ti -1c
+.RI "int \fBPeek32\fP ()"
+.br
+.ti -1c
+.RI "void \fBPush\fP (byte data)"
+.br
+.ti -1c
+.RI "byte \fBPop\fP ()"
+.br
+.ti -1c
+.RI "byte \fBPeek\fP ()"
+.br
+.ti -1c
+.RI "override string \fBToString\fP ()"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Member Function Documentation"
+.PP 
+.SS "byte Vcsos\&.Komponent\&.Stack\&.Peek ()"
+
+.PP
+.nf
+67         {
+68             return VM\&.Instance\&.Ram [VM\&.Instance\&.CurrentCore\&.Register\&.sp+1];
+69         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Stack\&.Peek32 ()"
+
+.PP
+.nf
+45         {
+46             byte[] _l = new byte[4];
+47 
+48             for (int i = 0; i < 4; i++) {
+49                 _l[i] = VM\&.Instance\&.Ram [VM\&.Instance\&.CurrentCore\&.Register\&.sp+1+i];
+50             }
+51 
+52             return _l\&.ToInt ();
+53         }
+.fi
+.SS "byte Vcsos\&.Komponent\&.Stack\&.Pop ()"
+
+.PP
+.nf
+60         {
+61             byte b = VM\&.Instance\&.Ram [VM\&.Instance\&.CurrentCore\&.Register\&.sp+1];
+62             VM\&.Instance\&.Ram [VM\&.Instance\&.CurrentCore\&.Register\&.sp + 1] = 0;
+63             VM\&.Instance\&.CurrentCore\&.Register\&.sp += 1;
+64             return b;
+65         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Stack\&.Pop32 ()"
+
+.PP
+.nf
+37         {
+38             byte[] _l = new byte[4];
+39             for (int i = 0; i < 4; i++)
+40                 _l [i] = Pop ();
+41             
+42             return _l\&.ToInt ();
+43         }
+.fi
+.SS "void Vcsos\&.Komponent\&.Stack\&.Push (byte data)"
+
+.PP
+.nf
+55         {
+56             VM\&.Instance\&.Ram [VM\&.Instance\&.CurrentCore\&.Register\&.sp] = data;
+57             VM\&.Instance\&.CurrentCore\&.Register\&.sp -= 1;
+58         }
+.fi
+.SS "void Vcsos\&.Komponent\&.Stack\&.Push32 (int value)"
+
+.PP
+.nf
+29         {
+30             byte[] _l = value\&.ToBytes ();
+31             Array\&.Reverse (_l);
+32             for (int i = 0; i < _l\&.Length; i++)
+33                 Push (_l [i]);
+34             //Push (0);
+35         }
+.fi
+.SS "override string Vcsos\&.Komponent\&.Stack\&.ToString ()"
+
+.PP
+.nf
+71         {
+72             return string\&.Format ("[Stack] Peek32: {0}", Peek32(), Peek());
+73         }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

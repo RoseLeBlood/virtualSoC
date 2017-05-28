@@ -1,0 +1,99 @@
+.TH "Vcsos.Assembler" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Vcsos.Assembler \- \fBAssembler\fP Klasse\&. Diese Klasse führt die Bearbeitzng aus  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBAssembler\fP (int numCores)"
+.br
+.ti -1c
+.RI "void \fBStart\fP ()"
+.br
+.RI "Starte das System "
+.ti -1c
+.RI "override string \fBToString\fP ()"
+.br
+.in -1c
+.SS "Properties"
+
+.in +1c
+.ti -1c
+.RI "bool \fBIsAlive\fP\fC [get]\fP"
+.br
+.RI "get ob system noch läuft "
+.in -1c
+.SH "Detailed Description"
+.PP 
+\fBAssembler\fP Klasse\&. Diese Klasse führt die Bearbeitzng aus 
+
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Vcsos\&.Assembler\&.Assembler (int numCores)"
+
+.PP
+.nf
+73         {
+74             m_pTimer = new System\&.Collections\&.Generic\&.List<NamedTimer>();
+75             m_objLock = new object();
+76 
+77             for (int i = 0; i < numCores; i++)
+78             {
+79                 m_pTimer\&.Add( new NamedTimer(1000\&.0 / (Core\&.BaudMhz), i) );
+80 
+81 
+82                 // weise dem Timer event Elapsed die Function TimerElapsed zu
+83                 m_pTimer[i]\&.Elapsed += TimerElapsed;
+84                 // Setze Timer AutoRest zu false (aus)
+85                 m_pTimer[i]\&.AutoReset = false;                
+86             }
+87 
+88             // Erstelle die Parser Faktory
+89             m_pParser = new ParserFactory ();
+90             // Setze die Variable m_bIsAlive auf true
+91             m_bIsAlive = true;
+92 
+93         }
+.fi
+.SH "Member Function Documentation"
+.PP 
+.SS "void Vcsos\&.Assembler\&.Start ()"
+
+.PP
+Starte das System 
+.PP
+.nf
+98         {
+99             foreach (var item in m_pTimer)
+100             {
+101                 item\&.Start();
+102             }
+103             // Starte den Timer somit das System
+104             //m_pTimer[0]\&.Start ();
+105         }
+.fi
+.SS "override string Vcsos\&.Assembler\&.ToString ()"
+
+.PP
+.nf
+183         {
+184             return m_pParser\&.ToString();
+185         }
+.fi
+.SH "Property Documentation"
+.PP 
+.SS "bool Vcsos\&.Assembler\&.IsAlive\fC [get]\fP"
+
+.PP
+get ob system noch läuft 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

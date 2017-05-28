@@ -1,0 +1,96 @@
+.TH "vminst.Instruction" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vminst.Instruction \- Basis Klasse jeder \fBInstruction\fP  
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBInstruction\fP (string text, int p1, int p2)"
+.br
+.RI "Konstruter zum erstellen eines OpCode "
+.ti -1c
+.RI "override string \fBToString\fP ()"
+.br
+.RI "\fBToString()\fP "
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "string \fBOpCode\fP"
+.br
+.RI "Name / String des Codes "
+.ti -1c
+.RI "int \fBOpParam1\fP"
+.br
+.RI "param1 = instruction Lenght in bytes; Param2 Parameter Anzahl "
+.in -1c
+.SH "Detailed Description"
+.PP 
+Basis Klasse jeder \fBInstruction\fP 
+
+
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "vminst\&.Instruction\&.Instruction (string text, int p1, int p2)"
+
+.PP
+Konstruter zum erstellen eines OpCode 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItext\fP Name des OpCodes
+.br
+\fIp1\fP Lenght in bytes 
+.br
+\fIp2\fP Parameter Count
+.RE
+.PP
+
+.PP
+.nf
+75         {
+76             OpCode = text;
+77             OpParam1 = p1;
+78             OpParam2 = p2;
+79         }
+.fi
+.SH "Member Function Documentation"
+.PP 
+.SS "override string vminst\&.Instruction\&.ToString ()"
+
+.PP
+\fBToString()\fP 
+.PP
+\fBReturns:\fP
+.RS 4
+instruction als string
+.RE
+.PP
+
+.PP
+.nf
+85         {
+86             return string\&.Format ("{0} {1} {3}", OpCode, OpParam1, OpParam2);
+87         }
+.fi
+.SH "Member Data Documentation"
+.PP 
+.SS "string vminst\&.Instruction\&.OpCode"
+
+.PP
+Name / String des Codes 
+.SS "int vminst\&.Instruction\&.OpParam1"
+
+.PP
+param1 = instruction Lenght in bytes; Param2 Parameter Anzahl 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

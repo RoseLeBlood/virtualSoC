@@ -1,0 +1,53 @@
+.TH "vmasm.GzipOutput" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vmasm.GzipOutput
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits \fBvmasm\&.IModuleOutput\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "bool \fBWriteToFile\fP (byte[] asmdata, string file)"
+.br
+.in -1c
+.SS "Properties"
+
+.in +1c
+.ti -1c
+.RI "string \fBName\fP\fC [get]\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Member Function Documentation"
+.PP 
+.SS "bool vmasm\&.GzipOutput\&.WriteToFile (byte [] asmdata, string file)"
+
+.PP
+Implements \fBvmasm\&.IModuleOutput\fP\&.
+.PP
+.nf
+33         {
+34             file = file\&.Contains("bin\&.gz") ? file : file  + "bin\&.gz";
+35 
+36             using(var sfile = new System\&.IO\&.FileStream(file, System\&.IO\&.FileMode\&.Create))
+37             {
+38                 using(GZipStream gStream = new GZipStream(sfile, CompressionMode\&.Compress))
+39                     gStream\&.Write (asmdata, 0, asmdata\&.Length);
+40             }
+41             return true;
+42         }
+.fi
+.SH "Property Documentation"
+.PP 
+.SS "string vmasm\&.GzipOutput\&.Name\fC [get]\fP"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

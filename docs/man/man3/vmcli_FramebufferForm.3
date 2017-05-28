@@ -1,0 +1,63 @@
+.TH "vmcli.FramebufferForm" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vmcli.FramebufferForm
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits GameWindow\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBFramebufferForm\fP ()"
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "override void \fBOnRenderFrame\fP (FrameEventArgs e)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "vmcli\&.FramebufferForm\&.FramebufferForm ()"
+
+.PP
+.nf
+38                                   : base(320,320, GraphicsMode\&.Default, 
+39             "", GameWindowFlags\&.Default, DisplayDevice\&.Default, 2,0,
+40             OpenTK\&.Graphics\&.GraphicsContextFlags\&.Default)
+41         {
+42             //VM\&.Instance\&.FBdev\&.UpdateFunction = UpdateBuffer;
+43             VM\&.Instance\&.FBdev\&.InitFunction = InitFrameBuffer;
+44 
+45             string versionOpenGL = GL\&.GetString(StringName\&.Version);
+46 
+47             Console\&.WriteLine ("vmGPU on OpenGL {0}", versionOpenGL);
+48         }
+.fi
+.SH "Member Function Documentation"
+.PP 
+.SS "override void vmcli\&.FramebufferForm\&.OnRenderFrame (FrameEventArgs e)\fC [protected]\fP"
+
+.PP
+.nf
+50         {
+51             GL\&.Clear( ClearBufferMask\&.ColorBufferBit );
+52             View ();
+53             Draw();
+54 
+55             SwapBuffers();
+56         }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

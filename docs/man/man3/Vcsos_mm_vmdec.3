@@ -1,0 +1,64 @@
+.TH "Vcsos.mm.vmdec" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Vcsos.mm.vmdec
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits \fBVcsos\&.mm\&.vmoperator\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "bool \fBParseAndRun\fP (\fBParserFactory\fP factory)"
+.br
+.in -1c
+.SS "Properties"
+
+.in +1c
+.ti -1c
+.RI "string \fBName\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "string \fBInfo\fP\fC [get]\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Member Function Documentation"
+.PP 
+.SS "bool Vcsos\&.mm\&.vmdec\&.ParseAndRun (\fBParserFactory\fP factory)"
+
+.PP
+Implements \fBVcsos\&.mm\&.vmoperator\fP\&.
+.PP
+.nf
+37         {
+38             InstructionParam2 param1 = factory\&.getParam(4);
+39             int param1V = VM\&.Instance\&.Ram\&.Read32(VM\&.Instance\&.CurrentCore\&.Register\&.ip + 5);
+40 
+41             if (param1 == InstructionParam2\&.Pointer)
+42             {
+43                 MemoryMap\&.Write(VM\&.Instance\&.CurrentCore\&.Akku\&.Dec(MemoryMap\&.Read32(param1V)), (uint)param1V);
+44             }
+45             else if (param1 == InstructionParam2\&.Register)
+46             {
+47                 VM\&.Instance\&.CurrentCore\&.Register\&.Set(factory\&.m_pRegisters[param1V]\&.Name,
+48                   VM\&.Instance\&.CurrentCore\&.Akku\&.Dec(VM\&.Instance\&.CurrentCore\&.Register\&.Get(factory\&.m_pRegisters[param1V]\&.Name)));
+49             }
+50 
+51             return true;
+52         }
+.fi
+.SH "Property Documentation"
+.PP 
+.SS "string Vcsos\&.mm\&.vmdec\&.Info\fC [get]\fP"
+
+.SS "string Vcsos\&.mm\&.vmdec\&.Name\fC [get]\fP"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

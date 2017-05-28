@@ -1,0 +1,61 @@
+.TH "vmcli.RawInputType" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vmcli.RawInputType
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits \fBvmcli\&.IInputType\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "byte [] \fBLoadFromStream\fP (System\&.IO\&.Stream stream)"
+.br
+.ti -1c
+.RI "byte [] \fBLoadFromFile\fP (string path)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Member Function Documentation"
+.PP 
+.SS "byte [] vmcli\&.RawInputType\&.LoadFromFile (string path)"
+
+.PP
+Implements \fBvmcli\&.IInputType\fP\&.
+.PP
+.nf
+39         {
+40             try
+41             {
+42                 return LoadFromStream (new System\&.IO\&.FileStream (path, System\&.IO\&.FileMode\&.Open));
+43             }
+44             catch {
+45                 throw new Exception ("file not found");
+46             }
+47         }
+.fi
+.SS "byte [] vmcli\&.RawInputType\&.LoadFromStream (System\&.IO\&.Stream stream)"
+
+.PP
+Implements \fBvmcli\&.IInputType\fP\&.
+.PP
+.nf
+29         {
+30             if (stream == null)
+31                 return new byte[] { (byte)4 };
+32             byte[] str = new byte[stream\&.Length];
+33             stream\&.Position = 0;
+34             stream\&.Read (str, 0, (int)stream\&.Length);
+35 
+36             return str;
+37         }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

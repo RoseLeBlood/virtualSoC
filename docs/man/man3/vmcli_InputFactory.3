@@ -1,0 +1,36 @@
+.TH "vmcli.InputFactory" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+vmcli.InputFactory
+.SH SYNOPSIS
+.br
+.PP
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static \fBIInputType\fP \fBGetInputClass\fP (\fBCommandLineArgs\fP cmd)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Member Function Documentation"
+.PP 
+.SS "static \fBIInputType\fP vmcli\&.InputFactory\&.GetInputClass (\fBCommandLineArgs\fP cmd)\fC [static]\fP"
+
+.PP
+.nf
+35         {
+36             if (cmd\&.GetValue<string> ("t") == "gz") {
+37                 return new GzipInputType();
+38             }
+39             
+40             return new RawInputType();
+41         }
+.fi
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

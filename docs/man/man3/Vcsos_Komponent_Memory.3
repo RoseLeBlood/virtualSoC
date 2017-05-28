@@ -1,0 +1,256 @@
+.TH "Vcsos.Komponent.Memory" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Vcsos.Komponent.Memory
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits Stream, and \fBVcsos\&.Komponent\&.IVMKomponente\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBMemory\fP (int mSize, string name)"
+.br
+.ti -1c
+.RI "int \fBWrite\fP (byte[] data, int addr=0)"
+.br
+.ti -1c
+.RI "int \fBWrite\fP (Int16 data, int addr)"
+.br
+.ti -1c
+.RI "int \fBWrite\fP (Int32 data, uint addr)"
+.br
+.ti -1c
+.RI "Int32 \fBRead32\fP (Int32 addr)"
+.br
+.ti -1c
+.RI "Int16 \fBRead16\fP (Int32 addr)"
+.br
+.ti -1c
+.RI "override string \fBToString\fP ()"
+.br
+.ti -1c
+.RI "override void \fBFlush\fP ()"
+.br
+.ti -1c
+.RI "override long \fBSeek\fP (long offset, SeekOrigin origin)"
+.br
+.ti -1c
+.RI "override void \fBSetLength\fP (long value)"
+.br
+.ti -1c
+.RI "override int \fBRead\fP (byte[] buffer, int offset, int count)"
+.br
+.ti -1c
+.RI "override void \fBWrite\fP (byte[] buffer, int offset, int count)"
+.br
+.in -1c
+.SS "Properties"
+
+.in +1c
+.ti -1c
+.RI "string \fBName\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "string \fBAuthor\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "int \fBSize\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "byte \fBthis[int adress]\fP\fC [get, set]\fP"
+.br
+.ti -1c
+.RI "override bool \fBCanRead\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "override bool \fBCanSeek\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "override bool \fBCanWrite\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "override long \fBLength\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "override long \fBPosition\fP\fC [get, set]\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Vcsos\&.Komponent\&.Memory\&.Memory (int mSize, string name)"
+
+.PP
+.nf
+49             : base ()
+50         {
+51             m_pMemory = new byte[mSize];
+52             m_iSize = mSize;
+53             m_strAutor = "Anna-Sophia Schröck";
+54             m_strName = name;
+55 
+56             this\&.Write (Utils\&.RandMemory (mSize), 0, mSize);
+57 
+58             Console\&.WriteLine ("[VmSoC Komponente] {0} Craeted", name);
+59         }
+.fi
+.SH "Member Function Documentation"
+.PP 
+.SS "override void Vcsos\&.Komponent\&.Memory\&.Flush ()"
+
+.PP
+.nf
+123         {
+124             
+125         }
+.fi
+.SS "override int Vcsos\&.Komponent\&.Memory\&.Read (byte [] buffer, int offset, int count)"
+
+.PP
+.nf
+138         {
+139             int read = Math\&.Min (count, Size);
+140 
+141             for (int i = offset; i < read; i++)
+142                 buffer [i] = m_pMemory [i];
+143 
+144             return read;
+145         }
+.fi
+.SS "Int16 Vcsos\&.Komponent\&.Memory\&.Read16 (Int32 addr)"
+
+.PP
+.nf
+93         {
+94             byte[] _d = Int16\&.MinValue\&.ToBytes();
+95 
+96             for (int i = 0; i < _d\&.Length; i++)
+97                 _d [i] = m_pMemory [addr + i];
+98 
+99             return _d\&.ToShort ();
+100         }
+.fi
+.SS "Int32 Vcsos\&.Komponent\&.Memory\&.Read32 (Int32 addr)"
+
+.PP
+.nf
+84         {
+85             byte[] _d = Int32\&.MinValue\&.ToBytes();
+86 
+87             for (int i = 0; i < _d\&.Length; i++)
+88                 _d [i] = m_pMemory [addr + i];
+89 
+90             return _d\&.ToUint ();
+91         }
+.fi
+.SS "override long Vcsos\&.Komponent\&.Memory\&.Seek (long offset, SeekOrigin origin)"
+
+.PP
+.nf
+128         {
+129             return 0;
+130         }
+.fi
+.SS "override void Vcsos\&.Komponent\&.Memory\&.SetLength (long value)"
+
+.PP
+.nf
+133         {
+134             
+135         }
+.fi
+.SS "override string Vcsos\&.Komponent\&.Memory\&.ToString ()"
+
+.PP
+.nf
+102         {
+103             var output = new StringWriter ();
+104 
+105             int address = 0;
+106             output\&.WriteLine (m_strName + ":");
+107             for (int i = 0; i < m_pMemory\&.Length; i++) {
+108                 var b = m_pMemory [i];
+109                 var b1 = m_pMemory [++i];
+110 
+111                 if (address == 0 || address%16==0)
+112                     output\&.Write(System\&.Environment\&.NewLine + "[{0:X4}] ", address);
+113                 address += 2;
+114                 output\&.Write(" {0:X2}{1:X2} ",(int)b, (int)b1);
+115 
+116             }
+117             return output\&.ToString ();
+118         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Memory\&.Write (byte [] data, int addr = \fC0\fP)"
+
+.PP
+.nf
+61         {
+62             for (int i = addr; i < data\&.Length; i++) {
+63                 m_pMemory [i] = data [i];
+64             }
+65             return addr + data\&.Length;
+66         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Memory\&.Write (Int16 data, int addr)"
+
+.PP
+.nf
+68         {
+69             byte[] _d = data\&.ToBytes ();
+70             for (uint i = 0; i < _d\&.Length; i++)
+71                 m_pMemory [addr + i] = _d [i];
+72 
+73             return addr + _d\&.Length;
+74         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Memory\&.Write (Int32 data, uint addr)"
+
+.PP
+.nf
+76         {
+77             byte[] _d = data\&.ToBytes ();
+78             for (uint i = 0; i < _d\&.Length; i++)
+79                 m_pMemory [addr + i] = _d [i];
+80 
+81             return (int)(addr + _d\&.Length);
+82         }
+.fi
+.SS "override void Vcsos\&.Komponent\&.Memory\&.Write (byte [] buffer, int offset, int count)"
+
+.PP
+.nf
+148         {
+149             for (int i = offset; i < count; i++)
+150                 m_pMemory [i] = buffer [i];
+151         }
+.fi
+.SH "Property Documentation"
+.PP 
+.SS "string Vcsos\&.Komponent\&.Memory\&.Author\fC [get]\fP"
+
+.SS "override bool Vcsos\&.Komponent\&.Memory\&.CanRead\fC [get]\fP"
+
+.SS "override bool Vcsos\&.Komponent\&.Memory\&.CanSeek\fC [get]\fP"
+
+.SS "override bool Vcsos\&.Komponent\&.Memory\&.CanWrite\fC [get]\fP"
+
+.SS "override long Vcsos\&.Komponent\&.Memory\&.Length\fC [get]\fP"
+
+.SS "string Vcsos\&.Komponent\&.Memory\&.Name\fC [get]\fP"
+
+.SS "override long Vcsos\&.Komponent\&.Memory\&.Position\fC [get]\fP, \fC [set]\fP"
+
+.SS "int Vcsos\&.Komponent\&.Memory\&.Size\fC [get]\fP"
+
+.SS "byte Vcsos\&.Komponent\&.Memory\&.this[int adress]\fC [get]\fP, \fC [set]\fP"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.

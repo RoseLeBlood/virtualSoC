@@ -1,0 +1,166 @@
+.TH "Vcsos.Komponent.Framebuffer" 3 "Sun May 28 2017" "Version 0.6.2" "virtualSoC" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Vcsos.Komponent.Framebuffer
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Inherits \fBVcsos\&.Komponent\&.vmKomponente\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBFramebuffer\fP ()"
+.br
+.ti -1c
+.RI "void \fBInit\fP ()"
+.br
+.ti -1c
+.RI "void \fBDestroy\fP ()"
+.br
+.ti -1c
+.RI "void \fBSetPixel\fP (int colorRef, int x, int y)"
+.br
+.RI "Sets the pixel\&. "
+.ti -1c
+.RI "int \fBGetPixel\fP (int x, int y)"
+.br
+.in -1c
+.SS "Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "const uint \fBFBINFO\fP = 0xAFD0"
+.br
+.ti -1c
+.RI "const uint \fBFBBASE\fP = 0xB000"
+.br
+.in -1c
+.SS "Properties"
+
+.in +1c
+.ti -1c
+.RI "\fBInitFrameBuffer\fP \fBInitFunction\fP\fC [get, set]\fP"
+.br
+.ti -1c
+.RI "Size \fBSize\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "\fBMemory\fP \fBMemory\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "string \fBName\fP\fC [get]\fP"
+.br
+.ti -1c
+.RI "string \fBAuthor\fP\fC [get]\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "Vcsos\&.Komponent\&.Framebuffer\&.Framebuffer ()"
+
+.PP
+.nf
+138                               : base("Referenz GPU", "Anna-Sophia Schroeck")
+139         {
+140         }
+.fi
+.SH "Member Function Documentation"
+.PP 
+.SS "void Vcsos\&.Komponent\&.Framebuffer\&.Destroy ()"
+
+.PP
+.nf
+164         {
+165             GC\&.Collect ();
+166         }
+.fi
+.SS "int Vcsos\&.Komponent\&.Framebuffer\&.GetPixel (int x, int y)"
+
+.PP
+.nf
+182         {
+183             int offset = (int)(FBBASE + (y * m_pInfo\&.Width * 3 + x * 3));
+184 
+185             byte r = MemoryMap\&.Read8 (offset + 0);
+186             byte g = MemoryMap\&.Read8 (offset + 1);
+187             byte b = MemoryMap\&.Read8 (offset + 2);
+188 
+189             return ((r & 0xff) << 16) | ((g & 0xff) << 8) | (b & 0xff);
+190         }
+.fi
+.SS "void Vcsos\&.Komponent\&.Framebuffer\&.Init ()"
+
+.PP
+.nf
+143         {
+144             int colorRef = VM\&.Instance\&.CurrentCore\&.Register\&.Stack\&.Pop32 ();
+145             int mode = VM\&.Instance\&.CurrentCore\&.Register\&.Stack\&.Pop32 ();
+146 
+147             m_pInfo = new FrameBufferInfo (mode);// = new Size (w, h);
+148             m_pMemory = new Memory(m_pInfo\&.Size, "FrameBuffer");
+149             m_pGPUCore = new Core(0);
+150             
+151 
+152             for (int x = 0; x < m_pInfo\&.Width; x++) {
+153                 for (int y = 0; y < m_pInfo\&.Height; y++) {
+154                     SetPixel (colorRef, x, y);
+155                 }
+156             }
+157 
+158 
+159             if (m_pInitFunction != null)
+160                 m_pInitFunction (m_pInfo);
+161         }
+.fi
+.SS "void Vcsos\&.Komponent\&.Framebuffer\&.SetPixel (int colorRef, int x, int y)"
+
+.PP
+Sets the pixel\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIcolorRef\fP Color RGB String
+.br
+\fIx\fP The x coordinate\&.
+.br
+\fIy\fP The y coordinate\&.
+.RE
+.PP
+
+.PP
+.nf
+174         {
+175             int offset = (int)(FBBASE + (y * m_pInfo\&.Width * 3 + x * 3));
+176 
+177             MemoryMap\&.Write((byte)((colorRef & 0xFF0000) >> 16), offset + 0);
+178             MemoryMap\&.Write ((byte)((colorRef & 0x00FF00) >> 8), offset + 1);
+179             MemoryMap\&.Write ((byte)((colorRef & 0x0000FF)), offset + 2);
+180         }
+.fi
+.SH "Member Data Documentation"
+.PP 
+.SS "const uint Vcsos\&.Komponent\&.Framebuffer\&.FBBASE = 0xB000"
+
+.SS "const uint Vcsos\&.Komponent\&.Framebuffer\&.FBINFO = 0xAFD0"
+
+.SH "Property Documentation"
+.PP 
+.SS "string Vcsos\&.Komponent\&.vmKomponente\&.Author\fC [get]\fP, \fC [inherited]\fP"
+
+.SS "\fBInitFrameBuffer\fP Vcsos\&.Komponent\&.Framebuffer\&.InitFunction\fC [get]\fP, \fC [set]\fP"
+
+.SS "\fBMemory\fP Vcsos\&.Komponent\&.Framebuffer\&.Memory\fC [get]\fP"
+
+.SS "string Vcsos\&.Komponent\&.vmKomponente\&.Name\fC [get]\fP, \fC [inherited]\fP"
+
+.SS "Size Vcsos\&.Komponent\&.Framebuffer\&.Size\fC [get]\fP"
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for virtualSoC from the source code\&.
