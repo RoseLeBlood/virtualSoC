@@ -8,11 +8,11 @@ namespace Vcsos.Komponent
 {
     public class CPU : vmKomponente
     {
-        protected CacheStack m_pCacheStack; // L1 IPC  
+        protected Stack m_pCacheStack; // L1 IPC  
         private List<Core> m_lstCores;
         private int m_iCurCore;
 
-        public CacheStack Ipc
+        public Stack Ipc
         {
             get { return m_pCacheStack; }
         }
@@ -41,7 +41,7 @@ namespace Vcsos.Komponent
 
             for (int i = 0; i < coreNumbers; i++)
                 m_lstCores.Add(new Core(i, true));
-            m_pCacheStack = new CacheStack(256, "CPU-IPC ");
+            m_pCacheStack = new Stack(512, "ProzessorCache (512)");
             m_iCurCore = 0;
         }
         

@@ -116,7 +116,6 @@ namespace Vcsos.Komponent
 		private InitFrameBuffer m_pInitFunction;
 
 		private Memory m_pMemory;
-        private Core m_pGPUCore;
 
 		public InitFrameBuffer InitFunction {
 			get { return m_pInitFunction; }
@@ -145,9 +144,7 @@ namespace Vcsos.Komponent
 			int mode = VM.Instance.CurrentCore.Register.Stack.Pop32 ();
 
 			m_pInfo = new FrameBufferInfo (mode);// = new Size (w, h);
-			m_pMemory = new Memory(m_pInfo.Size, "FrameBuffer");
-            m_pGPUCore = new Core(0);
-            
+			m_pMemory = new Memory(m_pInfo.Size, "FrameBuffer");            
 
             for (int x = 0; x < m_pInfo.Width; x++) {
 				for (int y = 0; y < m_pInfo.Height; y++) {

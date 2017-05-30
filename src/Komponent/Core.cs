@@ -24,8 +24,9 @@ using System;
 namespace Vcsos.Komponent
 {
 	public class Core : vmKomponente
-	{
-		protected CacheStack m_pCallStack;  // L3 Call Stack  
+	{ 
+        protected Stack      m_pStack;
+
 		private Register	 m_pRegister; 	// L2 Current Register
         private int          m_iCoreNumber;
 		protected Akku 		 m_pAkku;
@@ -52,31 +53,29 @@ namespace Vcsos.Komponent
 			get { return m_pRegister; }
 			set { m_pRegister = value; }
 		}
-		public CacheStack Stack
+		public Stack CallStack
 		{
-			get { return m_pCallStack; }
+			get { return m_pStack; }
 		}
+        public Stack Stack
+        {
+            get { return m_pStack; }
+        }
         public int CoreNumber
         {
             get { return m_iCoreNumber; }
         }
 		public Core (int number, bool running=false) : base("Referenz Core " + number.ToString(), "Anna-Sophia Schroeck")
 		{
+            m_pStack = new Stack(1024*1024, "CoreStack" + number.ToString());
             m_iCoreNumber = number;
-            m_pRegister = new Register ();
+            m_pRegister = new Register (this, m_pStack.Size);
 			m_pAkku = new Akku (this);
 			
-			m_pCallStack = new CacheStack  (135, "Core-Register" + number.ToString()); // 32 Unterprogramme
-            m_bStarted = running;
+			 m_bStarted = running;
             m_pRegister.ip = 7;
 
         }
-        /*public virtual void startCore()
-        {
-            Register.ip = VM.Instance.CPU.Ipc.Pop32();
-            m_bStarted = true;
-        }*/ 
-
         public int And(int v1, int v2)
 		{
 			return v1 & v2;

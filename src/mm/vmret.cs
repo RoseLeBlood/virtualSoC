@@ -34,7 +34,7 @@ namespace Vcsos.mm
         }
         public bool ParseAndRun (ParserFactory factory)
 		{
-			VM.Instance.CurrentCore.Register.Set ("IP", VM.Instance.CurrentCore.Stack.Pop32 ());
+			VM.Instance.CurrentCore.Register.Set ("IP", VM.Instance.CurrentCore.CallStack.Pop32 ());
 
 			return true;
 		}

@@ -27,13 +27,11 @@ namespace Vcsos.Komponent
 	public class Register
 	{
 		Memory			m_pMemRegister;
-		Stack    		m_pStack;
-		//BitArray 		m_flags;
+        Core            m_pCore;
 
 		public Stack Stack
 		{
-			get { return m_pStack; }
-			set { m_pStack = value; }
+			get { return m_pCore.Stack; }
 		}
 		public bool SignFlag 
 		{
@@ -118,11 +116,12 @@ namespace Vcsos.Komponent
 			set	{ m_pMemRegister.Write(value,24); }
 		}
 
-		public Register (int stackAddr = -1)
+		public Register (Core core, int iSpAddr)
 		{
-			m_pMemRegister = new Memory (28, "Register");
+            m_pCore = core;
+            m_pMemRegister = new Memory (28, "CoreRegister" + core.CoreNumber.ToString());
 
-			sp = (stackAddr == -1 ? VM.Instance.Ram.Size - 1 : stackAddr);
+            sp = iSpAddr;
 			ip = 0;
 			ax = ax.RandR ();
 			bx = bx.RandR ();
@@ -132,7 +131,7 @@ namespace Vcsos.Komponent
 			UnderFlow = false;
 			Exections = false;
 			lck = 0;
-			m_pStack = new Stack ();
+            
 		}
 		public override string ToString ()
 		{

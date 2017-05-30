@@ -145,7 +145,7 @@ namespace Vcsos
                     if (VM.Instance.CurrentCore.Register.Exections)
                     {
                         // Push Register IP auf den Stack
-                        VM.Instance.CurrentCore.Stack.Push32(VM.Instance.CurrentCore.Register.ip);
+                        VM.Instance.CurrentCore.CallStack.Push32(VM.Instance.CurrentCore.Register.ip);
                         // Push errCode auf den Szack
                         VM.Instance.CurrentCore.Register.Stack.Push32(errCode);
                         // Push VMExecptionType.Error auf dem Stack

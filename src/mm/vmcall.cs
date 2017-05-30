@@ -37,7 +37,7 @@ namespace Vcsos.mm
 			InstructionParam2 param1 = factory.getParam(4);
 			int param1V = VM.Instance.Ram.Read32 (VM.Instance.CurrentCore.Register.ip + 5);
 
-			VM.Instance.CurrentCore.Stack.Push32 (VM.Instance.CurrentCore.Register.ip+9);
+			VM.Instance.CurrentCore.CallStack.Push32 (VM.Instance.CurrentCore.Register.ip+9);
 			VM.Instance.CurrentCore.Register.Set ("IP", param1V);
 
 			if (param1 == InstructionParam2.Value)

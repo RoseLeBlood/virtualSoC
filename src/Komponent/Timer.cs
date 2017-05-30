@@ -45,7 +45,7 @@ namespace Vcsos.Komponent
 		void TimerElapsed (object sender, System.Timers.ElapsedEventArgs e)
 		{
 			if (VM.Instance.CurrentCore.Register.Exections) {
-				VM.Instance.CurrentCore.Stack.Push32 (VM.Instance.CurrentCore.Register.ip);
+				VM.Instance.CurrentCore.CallStack.Push32 (VM.Instance.CurrentCore.Register.ip);
 
 				VM.Instance.CurrentCore.Register.Stack.Push32 (0); // TimerCode
 				VM.Instance.CurrentCore.Register.Stack.Push32 ((int)VMExecptionType.Hardware); // Hardware Exeption
