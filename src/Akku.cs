@@ -47,7 +47,7 @@ namespace Vcsos.Komponent
         /// <param name="data"></param>
 		public void MoveAX(Int32 data) // MOV A, #6
 		{
-			m_pCpu.Register.ax = data;
+			m_pCpu.Register.eax = data;
 		}
         /// <summary>
         /// lese die Daten aus dem Register AX
@@ -55,7 +55,7 @@ namespace Vcsos.Komponent
         /// <returns>Daten aus dem Register AX</returns>
 		public int MoveFromAX() // MOV REG, A
 		{
-			return m_pCpu.Register.ax;
+			return m_pCpu.Register.eax;
 		}
         /// <summary>
         /// lese die Daten aus dem Register BX
@@ -63,7 +63,7 @@ namespace Vcsos.Komponent
         /// <returns>Daten aus dem Register BX</returns>
 		public int MoveFromBX() // MOX REG, B
 		{
-			return m_pCpu.Register.bx;
+			return m_pCpu.Register.ebx;
 		}
         /// <summary>
         /// Addiere den Wert aus Parameter mit dem Register AX
@@ -75,8 +75,8 @@ namespace Vcsos.Komponent
 			int result = 0;
 			int carry = (int)(m_pCpu.Register.CarryFlag ? 1 : 0);
 
-			m_pCpu.Register.OverFlow = Add (m_pCpu.Register.ax, data, ref carry, ref result);
-			m_pCpu.Register.ax = result;
+			m_pCpu.Register.OverFlow = Add (m_pCpu.Register.eax, data, ref carry, ref result);
+			m_pCpu.Register.eax = result;
 			m_pCpu.Register.CarryFlag = carry == 1;
 			m_pCpu.Register.UnderFlow = false;
 
@@ -123,21 +123,21 @@ namespace Vcsos.Komponent
 			data = (!m_pCpu.Register.AkkuHelp) ? CmplTwo(data) : data;
 
             // Weise dem Register BX den Wert aus dem Register BX zu
-			m_pCpu.Register.bx = m_pCpu.Register.ax;
+			m_pCpu.Register.ebx = m_pCpu.Register.eax;
 		
             // Addiere Register AX mit Register BX per Schleife (data-1)
 			for (uint i = 0; i < data -1; i++) {
-				m_pCpu.Register.ax = Add (m_pCpu.Register.bx, m_pCpu.Register.ax);
+				m_pCpu.Register.eax = Add (m_pCpu.Register.ebx, m_pCpu.Register.eax);
 			}
             // Wenn Register AX kleiner als Register BX ist dann liegt ein Overflow vor
-			m_pCpu.Register.OverFlow = (m_pCpu.Register.ax < m_pCpu.Register.bx);
+			m_pCpu.Register.OverFlow = (m_pCpu.Register.eax < m_pCpu.Register.ebx);
             // Wenn Register AkkuHelp false ist erstelle das 2er Compliment vom Register AX 
             // und weise dies Register AX ist sonst Weise Register AX Revister AX zu
-			m_pCpu.Register.ax = (!m_pCpu.Register.AkkuHelp) ? CmplTwo( m_pCpu.Register.ax) 
-				: m_pCpu.Register.ax;
+			m_pCpu.Register.eax = (!m_pCpu.Register.AkkuHelp) ? CmplTwo( m_pCpu.Register.eax) 
+				: m_pCpu.Register.eax;
 			
             // Return das Etgebnoss der Multiplikation
-			return m_pCpu.Register.ax;
+			return m_pCpu.Register.eax;
 		}
 
         
@@ -150,15 +150,15 @@ namespace Vcsos.Komponent
             data = (!m_pCpu.Register.AkkuHelp) ? CmplTwo(data) : data;
 
             // Weise dem Register BX den Wert aus dem Register BX zu
-            m_pCpu.Register.bx = a;
+            m_pCpu.Register.ebx = a;
 
             // Addiere Register AX mit Register BX per Schleife (data-1)
             for (uint i = 0; i < data - 1; i++)
             {
-                a = Add(m_pCpu.Register.bx, a);
+                a = Add(m_pCpu.Register.ebx, a);
             }
             // Wenn Register AX kleiner als Register BX ist dann liegt ein Overflow vor
-            m_pCpu.Register.OverFlow = (a < m_pCpu.Register.bx);
+            m_pCpu.Register.OverFlow = (a < m_pCpu.Register.ebx);
             // Wenn Register AkkuHelp false ist erstelle das 2er Compliment vom Register AX 
             // und weise dies Register AX ist sonst Weise Register AX Revister AX zu
             return (!m_pCpu.Register.AkkuHelp) ? CmplTwo(a)
@@ -172,7 +172,7 @@ namespace Vcsos.Komponent
         /// <returns>Das ergebniss der Operation</returns>
 		public int Div(int data)
 		{
-            if (m_pCpu.Register.ax == 0) // Ist Register AX gleich 0...
+            if (m_pCpu.Register.eax == 0) // Ist Register AX gleich 0...
             {
                 // Setze Flag DivByZero
                 m_pCpu.Register.DivByZero = true;
@@ -185,30 +185,30 @@ namespace Vcsos.Komponent
             data = (!m_pCpu.Register.AkkuHelp) ? CmplTwo(data) : data;
 
             // Weise dem Register CX den Wert aus Register AX zu
-			m_pCpu.Register.cx = m_pCpu.Register.ax;
+			m_pCpu.Register.ecx = m_pCpu.Register.eax;
             // Weise dem Register BX zu - Ist Register AX negative das 2er Kompliment von Register AX
             // sonst den Wert aus Register AX
-			m_pCpu.Register.bx = (m_pCpu.Register.ax < 0) ? 
-				CmplTwo(m_pCpu.Register.ax) : m_pCpu.Register.ax;
+			m_pCpu.Register.ebx = (m_pCpu.Register.eax < 0) ? 
+				CmplTwo(m_pCpu.Register.eax) : m_pCpu.Register.eax;
             // Weise dem Register AX null zu
-			m_pCpu.Register.ax = 0;
+			m_pCpu.Register.eax = 0;
 
             // Führe die Division als Addition durch 
-			while (m_pCpu.Register.bx >= data) { // solange wie Register BX größer data ist 
+			while (m_pCpu.Register.ebx >= data) { // solange wie Register BX größer data ist 
                 // Weise dem Register BX das Ergebniss aus der Addition von Register BX und
                 // dem 2er Kompliment von data zu
-				m_pCpu.Register.bx = Add(m_pCpu.Register.bx, ~data + 1);
+				m_pCpu.Register.ebx = Add(m_pCpu.Register.ebx, ~data + 1);
                 // Weise dem Carry Flag false zu
 				m_pCpu.Register.CarryFlag = false;
                 // Addiere auf Register AX eine 1 
 				Add(1);
 			}
             // Weise dem Register AX das Ergebniss der Division zu
-			m_pCpu.Register.ax = (!m_pCpu.Register.AkkuHelp ^ !(m_pCpu.Register.cx > 0)) ? CmplTwo( m_pCpu.Register.ax) 
-				: m_pCpu.Register.ax;
+			m_pCpu.Register.eax = (!m_pCpu.Register.AkkuHelp ^ !(m_pCpu.Register.ecx > 0)) ? CmplTwo( m_pCpu.Register.eax) 
+				: m_pCpu.Register.eax;
 			
             // Gebe das Ergebniss aus dem Register AX zurück
-			return m_pCpu.Register.ax;
+			return m_pCpu.Register.eax;
 		}
         public int Div(int a, int data)
         {
@@ -225,27 +225,27 @@ namespace Vcsos.Komponent
             data = (!m_pCpu.Register.AkkuHelp) ? CmplTwo(data) : data;
 
             // Weise dem Register CX den Wert a zu
-            m_pCpu.Register.cx = a;
+            m_pCpu.Register.ecx = a;
             // Weise dem Register BX zu - Ist a negative das 2er Kompliment von a
             // sonst a
-            m_pCpu.Register.bx = (a < 0) ?
+            m_pCpu.Register.ebx = (a < 0) ?
                 CmplTwo(a) : a;
             // Weise dem Register a null zu
             a = 0;
 
             // Führe die Division als Addition durch 
-            while (m_pCpu.Register.bx >= data)
+            while (m_pCpu.Register.ebx >= data)
             { // solange wie Register BX größer data ist 
               // Weise dem Register BX das Ergebniss aus der Addition von Register BX und
               // dem 2er Kompliment von data zu
-                m_pCpu.Register.bx = Add(m_pCpu.Register.bx, ~data + 1);
+                m_pCpu.Register.ebx = Add(m_pCpu.Register.ebx, ~data + 1);
                 // Weise dem Carry Flag false zu
                 m_pCpu.Register.CarryFlag = false;
                 // Addiere auf a eine 1 
                 Add(a, 1);
             }
             // gibt das Ergebniss der Division zu
-            return (!m_pCpu.Register.AkkuHelp ^ !(m_pCpu.Register.cx > 0)) ? CmplTwo(a) : a;
+            return (!m_pCpu.Register.AkkuHelp ^ !(m_pCpu.Register.ecx > 0)) ? CmplTwo(a) : a;
         }
         /// <summary>
         /// Subtration vom Register AX 
@@ -259,9 +259,9 @@ namespace Vcsos.Komponent
 
             // Subtraction per Zweiterkompliment und Addition
             // benutze old carry und speichere das ergebniss in result
-			m_pCpu.Register.OverFlow = Add (m_pCpu.Register.ax, ~data + 1, ref carry, ref result);
+			m_pCpu.Register.OverFlow = Add (m_pCpu.Register.eax, ~data + 1, ref carry, ref result);
             // speichern des Ergebnisses der Addition in den Register AX
-			m_pCpu.Register.ax = result;
+			m_pCpu.Register.eax = result;
             // speichern des Carry Flags
 			m_pCpu.Register.CarryFlag = carry == 1;
 

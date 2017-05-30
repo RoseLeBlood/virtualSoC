@@ -51,7 +51,6 @@ DestroyFramebuffer:
 RET
 ; Basic IP for other Cores
 ORG h7
-HLT
 JMP $
 
 ; Start Address is 0x10

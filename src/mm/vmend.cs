@@ -33,7 +33,7 @@ namespace Vcsos.mm
         }
         public bool ParseAndRun (ParserFactory factory)
 		{
-			#if DEBUG
+			/*#if DEBUG
 
 			string r = VM.Instance.Ram.ToString();
 			Console.WriteLine(r);
@@ -41,7 +41,7 @@ namespace Vcsos.mm
             {
                 Console.WriteLine("Core{0}: {1}", i, VM.Instance.CPU[i].Register.ToString());
             }
-			#endif
+			#endif*/
 			return false;
 		}
 	}

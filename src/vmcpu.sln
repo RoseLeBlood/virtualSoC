@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vmcpu", "vmcpu.csproj", "{775C8DE9-9F35-43BF-96EE-9EB11623594C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vmasm", "vmasm\vmasm.csproj", "{1BB1BA4C-D91C-4A92-9B97-3578A76DC40F}"
@@ -9,28 +11,53 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vminst", "vminst\vminst.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vmcli", "vmcli\vmcli.csproj", "{1CF36A28-40B6-49CB-96FD-4A486EC61E78}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vmstudio", "vmstudio\vmstudio.csproj", "{948FF3AD-0491-4FB7-A566-6F986DBF6485}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1BB1BA4C-D91C-4A92-9B97-3578A76DC40F}.Debug|x86.ActiveCfg = Debug|x86
-		{1BB1BA4C-D91C-4A92-9B97-3578A76DC40F}.Debug|x86.Build.0 = Debug|x86
-		{1BB1BA4C-D91C-4A92-9B97-3578A76DC40F}.Release|x86.ActiveCfg = Release|x86
-		{1BB1BA4C-D91C-4A92-9B97-3578A76DC40F}.Release|x86.Build.0 = Release|x86
-		{1CF36A28-40B6-49CB-96FD-4A486EC61E78}.Debug|x86.ActiveCfg = Debug|x86
-		{1CF36A28-40B6-49CB-96FD-4A486EC61E78}.Debug|x86.Build.0 = Debug|x86
-		{1CF36A28-40B6-49CB-96FD-4A486EC61E78}.Release|x86.ActiveCfg = Release|x86
-		{1CF36A28-40B6-49CB-96FD-4A486EC61E78}.Release|x86.Build.0 = Release|x86
+		{775C8DE9-9F35-43BF-96EE-9EB11623594C}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{775C8DE9-9F35-43BF-96EE-9EB11623594C}.Debug|x86.ActiveCfg = Debug|x86
 		{775C8DE9-9F35-43BF-96EE-9EB11623594C}.Debug|x86.Build.0 = Debug|x86
+		{775C8DE9-9F35-43BF-96EE-9EB11623594C}.Release|Any CPU.ActiveCfg = Release|x86
 		{775C8DE9-9F35-43BF-96EE-9EB11623594C}.Release|x86.ActiveCfg = Release|x86
 		{775C8DE9-9F35-43BF-96EE-9EB11623594C}.Release|x86.Build.0 = Release|x86
+		{1BB1BA4C-D91C-4A92-9B97-3578A76DC40F}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{1BB1BA4C-D91C-4A92-9B97-3578A76DC40F}.Debug|x86.ActiveCfg = Debug|x86
+		{1BB1BA4C-D91C-4A92-9B97-3578A76DC40F}.Debug|x86.Build.0 = Debug|x86
+		{1BB1BA4C-D91C-4A92-9B97-3578A76DC40F}.Release|Any CPU.ActiveCfg = Release|x86
+		{1BB1BA4C-D91C-4A92-9B97-3578A76DC40F}.Release|x86.ActiveCfg = Release|x86
+		{1BB1BA4C-D91C-4A92-9B97-3578A76DC40F}.Release|x86.Build.0 = Release|x86
+		{912FFE4A-12B8-48BE-B9CF-B86BB5BB13D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{912FFE4A-12B8-48BE-B9CF-B86BB5BB13D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{912FFE4A-12B8-48BE-B9CF-B86BB5BB13D2}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{912FFE4A-12B8-48BE-B9CF-B86BB5BB13D2}.Debug|x86.Build.0 = Debug|Any CPU
+		{912FFE4A-12B8-48BE-B9CF-B86BB5BB13D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{912FFE4A-12B8-48BE-B9CF-B86BB5BB13D2}.Release|Any CPU.Build.0 = Release|Any CPU
 		{912FFE4A-12B8-48BE-B9CF-B86BB5BB13D2}.Release|x86.ActiveCfg = Release|Any CPU
 		{912FFE4A-12B8-48BE-B9CF-B86BB5BB13D2}.Release|x86.Build.0 = Release|Any CPU
+		{1CF36A28-40B6-49CB-96FD-4A486EC61E78}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{1CF36A28-40B6-49CB-96FD-4A486EC61E78}.Debug|x86.ActiveCfg = Debug|x86
+		{1CF36A28-40B6-49CB-96FD-4A486EC61E78}.Debug|x86.Build.0 = Debug|x86
+		{1CF36A28-40B6-49CB-96FD-4A486EC61E78}.Release|Any CPU.ActiveCfg = Release|x86
+		{1CF36A28-40B6-49CB-96FD-4A486EC61E78}.Release|x86.ActiveCfg = Release|x86
+		{1CF36A28-40B6-49CB-96FD-4A486EC61E78}.Release|x86.Build.0 = Release|x86
+		{948FF3AD-0491-4FB7-A566-6F986DBF6485}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{948FF3AD-0491-4FB7-A566-6F986DBF6485}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{948FF3AD-0491-4FB7-A566-6F986DBF6485}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{948FF3AD-0491-4FB7-A566-6F986DBF6485}.Debug|x86.Build.0 = Debug|Any CPU
+		{948FF3AD-0491-4FB7-A566-6F986DBF6485}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{948FF3AD-0491-4FB7-A566-6F986DBF6485}.Release|Any CPU.Build.0 = Release|Any CPU
+		{948FF3AD-0491-4FB7-A566-6F986DBF6485}.Release|x86.ActiveCfg = Release|Any CPU
+		{948FF3AD-0491-4FB7-A566-6F986DBF6485}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = vmcli\vmcli.csproj

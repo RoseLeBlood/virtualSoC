@@ -1,6 +1,0 @@
-D:\annas\Documents\GitHub\virtualSoC\bin\Debug\vmcli.exe.config
-D:\annas\Documents\GitHub\virtualSoC\bin\Debug\vmcli.exe
-D:\annas\Documents\GitHub\virtualSoC\bin\Debug\vmcli.pdb
-D:\annas\Documents\GitHub\virtualSoC\src\vmcli\obj\x86\Debug\vmcli.csprojResolveAssemblyReference.cache
-D:\annas\Documents\GitHub\virtualSoC\src\vmcli\obj\x86\Debug\vmcli.exe
-D:\annas\Documents\GitHub\virtualSoC\src\vmcli\obj\x86\Debug\vmcli.pdb

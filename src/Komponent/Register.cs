@@ -33,7 +33,64 @@ namespace Vcsos.Komponent
 		{
 			get { return m_pCore.Stack; }
 		}
-		public bool SignFlag 
+        /// <summary>
+        /// StackPointer - CoreStack not RAM
+        /// </summary>
+        public int sp
+        {
+            get { return m_pMemRegister.Read32(0); }
+            set { m_pMemRegister.Write(value, 0); }
+        }
+        /// <summary>
+        /// Instruction Pointer
+        /// </summary>
+        public int ip
+        {
+            get { return m_pMemRegister.Read32(4); }
+            set { m_pMemRegister.Write(value, 4); }
+        }
+        /// <summary>
+        /// Akku A 32Bit
+        /// </summary>
+        public int eax
+        {
+            get { return m_pMemRegister.Read32(8); }
+            set
+            {
+                m_pMemRegister.Write(value, 8);
+                if (eax == 0)
+                {
+                    ZeroFlag = true;
+                }
+                else if (eax <= 0)
+                {
+                    SignFlag = false;
+                }
+                else
+                {
+                    ZeroFlag = false;
+                    SignFlag = true;
+                }
+            }
+        }
+        /// <summary>
+        /// Akku B 32bit (Not Flags set)
+        /// </summary>
+        public int ebx
+        {
+            get { return m_pMemRegister.Read32(12); }
+            set { m_pMemRegister.Write(value, 12); }
+        }
+        /// <summary>
+        /// Akku C 32 Bit (no flags set)
+        /// </summary>
+        public int ecx
+        {
+            get { return m_pMemRegister.Read32(16); }
+            set { m_pMemRegister.Write(value, 16); }
+        }
+
+        public bool SignFlag 
 		{
 			get { return m_pMemRegister.Read16(20).Get(0); }
 			set { m_pMemRegister.Write(m_pMemRegister.Read16(20).Set(value, 0), 20); }
@@ -73,78 +130,77 @@ namespace Vcsos.Komponent
 			get { return m_pMemRegister.Read16(20).Get(7); }
 			set { m_pMemRegister.Write(m_pMemRegister.Read16(20).Set(value, 7), 20); }
 		}
-		public int sp
-		{
-			get { return m_pMemRegister.Read32(0); }
-			set	{ m_pMemRegister.Write(value,0); }
-		}
-		public int ip
-		{
-			get { return m_pMemRegister.Read32(4); }
-			set	{ m_pMemRegister.Write(value,4); }
-		}
-		public int ax
-		{
-			get { return m_pMemRegister.Read32(8); }
-			set	
-			{ 
-				m_pMemRegister.Write(value,8);
-				if (ax == 0) {
-					ZeroFlag = true;
-				}
-				else if(ax <= 0) {
-					SignFlag = false;
-				} else {
-					ZeroFlag = false;
-					SignFlag = true;
-				}
-			}
-		}
-		public int bx
-		{
-			get { return m_pMemRegister.Read32(12); }
-			set	{ m_pMemRegister.Write(value,12); }
-		}
-		public int cx
-		{
-			get { return m_pMemRegister.Read32(16); }
-			set	{ m_pMemRegister.Write(value,16); }
-		}
-		public int lck
-		{
-			get { return m_pMemRegister.Read32(24); }
-			set	{ m_pMemRegister.Write(value,24); }
-		}
+        internal bool Sync
+        {
+            get { return m_pMemRegister.Read16(28).Get(0); }
+            set { m_pMemRegister.Write(m_pMemRegister.Read16(28).Set(value, 0), 28); }
+        }
+        
+        #region Reserved
+
+        internal bool RescA
+        {
+            get { return m_pMemRegister.Read16(28).Get(2); }
+            set { m_pMemRegister.Write(m_pMemRegister.Read16(28).Set(value, 2), 28); }
+        }
+        internal bool RescB
+        {
+            get { return m_pMemRegister.Read16(28).Get(3); }
+            set { m_pMemRegister.Write(m_pMemRegister.Read16(28).Set(value, 3), 28); }
+        }
+        internal bool RescC
+        {
+            get { return m_pMemRegister.Read16(28).Get(4); }
+            set { m_pMemRegister.Write(m_pMemRegister.Read16(28).Set(value, 4), 28); }
+        }
+        internal bool RescD
+        {
+            get { return m_pMemRegister.Read16(28).Get(5); }
+            set { m_pMemRegister.Write(m_pMemRegister.Read16(28).Set(value, 5), 28); }
+        }
+        internal bool RescE
+        {
+            get { return m_pMemRegister.Read16(28).Get(6); }
+            set { m_pMemRegister.Write(m_pMemRegister.Read16(28).Set(value, 6), 28); }
+        }
+        internal bool RescF
+        {
+            get { return m_pMemRegister.Read16(28).Get(7); }
+            set { m_pMemRegister.Write(m_pMemRegister.Read16(28).Set(value, 7), 28); }
+        }
+        #endregion
+
 
 		public Register (Core core, int iSpAddr)
 		{
             m_pCore = core;
-            m_pMemRegister = new Memory (28, "CoreRegister" + core.CoreNumber.ToString(), 0);
+            m_pMemRegister = new Memory (36, "CoreRegister" + core.CoreNumber.ToString(), 0);
 
             sp = iSpAddr;
 			ip = 0;
-			ax = ax.RandR ();
-			bx = bx.RandR ();
+			eax = eax.RandR ();
+			ebx = ebx.RandR ();
+            ecx = ecx.RandR ();
 
 			DivByZero = false;
 			OverFlow = false;
 			UnderFlow = false;
 			Exections = false;
-			lck = 0;
+			Sync = true;
             
 		}
 		public override string ToString ()
 		{
 			return string.Format ("[Register: SignFlag={0}, ZeroFlag={1}, OverFlow={2}, CarryFlag={3}, UnderFlow={4}, DivByZero={5}, " +
-				"sp={6}, ip={7}, ax={8}, bx={9}, cx={10}]", SignFlag, ZeroFlag, OverFlow, CarryFlag, UnderFlow, DivByZero, sp, ip, ax, bx, cx);
+				"sp={6}, ip={7}, ax={8}, bx={9}, cx={10}]", SignFlag, ZeroFlag, OverFlow, CarryFlag, UnderFlow, DivByZero, sp, ip, eax, ebx, ecx);
 		}
 		public int Get(string name)
 		{
 			switch (name) {
 			case "AX":
-				return ax;
+				return eax;
 			case "BX":
-				return bx;
+				return ebx;
 			case "SP":
 				return sp;
 			case "IP":
@@ -159,10 +215,10 @@ namespace Vcsos.Komponent
 		{
 			switch (name) {
 			case "AX":
-				ax = v;
+				eax = v;
 				break;
 			case "BX":
-				bx = v;
+				ebx = v;
 				break;
 			case "SP":
 				sp = v;

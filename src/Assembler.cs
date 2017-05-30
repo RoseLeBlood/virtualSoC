@@ -20,29 +20,51 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using System;
-using vminst;
 using Vcsos.Komponent;
 using Vcsos.mm;
 
 namespace Vcsos
 {
-	public enum VMExecptionType : int
+    /// <summary>
+    /// Interrupt Type
+    /// </summary>
+    public enum VMInterruptType : int
 	{
 		Error,
 		Hardware,
         Core
 	}
 
-    public class VMExections : Exception
+    public enum VMInterruptDeviceID : int
     {
-        public int ErrorCode { get; set; }
-        public VMExecptionType Type { get; set; }
+        Timer0,
+        Timer1,
+        Framebuffer,
+        Parallel,
+        Serial,
+        GPIO,
+        I2C,
+        Flash
     }
-    public class NamedTimer : System.Timers.Timer
+    /// <summary>
+    /// Interrupt Helper class
+    /// </summary>
+    public class VMInterrupt : Exception
     {
-        public int ID { get; private set; }
-        public NamedTimer(double interval, int id) : base(interval) { ID = id; }
+        /// <summary>
+        /// Which Hardware send this Interrupt
+        /// </summary>
+        public VMInterruptDeviceID DeviceID { get; set; }
+        /// <summary>
+        /// Hardware, Software Interrupt Code (ErrorCode)
+        /// </summary>
+        public int Code { get; set; }
+        /// <summary>
+        /// Interrruct Type 
+        /// </summary>
+        public VMInterruptType Type { get; set; }
     }
+    
     /// <summary>
     /// Assembler Klasse. Diese Klasse führt die Bearbeitzng aus
     /// </summary>
@@ -51,7 +73,7 @@ namespace Vcsos
         /// <summary>
         /// Timer der Sincronisation und Takt gabe 
         /// </summary>
-		private System.Collections.Generic.List<NamedTimer> m_pTimer;
+		private System.Collections.Generic.List<TimerIDs> m_pTimer;
         /// <summary>
         /// Lebt das System noch
         /// </summary>
@@ -71,12 +93,12 @@ namespace Vcsos
 
 		public Assembler (int numCores)
 		{
-            m_pTimer = new System.Collections.Generic.List<NamedTimer>();
+            m_pTimer = new System.Collections.Generic.List<TimerIDs>();
             m_objLock = new object();
 
             for (int i = 0; i < numCores; i++)
             {
-                m_pTimer.Add( new NamedTimer(1000.0 / (Core.BaudMhz), i) );
+                m_pTimer.Add( new TimerIDs(1000.0 / (Core.BaudMhz), i) );
 
 
                 // weise dem Timer event Elapsed die Function TimerElapsed zu
@@ -108,14 +130,14 @@ namespace Vcsos
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-		void TimerElapsed (object sender, System.Timers.ElapsedEventArgs e)
+		void TimerElapsed (object sender, System.Timers.ElapsedEventArgs ea)
 		{
             
             lock (m_objLock)
             {
-                if (sender is NamedTimer)
+                if (sender is TimerIDs)
                 {
-                    NamedTimer p = sender as NamedTimer;
+                    TimerIDs p = sender as TimerIDs;
                     VM.Instance.CPU.CurrentCoreID = p.ID;
                 }
                
@@ -137,27 +159,31 @@ namespace Vcsos
                 // bei fehler
                 catch (System.Exception ex)
                 {
-                    int errCode = -1; // dekkariere errCode und weise der Variable -1 zu
-                    if (ex is VMExections) // ist die Exception eine VMExections dann..
-                        errCode = (ex as VMExections).ErrorCode; // weuse errCode die VMExections.errCode zu
-
-                    // Ist Exceptions Flg gesetzt dann... 
-                    if (VM.Instance.CurrentCore.Register.Exections)
+                    
+                    if (ex is VMInterrupt) // ist die Exception eine VMExections dann..
                     {
-                        // Push Register IP auf den Stack
-                        VM.Instance.CurrentCore.CallStack.Push32(VM.Instance.CurrentCore.Register.ip);
-                        // Push errCode auf den Szack
-                        VM.Instance.CurrentCore.Register.Stack.Push32(errCode);
-                        // Push VMExecptionType.Error auf dem Stack
-                        VM.Instance.CurrentCore.Register.Stack.Push32((int)VMExecptionType.Error);
-                        // Setze den Register IP auf 4
-                        VM.Instance.CurrentCore.Register.ip = 4;
-                    }
-                    else
-                    { // wenn Exception nicht aktiviert sind...
-                      // dann schalte das system auf tot und gib den Fehler auf die Console aus
-                        Console.WriteLine(ex.ToString());
-                        m_bIsAlive = false;
+                        VMInterrupt e = (ex as VMInterrupt); // weuse errCode die VMExections.errCode zu
+
+                        // Ist Exceptions Flg gesetzt dann... 
+                        if (VM.Instance.CurrentCore.Register.Exections)
+                        {
+                            // Push Register IP auf den Stack
+                            VM.Instance.CurrentCore.Stack.Push32(VM.Instance.CurrentCore.Register.ip);
+                            // Push devicd id
+                            VM.Instance.CurrentCore.Stack.Push32((int)e.DeviceID);
+                            // Push errCode auf den Stack
+                            VM.Instance.CurrentCore.Stack.Push32(e.Code);
+                            // Push VMExecptionType.Error auf dem Stack
+                            VM.Instance.CurrentCore.Stack.Push32((int)e.Type);
+                            // Setze den Register IP auf 4
+                            VM.Instance.CurrentCore.Register.ip = 4;
+                        }
+                        else
+                        { // wenn Exception nicht aktiviert sind...
+                          // dann schalte das system auf tot und gib den Fehler auf die Console aus
+                            Console.WriteLine(ex.ToString());
+                            m_bIsAlive = false;
+                        }
                     }
                 }
                 // Wenn m_bIsAlive true ist dann
@@ -167,9 +193,8 @@ namespace Vcsos
                 } 
                 else
                 {
-                    // Current : stop all cores when core 0 Halt - in the future all cores halt by
-                    // CHLT ALL 
-                    if(VM.Instance.CPU.CurrentCoreID == 0)
+                    // When Current Core Sync set then halt all Cores 
+                    if(VM.Instance.CurrentCore.Register.Sync)
                     {
                         foreach (var item in m_pTimer)
                         {

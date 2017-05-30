@@ -47,8 +47,10 @@ namespace Vcsos
      
 		public Memory Ram				{ get { return (Memory)this[0]; } }
 		public Framebuffer FBdev		{ get { return (Framebuffer)this[2]; } }
+        public Timer Timer0             { get { return (Timer)this[3]; } }
+        public Timer Timer1             { get { return (Timer)this[4]; } }
 
-		public bool IsAlive { get { return m_pAssembler.IsAlive; } }
+        public bool IsAlive { get { return m_pAssembler.IsAlive; } }
 
         /// <summary>
         /// Gibt die Singleton Instance zzrück
@@ -73,7 +75,7 @@ namespace Vcsos
 		{
             m_pAssembler = new Assembler(iNumCores);
             int newMemorySize = ramSize.ToBoundary(4);
-			Add( new Memory (newMemorySize, "RAM", 10));
+			Add( new Memory (newMemorySize, "RAM", 500));
 
 			if (newMemorySize != ramSize) 
 				Console.WriteLine("VM: Memory was expanded from {0} bytes to {1} bytes to a page boundary." + System.Environment.NewLine,
@@ -81,7 +83,8 @@ namespace Vcsos
 
 			Add (new CPU (iNumCores));
 			Add (new Framebuffer ());
-			Add (new Timer ());
+			Add (new Timer (0));
+            Add (new Timer (1));
 			
 		}
         /// <summary>

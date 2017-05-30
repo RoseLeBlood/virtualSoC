@@ -67,7 +67,7 @@ namespace Vcsos.Komponent
         }
 		public Core (int number, bool running=false) : base("Referenz Core " + number.ToString(), "Anna-Sophia Schroeck")
 		{
-            m_pStack = new Stack(1024*1024,1, "CoreStack" + number.ToString());
+            m_pStack = new Stack(1024*1024, 100, "CoreStack" + number.ToString());
             m_iCoreNumber = number;
             m_pRegister = new Register (this, m_pStack.Size);
 			m_pAkku = new Akku (this);

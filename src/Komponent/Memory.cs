@@ -23,12 +23,14 @@ using System;
 using System.IO;
 using System.Threading;
 using Vcsos;
-
+using System.Diagnostics;
 namespace Vcsos.Komponent
 {
 	public class Memory : System.IO.Stream, IVMKomponente
 	{
-		private byte[] m_pMemory;
+        public const int SEC_DELAY = 10000000;
+
+        private byte[] m_pMemory;
 		private int m_iSize;
 		private string m_strName;
 		private string m_strAutor;
@@ -132,9 +134,11 @@ namespace Vcsos.Komponent
 			return output.ToString ();
 		}
 
+
         private void delay()
         {
-           // Thread.Sleep(0);
+            var t = Stopwatch.StartNew();
+            while (t.ElapsedTicks < m_iReadWriteDelay) { }
         }
 		#region implemented abstract members of Stream
 

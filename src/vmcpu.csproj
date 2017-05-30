@@ -79,6 +79,9 @@
     <Compile Include="mm\vmjmp.cs" />
     <Compile Include="mm\vmmov.cs" />
     <Compile Include="Utils.cs" />
+    <Compile Include="Utils\IDTimer.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="VM.cs" />
     <Compile Include="mm\vmor.cs" />
     <Compile Include="mm\vmxor.cs" />

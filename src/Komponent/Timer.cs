@@ -21,15 +21,27 @@
 
 using System;
 
+
 namespace Vcsos.Komponent
 {
-	public class Timer : vmKomponente
-	{
-		private System.Timers.Timer m_pTimer;
+    public class TimerVMException : VMInterrupt
+    {
+        public TimerVMException(int id, int errorCode) : base()
+        {
+            base.DeviceID = (VMInterruptDeviceID)id;
+            base.Code = errorCode;
+            this.Type = VMInterruptType.Hardware;
+        }
 
-		public Timer () : base("Timer R0", "Anna-Sophia Schroeck")
+    }
+
+    public class Timer : vmKomponente
+	{
+		private Vcsos.TimerIDs m_pTimer;
+
+		public Timer (int id) : base("Timer R" + id.ToString(), "Anna-Sophia Schroeck")
 		{
-			m_pTimer = new System.Timers.Timer ();
+            m_pTimer = new Vcsos.TimerIDs(id);
 		}
 		public void Create()
 		{
@@ -44,16 +56,9 @@ namespace Vcsos.Komponent
 		}
 		void TimerElapsed (object sender, System.Timers.ElapsedEventArgs e)
 		{
-			if (VM.Instance.CurrentCore.Register.Exections) {
-				VM.Instance.CurrentCore.CallStack.Push32 (VM.Instance.CurrentCore.Register.ip);
+            throw new TimerVMException(0, 0);
 
-				VM.Instance.CurrentCore.Register.Stack.Push32 (0); // TimerCode
-				VM.Instance.CurrentCore.Register.Stack.Push32 ((int)VMExecptionType.Hardware); // Hardware Exeption
-
-
-				VM.Instance.CurrentCore.Register.ip = 4;
-			}
-		}
+        }
 	}
 }
 
