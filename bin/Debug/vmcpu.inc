@@ -31,7 +31,7 @@ RET
 
 ORG h100
 InitFramebuffer:
-PUSH #6  ; MODE
+PUSH #8  ; MODE
 PUSH #hFF000000; Color 
 FBI ; Create FrameBuffer and Write Info To Ram
 RET
@@ -39,6 +39,7 @@ DestroyFramebuffer:
 RET
 ; Basic IP for other Cores
 ORG h7
+HLT
 JMP $
 
 ; Start Address is 0x10

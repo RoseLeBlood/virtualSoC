@@ -41,7 +41,7 @@ namespace Vcsos.Komponent
 
             for (int i = 0; i < coreNumbers; i++)
                 m_lstCores.Add(new Core(i, true));
-            m_pCacheStack = new Stack(512, "ProzessorCache (512)");
+            m_pCacheStack = new Stack(512, 2, "ProzessorCache (512)");
             m_iCurCore = 0;
         }
         

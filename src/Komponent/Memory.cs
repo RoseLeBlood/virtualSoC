@@ -21,6 +21,7 @@
 
 using System;
 using System.IO;
+using System.Threading;
 using Vcsos;
 
 namespace Vcsos.Komponent
@@ -31,6 +32,7 @@ namespace Vcsos.Komponent
 		private int m_iSize;
 		private string m_strName;
 		private string m_strAutor;
+        private int m_iReadWriteDelay;
 
 		public string Name { get { return m_strName; } }
 		public string Author { get { return m_strAutor; } }
@@ -41,11 +43,11 @@ namespace Vcsos.Komponent
 		}
 		public byte this[int adress]
 		{
-			get { return m_pMemory[adress]; }
-			set { m_pMemory[adress] = value; }
+			get { delay();  return m_pMemory[adress]; }
+			set { delay();  m_pMemory[adress] = value; }
 		}
 
-		public Memory (int mSize, string name)
+		public Memory (int mSize, string name, int delay)
 			: base ()
 		{
 			m_pMemory = new byte[mSize];
@@ -54,6 +56,7 @@ namespace Vcsos.Komponent
             m_strName = name;
 
 			this.Write (Utils.RandMemory (mSize), 0, mSize);
+            m_iReadWriteDelay = delay;
 
 			Console.WriteLine ("[VmSoC Komponente] {0} Craeted", name);
 		}
@@ -61,22 +64,29 @@ namespace Vcsos.Komponent
 		{
 			for (int i = addr; i < data.Length; i++) {
 				m_pMemory [i] = data [i];
-			}
+                delay();
+
+            }
 			return addr + data.Length;
 		}
 		public int Write(Int16 data, int addr)
 		{
 			byte[] _d = data.ToBytes ();
-			for (uint i = 0; i < _d.Length; i++)
-				m_pMemory [addr + i] = _d [i];
-
-			return addr + _d.Length;
+            for (uint i = 0; i < _d.Length; i++)
+            {
+                m_pMemory[addr + i] = _d[i];
+                delay();
+            }
+            return addr + _d.Length;
 		}
 		public int Write(Int32 data, uint addr)
 		{
 			byte[] _d = data.ToBytes ();
-			for (uint i = 0; i < _d.Length; i++)
-				m_pMemory [addr + i] = _d [i];
+            for (uint i = 0; i < _d.Length; i++)
+            {
+                m_pMemory[addr + i] = _d[i];
+                delay();
+            }
 
 			return (int)(addr + _d.Length);
 		}
@@ -84,18 +94,23 @@ namespace Vcsos.Komponent
 		{
 			byte[] _d = Int32.MinValue.ToBytes();
 
-			for (int i = 0; i < _d.Length; i++)
-				_d [i] = m_pMemory [addr + i];
-
+            for (int i = 0; i < _d.Length; i++)
+            {
+                _d[i] = m_pMemory[addr + i];
+                
+            }
+            delay();
 			return _d.ToUint ();
 		}
 		public Int16 Read16(Int32 addr)
 		{
 			byte[] _d = Int16.MinValue.ToBytes();
 
-			for (int i = 0; i < _d.Length; i++)
-				_d [i] = m_pMemory [addr + i];
-
+            for (int i = 0; i < _d.Length; i++)
+            {
+                _d[i] = m_pMemory[addr + i];
+            }
+            delay();
 			return _d.ToShort ();
 		}
 		public override string  ToString()
@@ -117,6 +132,10 @@ namespace Vcsos.Komponent
 			return output.ToString ();
 		}
 
+        private void delay()
+        {
+           // Thread.Sleep(0);
+        }
 		#region implemented abstract members of Stream
 
 		public override void Flush ()

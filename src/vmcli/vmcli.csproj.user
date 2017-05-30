@@ -3,6 +3,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <StartWorkingDirectory>
     </StartWorkingDirectory>
-    <StartArguments>-t raw -i test.bin -c 1</StartArguments>
+    <StartArguments>-t raw -i test.bin -c 2</StartArguments>
   </PropertyGroup>
 </Project>

@@ -73,7 +73,7 @@ namespace Vcsos
 		{
             m_pAssembler = new Assembler(iNumCores);
             int newMemorySize = ramSize.ToBoundary(4);
-			Add( new Memory (newMemorySize, "RAM"));
+			Add( new Memory (newMemorySize, "RAM", 10));
 
 			if (newMemorySize != ramSize) 
 				Console.WriteLine("VM: Memory was expanded from {0} bytes to {1} bytes to a page boundary." + System.Environment.NewLine,

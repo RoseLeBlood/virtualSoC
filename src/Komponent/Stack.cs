@@ -31,9 +31,9 @@ namespace Vcsos.Komponent
         {
             get { return m_pMemory.Size-1; }
         }
-        internal Stack(int size, string name ="")
+        internal Stack(int size, int delay, string name ="")
         {
-            m_pMemory = new Memory(size, name);
+            m_pMemory = new Memory(size, name, delay);
         }
 		public void Push32(int value)
 		{

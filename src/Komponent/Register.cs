@@ -119,7 +119,7 @@ namespace Vcsos.Komponent
 		public Register (Core core, int iSpAddr)
 		{
             m_pCore = core;
-            m_pMemRegister = new Memory (28, "CoreRegister" + core.CoreNumber.ToString());
+            m_pMemRegister = new Memory (28, "CoreRegister" + core.CoreNumber.ToString(), 0);
 
             sp = iSpAddr;
 			ip = 0;
