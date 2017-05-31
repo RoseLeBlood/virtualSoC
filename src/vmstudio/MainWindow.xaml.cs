@@ -48,6 +48,7 @@ namespace vmstudio
                                         "ADD #d148   ; Add 2d to AX = 200d\n\n" +
                                         "FBSET AX,AX,#h00FF00 ; SetPixel to (200)x(200) in green\n"+
                                         "HLT";
+            clsLog.WriteOutput("viSoC Studio 2018 loaded", Colors.White);
         }
     }
 }

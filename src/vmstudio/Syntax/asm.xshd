@@ -1,52 +1,44 @@
 ﻿<SyntaxDefinition name="ASM" extensions=".asm" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
 	<Color name="Comment" foreground="Green" />
 	<Color name="String" foreground="Blue" />
-	<Color name="Regex" foreground="#FFFF6600" />
+	<Color name="label" foreground="Black" />
 	<RuleSet>
 		<Span color="Comment" multiline="false">
 			<Begin>;</Begin>
 		</Span>
 		
-		<Span color="String">
-			<Begin>"</Begin>
-			<End>"</End>
-			<RuleSet>
-				<Span begin="\\" end="." />
-			</RuleSet>
+		<Span color="String" fontStyle="italic">
+			<Begin>'</Begin>
+			<End>'</End>
 		</Span>
 		
-		<Span color="Regex" multiline="true">
-			<Begin>@/</Begin>
-			<End>/</End>
-		</Span>
-	
-		<Keywords foreground="Blue" fontWeight="bold">
+		<Keywords foreground="Blue" fontWeight="bold" >
 			<Word>add</Word>
-			<Word>sub</Word>
-			<Word>div</Word>
-			<Word>mul</Word>
-			<Word>push</Word>
-			<Word>pop</Word>
-			<Word>hlt</Word>
-			<Word>csh</Word>
-			<Word>nop</Word>
-			<Word>while</Word>
+			<Word>SUB</Word>
+			<Word>DIV</Word>
+			<Word>MUL</Word>
+			<Word>PUSH</Word>
+			<Word>POP</Word>
+			<Word>HLT</Word>
+			<Word>INV</Word>
+			<Word>NOP</Word>
+			<Word>CALL</Word>
+			<Word>MOV</Word>
+			<Word>FBSET</Word>
 		</Keywords>
-		<Keywords foreground="Navy">
+		<Keywords foreground="Navy" fontWeight="bold">
 			<Word>.dim</Word>
 			<Word>LB</Word>
-			<Word>return</Word>
-			<Word>yield</Word>
-			<Word>goto</Word>
+			<Word>ORG</Word>
+			<Word>#include</Word>
 		</Keywords>
 		<Keywords foreground="Teal" fontWeight="bold">
-			<Word>try</Word>
-			<Word>raise</Word>
-			<Word>ensure</Word>
-			<Word>except</Word>
-			<Word>retry</Word>
-			<Word>success</Word>
+			<Word>EAX</Word>
+			<Word>EBX</Word>
+			<Word>ECX</Word>
+			<Word>IP</Word>
+			<Word>SP</Word>
+			<Word>OF</Word>
 		</Keywords>
 	</RuleSet>
-	
 </SyntaxDefinition>

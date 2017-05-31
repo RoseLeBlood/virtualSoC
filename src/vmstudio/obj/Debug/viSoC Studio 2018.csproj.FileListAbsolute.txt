@@ -2,7 +2,6 @@ D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\vmstudio.exe.config
 D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\vmstudio.exe
 D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\vmstudio.pdb
 D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\MahApps.Metro.dll
-D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\MahApps.Metro.IconPacks.dll
 D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\System.Windows.Interactivity.dll
 D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\Xceed.Wpf.AvalonDock.dll
 D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Aero.dll
@@ -18,8 +17,6 @@ D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\Xceed.Wpf.Themes.Win
 D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\Xceed.Wpf.Toolkit.dll
 D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\MahApps.Metro.pdb
 D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\MahApps.Metro.xml
-D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\MahApps.Metro.IconPacks.pdb
-D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\MahApps.Metro.IconPacks.xml
 D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\Xceed.Wpf.AvalonDock.xml
 D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Aero.xml
 D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\Xceed.Wpf.AvalonDock.Themes.Metro.xml
@@ -42,8 +39,6 @@ D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\ru\Xceed.Wpf.AvalonD
 D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
 D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
 D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\obj\Debug\viSoC Studio 2018.csprojResolveAssemblyReference.cache
-D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\obj\Debug\Resources\Icons.baml
-D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\obj\Debug\Resources\IconsNonShared.baml
 D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\obj\Debug\MainWindow.g.cs
 D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\obj\Debug\App.g.cs
 D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\obj\Debug\vmstudio_MarkupCompile.cache
@@ -64,3 +59,7 @@ D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\ConsoleControlAPI.pd
 D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\ConsoleControlAPI.xml
 D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\ICSharpCode.AvalonEdit.xml
 D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\Syntax\asm.xshd
+D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\MahApps.Metro.IconPacks.MaterialLight.dll
+D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\MahApps.Metro.IconPacks.MaterialLight.pdb
+D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\bin\Debug\MahApps.Metro.IconPacks.MaterialLight.xml
+D:\annas\Documents\GitHub\virtualSoC\src\vmstudio\obj\Debug\Resources\icons.baml

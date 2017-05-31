@@ -7,6 +7,7 @@
         xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
         xmlns:Control="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:Console="clr-namespace:ConsoleControl.WPF;assembly=ConsoleControl.WPF"       
         mc:Ignorable="d"
         Icon="virtualSoc.ico"
         Title="viSoC Studio 2018" Height="782" Width="1024" ShowIconOnTitleBar="True"
@@ -14,7 +15,7 @@
     <Control:MetroWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Resources/IconsNonShared.xaml" />
+                <ResourceDictionary Source="/Resources/icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Control:MetroWindow.Resources>
@@ -32,53 +33,71 @@
             <RowDefinition/>
             <RowDefinition Height="32"/>
         </Grid.RowDefinitions>
-        <ToolBar />
-
+        <ToolBarTray x:Name="xttoolmain" >
+            <ToolBar Margin="0,0,-143,-31" >
+                <Button x:Name="cmdnewproject" Content="New Project" Height="26" VerticalAlignment="Bottom" />
+            </ToolBar>
+        </ToolBarTray>
         <avalonDock:DockingManager x:Name="avManagerRoot" Grid.Row="1" 
-                                   AllowMixedOrientation="True">
+                                   AllowMixedOrientation="True" Grid.Column="1">
+            <avalonDock:DockingManager.Theme>
+                <avalonDock:VS2010Theme />
+            </avalonDock:DockingManager.Theme>
             <avalonDock:LayoutRoot >
                 <avalonDock:LayoutPanel Orientation="Horizontal">
                     <avalonDock:LayoutAnchorablePane DockWidth="150" >
-                        <avalonDock:LayoutAnchorable Title="Logging">
-                            <TextBox/>
+                        <avalonDock:LayoutAnchorable Title="Projectmap" >
+                            <Grid>
+                                <TreeView x:Name="trProjectMappe" />
+                            </Grid>
                         </avalonDock:LayoutAnchorable>
                     </avalonDock:LayoutAnchorablePane>
-                    
+
                     <avalonDock:LayoutDocumentPane >
                         <avalonDock:LayoutDocument Title="SourceCode" >
                             <Grid>
                                 <avalonEdit:TextEditor x:Name="txtSourceCode" 
                                                    SyntaxHighlighting="ASM"
                                                    FontFamily="Consales"
-                                                   FontSize="10pt"
+                                                   FontSize="10pt" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" WordWrap="True"
                                                    />
                             </Grid>
                         </avalonDock:LayoutDocument>
-                        <avalonDock:LayoutDocument Title="HexDump" />
+
 
                     </avalonDock:LayoutDocumentPane>
-                    
+
                     <avalonDock:LayoutAnchorablePane DockWidth="80" >
                         <avalonDock:LayoutAnchorable Title="Stats" CanClose="False">
                             <TextBlock/>
                         </avalonDock:LayoutAnchorable>
                     </avalonDock:LayoutAnchorablePane>
-                    
-                    
+
+
                 </avalonDock:LayoutPanel>
-                
+
                 <avalonDock:LayoutRoot.BottomSide>
                     <avalonDock:LayoutAnchorSide >
                         <avalonDock:LayoutAnchorGroup>
                             <avalonDock:LayoutAnchorable Title="Console" CanClose="False" >
-                                 
+                                <Console:ConsoleControl x:Name="clsLog"/>
                             </avalonDock:LayoutAnchorable>
                         </avalonDock:LayoutAnchorGroup>
                     </avalonDock:LayoutAnchorSide>
                 </avalonDock:LayoutRoot.BottomSide>
             </avalonDock:LayoutRoot>
         </avalonDock:DockingManager>
-        <StatusBar Grid.Row="2" />
+        <Grid Grid.Row="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="44"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="151"/>
+                <ColumnDefinition Width="39"/>
+            </Grid.ColumnDefinitions>
+            <Label Content="22:21 Uhr" Grid.Column="3"  />
+            <ProgressBar Grid.Column="2" x:Name="prgStatus" Height="Auto" Margin="0,11"/>
+            <Label Content="Bereit" x:Name="lblStatus"/>
+        </Grid>
 
     </Grid>
 </Control:MetroWindow>
