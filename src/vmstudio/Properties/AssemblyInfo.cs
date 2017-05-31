@@ -7,11 +7,11 @@ using System.Windows;
 // Allgemeine Informationen über eine Assembly werden über die folgenden
 // Attribute gesteuert. Ändern Sie diese Attributwerte, um die Informationen zu ändern,
 // die einer Assembly zugeordnet sind.
-[assembly: AssemblyTitle("vmstudio")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("viSoC Studio 2018")]
+[assembly: AssemblyDescription("virtual System on Chip Studio 2018")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("vmstudio")]
+[assembly: AssemblyProduct("viSoC Studio 2018")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

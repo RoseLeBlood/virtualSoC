@@ -1,24 +1,84 @@
-﻿<Window x:Class="vmstudio.MainWindow"
+﻿<Control:MetroWindow x:Class="vmstudio.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:vmstudio"
+        xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        xmlns:Control="http://metro.mahapps.com/winfx/xaml/controls"
         mc:Ignorable="d"
-        Title="MainWindow" Height="353.645" Width="525">
+        Icon="virtualSoc.ico"
+        Title="viSoC Studio 2018" Height="782" Width="1024" ShowIconOnTitleBar="True"
+                     x:Name="frmMain" Loaded="frmMain_Loaded">
+    <Control:MetroWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/IconsNonShared.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Control:MetroWindow.Resources>
+    <Control:MetroWindow.RightWindowCommands>
+        <Control:WindowCommands>
+            <StackPanel Orientation="Horizontal">
+                <Button Content="settings" x:Name="cmdSettings" />
+            </StackPanel>
+        </Control:WindowCommands>
+    </Control:MetroWindow.RightWindowCommands>
+
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="143"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="31"/>
             <RowDefinition/>
-            <RowDefinition Height="27"/>
+            <RowDefinition Height="32"/>
         </Grid.RowDefinitions>
-        <StatusBar HorizontalAlignment="Left" Width="517" Height="28" VerticalAlignment="Bottom" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="1"/>
-        <Menu Grid.ColumnSpan="2" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Width="517"/>
-        <DockPanel HorizontalAlignment="Left" LastChildFill="False" Grid.Row="1" Width="517" Grid.ColumnSpan="2" Height="266" VerticalAlignment="Bottom"/>
+        <ToolBar />
+
+        <avalonDock:DockingManager x:Name="avManagerRoot" Grid.Row="1" 
+                                   AllowMixedOrientation="True">
+            <avalonDock:LayoutRoot >
+                <avalonDock:LayoutPanel Orientation="Horizontal">
+                    <avalonDock:LayoutAnchorablePane DockWidth="150" >
+                        <avalonDock:LayoutAnchorable Title="Logging">
+                            <TextBox/>
+                        </avalonDock:LayoutAnchorable>
+                    </avalonDock:LayoutAnchorablePane>
+                    
+                    <avalonDock:LayoutDocumentPane >
+                        <avalonDock:LayoutDocument Title="SourceCode" >
+                            <Grid>
+                                <avalonEdit:TextEditor x:Name="txtSourceCode" 
+                                                   SyntaxHighlighting="ASM"
+                                                   FontFamily="Consales"
+                                                   FontSize="10pt"
+                                                   />
+                            </Grid>
+                        </avalonDock:LayoutDocument>
+                        <avalonDock:LayoutDocument Title="HexDump" />
+
+                    </avalonDock:LayoutDocumentPane>
+                    
+                    <avalonDock:LayoutAnchorablePane DockWidth="80" >
+                        <avalonDock:LayoutAnchorable Title="Stats" CanClose="False">
+                            <TextBlock/>
+                        </avalonDock:LayoutAnchorable>
+                    </avalonDock:LayoutAnchorablePane>
+                    
+                    
+                </avalonDock:LayoutPanel>
+                
+                <avalonDock:LayoutRoot.BottomSide>
+                    <avalonDock:LayoutAnchorSide >
+                        <avalonDock:LayoutAnchorGroup>
+                            <avalonDock:LayoutAnchorable Title="Console" CanClose="False" >
+                                 
+                            </avalonDock:LayoutAnchorable>
+                        </avalonDock:LayoutAnchorGroup>
+                    </avalonDock:LayoutAnchorSide>
+                </avalonDock:LayoutRoot.BottomSide>
+            </avalonDock:LayoutRoot>
+        </avalonDock:DockingManager>
+        <StatusBar Grid.Row="2" />
 
     </Grid>
-</Window>
+</Control:MetroWindow>

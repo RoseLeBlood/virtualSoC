@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vminst", "vminst\vminst.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vmcli", "vmcli\vmcli.csproj", "{1CF36A28-40B6-49CB-96FD-4A486EC61E78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vmstudio", "vmstudio\vmstudio.csproj", "{948FF3AD-0491-4FB7-A566-6F986DBF6485}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "viSoC Studio 2018", "vmstudio\viSoC Studio 2018.csproj", "{948FF3AD-0491-4FB7-A566-6F986DBF6485}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

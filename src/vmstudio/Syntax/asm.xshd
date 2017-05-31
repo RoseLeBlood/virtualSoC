@@ -1,0 +1,52 @@
+﻿<SyntaxDefinition name="ASM" extensions=".asm" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+	<Color name="Comment" foreground="Green" />
+	<Color name="String" foreground="Blue" />
+	<Color name="Regex" foreground="#FFFF6600" />
+	<RuleSet>
+		<Span color="Comment" multiline="false">
+			<Begin>;</Begin>
+		</Span>
+		
+		<Span color="String">
+			<Begin>"</Begin>
+			<End>"</End>
+			<RuleSet>
+				<Span begin="\\" end="." />
+			</RuleSet>
+		</Span>
+		
+		<Span color="Regex" multiline="true">
+			<Begin>@/</Begin>
+			<End>/</End>
+		</Span>
+	
+		<Keywords foreground="Blue" fontWeight="bold">
+			<Word>add</Word>
+			<Word>sub</Word>
+			<Word>div</Word>
+			<Word>mul</Word>
+			<Word>push</Word>
+			<Word>pop</Word>
+			<Word>hlt</Word>
+			<Word>csh</Word>
+			<Word>nop</Word>
+			<Word>while</Word>
+		</Keywords>
+		<Keywords foreground="Navy">
+			<Word>.dim</Word>
+			<Word>LB</Word>
+			<Word>return</Word>
+			<Word>yield</Word>
+			<Word>goto</Word>
+		</Keywords>
+		<Keywords foreground="Teal" fontWeight="bold">
+			<Word>try</Word>
+			<Word>raise</Word>
+			<Word>ensure</Word>
+			<Word>except</Word>
+			<Word>retry</Word>
+			<Word>success</Word>
+		</Keywords>
+	</RuleSet>
+	
+</SyntaxDefinition>
