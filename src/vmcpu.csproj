@@ -42,7 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Komponent\CPU.cs" />
+    <Compile Include="Komponent\fpu.cs" />
     <Compile Include="Komponent\IVMKomponente.cs" />
+    <Compile Include="Komponent\SoftFpu.cs" />
     <Compile Include="mm\vmadr.cs" />
     <Compile Include="mm\vmdec.cs" />
     <Compile Include="mm\vmdvr.cs" />

@@ -3,91 +3,140 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:vmstudio"
-        xmlns:avalonDock="http://schemas.xceed.com/wpf/xaml/avalondock"
-        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
-        xmlns:Control="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:Console="clr-namespace:ConsoleControl.WPF;assembly=ConsoleControl.WPF"       
-        mc:Ignorable="d"
+                     xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+                     xmlns:Control="http://metro.mahapps.com/winfx/xaml/controls"
+                     xmlns:views="clr-namespace:vmstudio.Views"
+                     mc:Ignorable="d"
+        BorderBrush="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"  
+        BorderThickness="1"
+        
+        ResizeMode="CanResizeWithGrip"
         Icon="virtualSoc.ico"
-        Title="viSoC Studio 2018" Height="782" Width="1024" ShowIconOnTitleBar="True"
+        Title="viSoC Studio 2018" Height="600" Width="800" ShowIconOnTitleBar="False"
                      x:Name="frmMain" Loaded="frmMain_Loaded">
     <Control:MetroWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Resources/icons.xaml" />
+
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Control:MetroWindow.Resources>
-    <Control:MetroWindow.RightWindowCommands>
-        <Control:WindowCommands>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="settings" x:Name="cmdSettings" />
-            </StackPanel>
-        </Control:WindowCommands>
-    </Control:MetroWindow.RightWindowCommands>
 
     <Grid>
+        <Grid.Resources>
+            <DataTemplate x:Key="MenuItemTemplate" DataType="{x:Type Control:HamburgerMenuGlyphItem}">
+                <Grid Height="48">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="48" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0"
+                               FontSize="16"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontFamily="Segoe MDL2 Assets"
+                               Foreground="White"
+                               Text="{Binding Glyph}" />
+                    <TextBlock Grid.Column="1"
+                               VerticalAlignment="Center"
+                               FontSize="16"
+                               Foreground="White"
+                               Text="{Binding Label}" />
+                </Grid>
+            </DataTemplate>
+
+            <DataTemplate x:Key="OptionsMenuItemTemplate" DataType="{x:Type Control:HamburgerMenuGlyphItem}">
+                <Grid Height="48">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="48" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0"
+                               FontSize="16"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               FontFamily="Segoe MDL2 Assets"
+                               Foreground="White"
+                               Text="{Binding Glyph}" />
+                    <TextBlock Grid.Column="1"
+                               VerticalAlignment="Center"
+                               FontSize="16"
+                               Foreground="White"
+                               Text="{Binding Label}" />
+                </Grid>
+            </DataTemplate>
+
+
+
+        </Grid.Resources>
         <Grid.RowDefinitions>
-            <RowDefinition Height="31"/>
             <RowDefinition/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="32"/>
         </Grid.RowDefinitions>
-        <ToolBarTray x:Name="xttoolmain" >
-            <ToolBar Margin="0,0,-143,-31" >
-                <Button x:Name="cmdnewproject" Content="New Project" Height="26" VerticalAlignment="Bottom" />
-            </ToolBar>
-        </ToolBarTray>
-        <avalonDock:DockingManager x:Name="avManagerRoot" Grid.Row="1" 
-                                   AllowMixedOrientation="True" Grid.Column="1">
-            <avalonDock:DockingManager.Theme>
-                <avalonDock:VS2010Theme />
-            </avalonDock:DockingManager.Theme>
-            <avalonDock:LayoutRoot >
-                <avalonDock:LayoutPanel Orientation="Horizontal">
-                    <avalonDock:LayoutAnchorablePane DockWidth="150" >
-                        <avalonDock:LayoutAnchorable Title="Projectmap" >
-                            <Grid>
-                                <TreeView x:Name="trProjectMappe" />
-                            </Grid>
-                        </avalonDock:LayoutAnchorable>
-                    </avalonDock:LayoutAnchorablePane>
 
-                    <avalonDock:LayoutDocumentPane >
-                        <avalonDock:LayoutDocument Title="SourceCode" >
-                            <Grid>
-                                <avalonEdit:TextEditor x:Name="txtSourceCode" 
-                                                   SyntaxHighlighting="ASM"
-                                                   FontFamily="Consales"
-                                                   FontSize="10pt" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" WordWrap="True"
-                                                   />
-                            </Grid>
-                        </avalonDock:LayoutDocument>
+        <Control:HamburgerMenu
+            x:Name="HamburgerMenuControl"
+                Foreground="White"
+                PaneBackground="#FF444444"
+                IsPaneOpen="False"
+            ItemClick="HamburgerMenu_ItemClick"
+            OptionsItemClick="HamburgerMenu_ItemClick"
+                ItemTemplate="{StaticResource MenuItemTemplate}"
+                OptionsItemTemplate="{StaticResource OptionsMenuItemTemplate}"
+                DisplayMode="CompactInline" >
+            <!--  Items  -->
+            <Control:HamburgerMenu.ItemsSource>
+                <Control:HamburgerMenuItemCollection>
+                    <Control:HamburgerMenuGlyphItem Glyph="&#59151;"
+                                                     Label="Sourcecode">
+                        <Control:HamburgerMenuGlyphItem.Tag>
+                            <views:EditorView />
+                        </Control:HamburgerMenuGlyphItem.Tag>
+                    </Control:HamburgerMenuGlyphItem>
 
+                    <Control:HamburgerMenuGlyphItem Glyph="&#59275;"
+                                                     Label="Running">
+                        <Control:HamburgerMenuGlyphItem.Tag>
+                            <TextBlock />
+                        </Control:HamburgerMenuGlyphItem.Tag>
+                    </Control:HamburgerMenuGlyphItem>
 
-                    </avalonDock:LayoutDocumentPane>
+                    <Control:HamburgerMenuGlyphItem Glyph="&#59155;"
+                                                     Label="Settings">
+                        <Control:HamburgerMenuGlyphItem.Tag>
+                            <TextBlock />
+                        </Control:HamburgerMenuGlyphItem.Tag>
+                    </Control:HamburgerMenuGlyphItem>
+                </Control:HamburgerMenuItemCollection>
+            </Control:HamburgerMenu.ItemsSource>
 
-                    <avalonDock:LayoutAnchorablePane DockWidth="80" >
-                        <avalonDock:LayoutAnchorable Title="Stats" CanClose="False">
-                            <TextBlock/>
-                        </avalonDock:LayoutAnchorable>
-                    </avalonDock:LayoutAnchorablePane>
+            <!--  Options  -->
+            <Control:HamburgerMenu.OptionsItemsSource>
+                <Control:HamburgerMenuItemCollection>
+                    <Control:HamburgerMenuGlyphItem Glyph="&#59151;"
+                                                     Label="About">
+                        <Control:HamburgerMenuGlyphItem.Tag>
+                            <views:AboutView/>
+                        </Control:HamburgerMenuGlyphItem.Tag>
+                    </Control:HamburgerMenuGlyphItem>
+                </Control:HamburgerMenuItemCollection>
+            </Control:HamburgerMenu.OptionsItemsSource>
 
+            <!--  Content  -->
+            <Control:HamburgerMenu.ContentTemplate>
+                <DataTemplate DataType="{x:Type Control:HamburgerMenuItem}">
 
-                </avalonDock:LayoutPanel>
-
-                <avalonDock:LayoutRoot.BottomSide>
-                    <avalonDock:LayoutAnchorSide >
-                        <avalonDock:LayoutAnchorGroup>
-                            <avalonDock:LayoutAnchorable Title="Console" CanClose="False" >
-                                <Console:ConsoleControl x:Name="clsLog"/>
-                            </avalonDock:LayoutAnchorable>
-                        </avalonDock:LayoutAnchorGroup>
-                    </avalonDock:LayoutAnchorSide>
-                </avalonDock:LayoutRoot.BottomSide>
-            </avalonDock:LayoutRoot>
-        </avalonDock:DockingManager>
-        <Grid Grid.Row="2" >
+                    <Grid >
+                        <ContentControl 
+                                x:Name="TheContent"
+                                Focusable="False"
+                                Content="{Binding Tag}" />
+                    </Grid>
+                </DataTemplate>
+            </Control:HamburgerMenu.ContentTemplate>
+        </Control:HamburgerMenu>
+        <Grid Grid.Row="2" Grid.ColumnSpan="2" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="44"/>
                 <ColumnDefinition/>
@@ -96,8 +145,13 @@
             </Grid.ColumnDefinitions>
             <Label Content="22:21 Uhr" Grid.Column="3"  />
             <ProgressBar Grid.Column="2" x:Name="prgStatus" Height="Auto" Margin="0,11"/>
-            <Label Content="Bereit" x:Name="lblStatus"/>
         </Grid>
+        <Expander Header="Console" Grid.Row="1" Grid.ColumnSpan="2"  >
+            <Grid Background="#FFE5E5E5">
+                <RichTextBox Height="80" x:Name="csLog" Background="Black" Foreground="LawnGreen" 
+                             IsHitTestVisible="False"/>
+            </Grid>
+        </Expander>
 
     </Grid>
 </Control:MetroWindow>

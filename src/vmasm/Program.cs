@@ -77,7 +77,7 @@ namespace vmasm
 
         private static void PrintAssembler()
         {
-            string res = (new Vcsos.Assembler(1)).ToString();
+            string res = (new Vcsos.DeAssembler(1)).ToString();
             Console.WriteLine(res);
         }
 

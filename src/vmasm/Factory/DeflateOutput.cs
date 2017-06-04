@@ -1,4 +1,5 @@
-﻿//
+﻿
+//
 //  DeflateOutput.cs
 //
 //  Author:
@@ -19,6 +20,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using System.IO;
 using System.IO.Compression;
 
 namespace vmasm
@@ -41,6 +43,13 @@ namespace vmasm
 			}
 			return true;
 		}
-	}
+        public MemoryStream WriteToStream(byte[] asmdata)
+        {
+            MemoryStream st = new MemoryStream();
+            using (DeflateStream gStream = new DeflateStream(st, CompressionMode.Compress))
+                gStream.Write(asmdata, 0, asmdata.Length);
+            return st;
+        }
+    }
 }
 

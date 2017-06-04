@@ -19,6 +19,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using System.IO;
 
 namespace vmasm
 {
@@ -26,13 +27,15 @@ namespace vmasm
 	{
 		RAW,
 		GZIP,
-		Deflate
+		Deflate,
+        Stream
 	}
 
 	public interface IModuleOutput
 	{
 		string Name { get; }
 		bool WriteToFile(byte[] asmdata, string file);
+        MemoryStream WriteToStream(byte[] asmdata);
 	}
 
 
@@ -58,6 +61,7 @@ namespace vmasm
 			case ModuleOutputType.GZIP:
 				output = new GzipOutput ();
 				break;
+            
 			default:
 				break;
 			}
@@ -66,6 +70,30 @@ namespace vmasm
 			}
 			return false;
 		}
-	}
+        public static MemoryStream WriteToFile(byte[] asmdata, ModuleOutputType eType)
+        {
+            IModuleOutput output = null;
+            switch (eType)
+            {
+                case ModuleOutputType.RAW:
+                    output = new RawOutput();
+                    break;
+                case ModuleOutputType.Deflate:
+                    output = new DeflateOutput();
+                    break;
+                case ModuleOutputType.GZIP:
+                    output = new GzipOutput();
+                    break;
+
+                default:
+                    break;
+            }
+            if (output != null)
+            {
+                return output.WriteToStream(asmdata);
+            }
+            return null;
+        }
+    }
 }
 

@@ -68,7 +68,7 @@ namespace Vcsos
     /// <summary>
     /// Assembler Klasse. Diese Klasse führt die Bearbeitzng aus
     /// </summary>
-	public class Assembler
+	public class DeAssembler
 	{
         /// <summary>
         /// Timer der Sincronisation und Takt gabe 
@@ -91,7 +91,7 @@ namespace Vcsos
         /// </summary>
 		public bool IsAlive { get { return m_bIsAlive; } }
 
-		public Assembler (int numCores)
+		public DeAssembler (int numCores)
 		{
             m_pTimer = new System.Collections.Generic.List<TimerIDs>();
             m_objLock = new object();

@@ -19,6 +19,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 using System;
+using System.IO;
 
 namespace vmasm
 {
@@ -30,7 +31,7 @@ namespace vmasm
 
 		public bool WriteToFile (byte[] asmdata, string file)
 		{
-			file = file.Contains(".df") ? file : file  + ".bin";
+			file = file.Contains(".bin") ? file : file  + ".bin";
 
 			using(var sfile = new System.IO.FileStream(file, System.IO.FileMode.Create))
 			{
@@ -38,6 +39,10 @@ namespace vmasm
 			}
 			return true;
 		}
-	}
+        public MemoryStream WriteToStream(byte[] asmdata)
+        {
+            return new MemoryStream();
+        }
+    }
 }
 

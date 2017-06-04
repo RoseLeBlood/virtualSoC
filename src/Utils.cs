@@ -158,6 +158,43 @@ namespace Vcsos
 			r.NextBytes (buffer);
 			return buffer;
 		}
-	}
+        public static uint SizeCalc(string value)
+        {
+            uint ramSize = 1;
+            string str = value.ToUpper();
+
+            if(str.Contains("G"))
+            {
+                str = str.Replace('G', ' ');
+                ramSize = 1024 * 1024 * 1024;
+            }
+            else if (str.Contains("M"))
+            {
+                str = str.Replace('M', ' ');
+                ramSize = 1024*1024;
+            }
+            else if (str.Contains("K"))
+            {
+                str = str.Replace('K', ' ');
+                ramSize = 1024;
+            }
+            else if (str.Contains("B"))
+            {
+                str = str.Replace('B', ' ');
+                ramSize = 1;
+            }
+            else
+                ramSize = 1;
+            uint size;
+
+            if (uint.TryParse(str, out size))
+            {
+                ramSize *= size;
+            }
+            else
+                ramSize *= 512;
+            return ramSize;
+        }
+    }
 }
 

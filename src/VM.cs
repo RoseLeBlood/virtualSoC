@@ -40,7 +40,7 @@ namespace Vcsos
         /// <summary>
         /// Die Assembler Klasse schalt zentrale
         /// </summary>
-		private Assembler m_pAssembler;
+		private DeAssembler m_pAssembler;
 
 		public Core 	CurrentCore		{ get { return ((CPU)this[1]).CurrentCore; } }
         public CPU      CPU             { get { return (CPU)this[1]; } }
@@ -73,7 +73,7 @@ namespace Vcsos
         /// <param name="ramSize">Größe des Arbeitsspeicher</param>
 		public void CreateVM(UInt32 ramSize, int iNumCores)
 		{
-            m_pAssembler = new Assembler(iNumCores);
+            m_pAssembler = new DeAssembler(iNumCores);
             int newMemorySize = ramSize.ToBoundary(4);
 			Add( new Memory (newMemorySize, "RAM", 500));
 
