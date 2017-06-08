@@ -19,30 +19,56 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
-            <RowDefinition Height="84"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
-            <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
         <avalonedit:TextEditor 
                 SyntaxHighlighting="ASM" FontFamily="Consolas"
                 FontSize="12pt" Background="#FFECECEC" 
                 Foreground="Black" 
-                ShowLineNumbers="True" Grid.RowSpan="2"
+                ShowLineNumbers="True"
             Name="txtSource" />
+        
+        <Expander Grid.Column="1" ExpandDirection="Right">
 
-        <TreeView Grid.Column="2" Grid.RowSpan="2"/>
+            <Grid Margin="-1">
+                <!-- <StackPanel Background="{DynamicResource BlackBrush}" Orientation="Horizontal">
+                    <Button Width="35" FontFamily="Segoe MDL2 Assets" Name="cmdNewFile" 
+                            Content="&#xE8E5;" Click="cmdNewFile_Click" />
+                    <Button FontFamily="Segoe MDL2 Assets" 
+                            Content="&#xE8E5;" Click="cmdNewFile_Click" />
+                    <Button FontFamily="Segoe MDL2 Assets"  
+                            Content="&#xE8E5;" Click="cmdNewFile_Click" />
 
-        <StackPanel  Grid.Column="2" Orientation="Vertical" Grid.Row="1" >
-            <Button Content="New File" Name="cmdOpenWork" Click="cmdOpenWork_Click" />
-            <Button Content="Save File"  x:Name="cmdSaveFile" Click="cmdSaveFile_Click"/>
-            <Button Content="Build"  Name="cmdBuild" Click="cmdBuild_Click" />
+
+                </StackPanel>-->
+                <TreeView Name="trWorkspace" MinWidth="250">
+                    <TreeView.Resources>
+                        <HierarchicalDataTemplate DataType="{x:Type  local:Workgroup}" 
+                                                  ItemsSource="{Binding FileSources}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8B7;" />
+                                <TextBlock Text="  "/>
+                                <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
 
 
-        </StackPanel>
+                        <DataTemplate DataType="{x:Type local:WorkgroupFile}">
+                            <StackPanel Orientation="Horizontal" >
+                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="{Binding Image}" />
+                                <TextBlock Text="{Binding Name}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </TreeView.Resources>
+                </TreeView>
+            </Grid>
+        </Expander>
+
+
 
 
     </Grid>

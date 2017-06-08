@@ -15,12 +15,7 @@ namespace vmstudio
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            Views.CreateOpenWorkspace m = new Views.CreateOpenWorkspace();
            
-            m.Show();
-
-            
-           // main.ShowDialog();
         }
     }
 }

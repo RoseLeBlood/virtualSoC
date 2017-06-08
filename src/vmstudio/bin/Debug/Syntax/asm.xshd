@@ -1,0 +1,44 @@
+﻿<SyntaxDefinition name="ASM" extensions=".asm" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+	<Color name="Comment" foreground="Green" />
+	<Color name="String" foreground="Blue" />
+	<Color name="label" foreground="Black" />
+	<RuleSet>
+		<Span color="Comment" multiline="false">
+			<Begin>;</Begin>
+		</Span>
+		
+		<Span color="String" fontStyle="italic">
+			<Begin>'</Begin>
+			<End>'</End>
+		</Span>
+		
+		<Keywords foreground="Blue" fontWeight="bold" >
+			<Word>add</Word>
+			<Word>SUB</Word>
+			<Word>DIV</Word>
+			<Word>MUL</Word>
+			<Word>PUSH</Word>
+			<Word>POP</Word>
+			<Word>HLT</Word>
+			<Word>INV</Word>
+			<Word>NOP</Word>
+			<Word>CALL</Word>
+			<Word>MOV</Word>
+			<Word>FBSET</Word>
+		</Keywords>
+		<Keywords foreground="Navy" fontWeight="bold">
+			<Word>.dim</Word>
+			<Word>LB</Word>
+			<Word>ORG</Word>
+			<Word>#include</Word>
+		</Keywords>
+		<Keywords foreground="Teal" fontWeight="bold">
+			<Word>EAX</Word>
+			<Word>EBX</Word>
+			<Word>ECX</Word>
+			<Word>IP</Word>
+			<Word>SP</Word>
+			<Word>OF</Word>
+		</Keywords>
+	</RuleSet>
+</SyntaxDefinition>

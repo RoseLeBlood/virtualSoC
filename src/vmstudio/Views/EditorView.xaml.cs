@@ -22,18 +22,17 @@ namespace vmstudio.Views
     /// Interaktionslogik für EditorView.xaml
     /// </summary>
     public partial class EditorView : UserControl
-    {
-        MemoryStream m_lStream;
-       
+    {       
         public EditorView()
         {
-         
-
             InitializeComponent();
+            List<Workgroup> lst = new List<Workgroup>();
+            lst.Add(new Workgroup(new Daten.WorkSpace("test", "test")));
+            trWorkspace.ItemsSource = lst;
 
 
-            Daten.SourceFile file = Daten.WorkSpaceHelper.Instance.Current.getFile("main.asm");
-            if (file != null) txtSource.Text = file.Open();
+           // Daten.SourceFile file = Daten.CurrentWorkspace.Instance.Current.getFile("main.asm");
+           // if (file != null) txtSource.Text = file.Open();
         }
 
         private void cmdNewFile_Click(object sender, RoutedEventArgs e)

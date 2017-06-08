@@ -84,10 +84,18 @@
             OptionsItemClick="HamburgerMenu_ItemClick"
                 ItemTemplate="{StaticResource MenuItemTemplate}"
                 OptionsItemTemplate="{StaticResource OptionsMenuItemTemplate}"
-                DisplayMode="CompactInline" >
+                DisplayMode="CompactInline" 
+            SelectedIndex="0">
             <!--  Items  -->
             <Control:HamburgerMenu.ItemsSource>
                 <Control:HamburgerMenuItemCollection>
+                    <Control:HamburgerMenuGlyphItem Glyph="&#xE80F;"
+                                                     Label="Home">
+                        <Control:HamburgerMenuGlyphItem.Tag>
+                            <TextBlock/>
+                        </Control:HamburgerMenuGlyphItem.Tag>
+                    </Control:HamburgerMenuGlyphItem>
+
                     <Control:HamburgerMenuGlyphItem Glyph="&#59151;"
                                                      Label="Sourcecode">
                         <Control:HamburgerMenuGlyphItem.Tag>
@@ -95,7 +103,7 @@
                         </Control:HamburgerMenuGlyphItem.Tag>
                     </Control:HamburgerMenuGlyphItem>
 
-                    <Control:HamburgerMenuGlyphItem Glyph="&#59275;"
+                    <Control:HamburgerMenuGlyphItem Glyph="&#xE890;"
                                                      Label="Running">
                         <Control:HamburgerMenuGlyphItem.Tag>
                             <TextBlock />
@@ -114,7 +122,7 @@
             <!--  Options  -->
             <Control:HamburgerMenu.OptionsItemsSource>
                 <Control:HamburgerMenuItemCollection>
-                    <Control:HamburgerMenuGlyphItem Glyph="&#59151;"
+                    <Control:HamburgerMenuGlyphItem Glyph="&#xe774;"
                                                      Label="About">
                         <Control:HamburgerMenuGlyphItem.Tag>
                             <views:AboutView/>
@@ -136,7 +144,7 @@
                 </DataTemplate>
             </Control:HamburgerMenu.ContentTemplate>
         </Control:HamburgerMenu>
-        <Grid Grid.Row="2" Grid.ColumnSpan="2" >
+        <Grid Grid.Row="2" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="44"/>
                 <ColumnDefinition/>
@@ -146,7 +154,7 @@
             <Label Content="22:21 Uhr" Grid.Column="3"  />
             <ProgressBar Grid.Column="2" x:Name="prgStatus" Height="Auto" Margin="0,11"/>
         </Grid>
-        <Expander Header="Console" Grid.Row="1" Grid.ColumnSpan="2"  >
+        <Expander Header="Console" Grid.Row="1"  >
             <Grid Background="#FFE5E5E5">
                 <RichTextBox Height="80" x:Name="csLog" Background="Black" Foreground="LawnGreen" 
                              IsHitTestVisible="False"/>

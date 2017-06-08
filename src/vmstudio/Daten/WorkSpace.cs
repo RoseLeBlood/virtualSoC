@@ -9,6 +9,13 @@ using System.Xml.Serialization;
 
 namespace vmstudio.Daten
 {
+    public enum SourceFileTyp
+    {
+        include,
+        source,
+        textfile,
+        other
+    }
     [Serializable]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("Workspace")]
@@ -16,7 +23,9 @@ namespace vmstudio.Daten
     {
         public string Name { get; set; }
         public string Path { get; set; }
-        
+        public SourceFileTyp Type { get; set; }
+
+
         public SourceFile()
         {
 
@@ -104,22 +113,5 @@ namespace vmstudio.Daten
         }
     }
 
-    public class WorkSpaceHelper
-    {
-        private static WorkSpaceHelper m_inst = new WorkSpaceHelper();
-        public static WorkSpaceHelper Instance { get { return m_inst; } }
-
-        public WorkSpace Current { get; set; }
-
-        public WorkSpaceHelper() { }
-
-        public void Open(string strpath)
-        {
-            Current = WorkSpace.Open(strpath);
-        }
-        public void Create(string name, string path)
-        {
-            Current = new WorkSpace(name, path);
-        }
-    }
+   
 }
