@@ -70,13 +70,19 @@ namespace vmstudio.Daten
             var includepath = System.IO.Path.Combine(Path, "include");
             System.IO.Directory.CreateDirectory(includepath);
 
-            IncludePath.Add(includepath);
-            Files.Add(new SourceFile("system.inc", includepath));
-            Files.Add(new SourceFile("main.asm", Path));
+            try
+            {
+                IncludePath.Add(includepath);
+                Files.Add(new SourceFile("system.inc", includepath));
+                Files.Add(new SourceFile("main.asm", Path));
 
-            File.Copy("system.inc", System.IO.Path.Combine(includepath, "system.inc"));
-            File.Copy("main.asm", System.IO.Path.Combine(Path, "main.asm"));
+                File.Copy("system.inc", System.IO.Path.Combine(includepath, "system.inc"));
+                File.Copy("main.asm", System.IO.Path.Combine(Path, "main.asm"));
+            }
+            catch
+            {
 
+            }
             Save();
         }
 

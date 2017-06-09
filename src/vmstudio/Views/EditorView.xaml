@@ -18,34 +18,57 @@
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="48"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
+        <ToolBar>
+            <Button Width="48" Name="cmdUndo" FontFamily="Segoe MDL2 Assets" Content="&#xE7A7;" Click="cmdUndo_Click" />
+            <Button Width="48" Name="cmdRedo" FontFamily="Segoe MDL2 Assets" Content="&#xE7A6;" Click="cmdRedo_Click" />
+            <Separator />
+            <Button Width="48" Name="cmdNewFile" FontFamily="Segoe MDL2 Assets" Content="&#xE710;" Click="cmdNewFile_Click" />
+            <Button Width="48" Name="cmdAddFile" FontFamily="Segoe MDL2 Assets" Content="&#xE8A5;" Click="cmdAddFile_Click" />
+            <Button Width="48" Name="cmdSave" FontFamily="Segoe MDL2 Assets" Content="&#xE74E;" Click="cmdSaveFile_Click" />
+            <Separator />
+            <Button Width="48" Name="cmdCut" FontFamily="Segoe MDL2 Assets" Content="&#xE8C6;" Click="cmdCut_Click" />
+            <Button Width="48" Name="cmdCopy" FontFamily="Segoe MDL2 Assets" Content="&#xE8C8;" Click="cmdCopy_Click" />
+            <Button Width="48" Name="cmdPaste" FontFamily="Segoe MDL2 Assets" Content="&#xE77F;" Click="cmdPaste_Click" />
+            <Separator />
+            <Button Width="48" Name="cmdBuild" FontFamily="Segoe MDL2 Assets" Content="&#xE768;" Click="cmdBuild_Click" />
+
+        </ToolBar>
 
         <avalonedit:TextEditor 
                 SyntaxHighlighting="ASM" FontFamily="Consolas"
                 FontSize="12pt" Background="#FFECECEC" 
                 Foreground="Black" 
                 ShowLineNumbers="True"
-            Name="txtSource" />
-        
-        <Expander Grid.Column="1" ExpandDirection="Right">
+            Name="txtSource" TextChanged="txtSource_TextChanged" Grid.Row="1" 
+            >
+            <avalonedit:TextEditor.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Command="Save" />
+                    <Separator />
+                    <MenuItem Command="Undo" />
+                    <MenuItem Command="Redo" />
+                    <Separator/>
+                    <MenuItem Command="Cut" />
+                    <MenuItem Command="Copy" />
+                    <MenuItem Command="Paste" />
+
+                </ContextMenu>
+            </avalonedit:TextEditor.ContextMenu>
+        </avalonedit:TextEditor>
+
+        <Expander Grid.Column="1" ExpandDirection="Right" Grid.RowSpan="2">
 
             <Grid Margin="-1">
-                <!-- <StackPanel Background="{DynamicResource BlackBrush}" Orientation="Horizontal">
-                    <Button Width="35" FontFamily="Segoe MDL2 Assets" Name="cmdNewFile" 
-                            Content="&#xE8E5;" Click="cmdNewFile_Click" />
-                    <Button FontFamily="Segoe MDL2 Assets" 
-                            Content="&#xE8E5;" Click="cmdNewFile_Click" />
-                    <Button FontFamily="Segoe MDL2 Assets"  
-                            Content="&#xE8E5;" Click="cmdNewFile_Click" />
-
-
-                </StackPanel>-->
-                <TreeView Name="trWorkspace" MinWidth="250">
+                
+                <TreeView Name="trWorkspace" MinWidth="250" 
+                          SelectedItemChanged="trWorkspace_SelectedItemChanged">
                     <TreeView.Resources>
                         <HierarchicalDataTemplate DataType="{x:Type  local:Workgroup}" 
                                                   ItemsSource="{Binding FileSources}">
@@ -67,7 +90,7 @@
                 </TreeView>
             </Grid>
         </Expander>
-
+        
 
 
 

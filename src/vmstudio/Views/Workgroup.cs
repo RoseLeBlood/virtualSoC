@@ -16,14 +16,10 @@ namespace vmstudio.Views
         {
             get { return m_pItem.Name; }
         }
-        public List<string> TextList
-        {
-            get; set;
-        }
         public string Text
         {
-            get { return TextList[TextList.Count - 1]; }
-            set { TextList.Add(value); }
+            get { return m_pItem.Open(); }
+            set { m_pItem.Save(value);  }
         }
 
         public string Image

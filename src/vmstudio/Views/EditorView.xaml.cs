@@ -22,7 +22,9 @@ namespace vmstudio.Views
     /// Interaktionslogik für EditorView.xaml
     /// </summary>
     public partial class EditorView : UserControl
-    {       
+    {
+        private WorkgroupFile m_grFile = null;
+
         public EditorView()
         {
             InitializeComponent();
@@ -53,6 +55,67 @@ namespace vmstudio.Views
         private void cmdBuild_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void txtSource_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cmdUndo_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cmdRedo_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cmdCopy_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cmdPaste_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cmdCut_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cmdNewFile_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cmdAddFile_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cmdBuild_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void trWorkspace_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (trWorkspace.SelectedItem == null) return;
+           if(trWorkspace.SelectedItem is WorkgroupFile)
+            {
+                m_grFile = trWorkspace.SelectedItem as WorkgroupFile;
+                //MessageBox.Show(m_grFile.Text);
+                txtSource.Text = m_grFile.Text;
+            }
         }
     }
 }
