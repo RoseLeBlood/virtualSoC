@@ -1,4 +1,4 @@
-﻿; Base Framebuffer Address
+; Base Framebuffer Address
 #define FB #hB000
 
 ; I/O Pins
@@ -54,4 +54,4 @@ ORG h7
 JMP $
 
 ; Start Address is 0x10
-ORG h10
+ORG h10h10

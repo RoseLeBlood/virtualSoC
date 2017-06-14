@@ -1,4 +1,6 @@
 ﻿using Dragablz;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -49,7 +51,9 @@ namespace vmstudio.Views
 
         private void cmdSaveFile_Click(object sender, RoutedEventArgs e)
         {
-
+            m_grFile.Save();
+            (Application.Current.MainWindow as MetroWindow).ShowMessageAsync("virtual SoC Studio 2018 ",
+                string.Format("File {0} saved", m_grFile.Name));
         }
 
         private void cmdBuild_Click(object sender, RoutedEventArgs e)
@@ -59,7 +63,7 @@ namespace vmstudio.Views
 
         private void txtSource_TextChanged(object sender, EventArgs e)
         {
-
+            m_grFile.Text = txtSource.Text;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
