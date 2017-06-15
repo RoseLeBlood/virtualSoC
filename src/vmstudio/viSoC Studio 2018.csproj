@@ -109,6 +109,10 @@
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ContentControlTree.cs" />
+    <Compile Include="Views\EditorSourceView.xaml.cs">
+      <DependentUpon>EditorSourceView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EditorView.xaml.cs">
       <DependentUpon>EditorView.xaml</DependentUpon>
     </Compile>
@@ -131,6 +135,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AboutView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditorSourceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

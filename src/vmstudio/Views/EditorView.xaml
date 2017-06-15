@@ -11,9 +11,7 @@
              d:DesignHeight="600" d:DesignWidth="800" Background="#FF444444">
 
     <UserControl.Resources>
-        <Style x:Name="viSocTab" BasedOn="{StaticResource MetroTabItem}" TargetType="{x:Type TabItem}">
-            <Setter Property="controls:ControlsHelper.HeaderFontSize" Value="12"/>
-        </Style>
+        
 
     </UserControl.Resources>
     <Grid>
@@ -41,32 +39,10 @@
 
         </ToolBar>
 
-        <avalonedit:TextEditor 
-                SyntaxHighlighting="ASM" FontFamily="Consolas"
-                FontSize="12pt" Background="#FFECECEC" 
-                Foreground="Black" 
-                ShowLineNumbers="True"
-            Name="txtSource" TextChanged="txtSource_TextChanged" Grid.Row="1" 
-            >
-            <avalonedit:TextEditor.ContextMenu>
-                <ContextMenu>
-                    <MenuItem Command="Save" />
-                    <Separator />
-                    <MenuItem Command="Undo" />
-                    <MenuItem Command="Redo" />
-                    <Separator/>
-                    <MenuItem Command="Cut" />
-                    <MenuItem Command="Copy" />
-                    <MenuItem Command="Paste" />
-
-                </ContextMenu>
-            </avalonedit:TextEditor.ContextMenu>
-        </avalonedit:TextEditor>
-
         <Expander Grid.Column="1" ExpandDirection="Right" Grid.RowSpan="2">
 
             <Grid Margin="-1">
-                
+
                 <TreeView Name="trWorkspace" MinWidth="250" 
                           SelectedItemChanged="trWorkspace_SelectedItemChanged">
                     <TreeView.Resources>
@@ -81,19 +57,22 @@
 
 
                         <DataTemplate DataType="{x:Type local:WorkgroupFile}">
-                            <StackPanel Orientation="Horizontal" >
-                                <TextBlock FontFamily="Segoe MDL2 Assets" Text="{Binding Image}" />
-                                <TextBlock Text="{Binding Name}" />
-                            </StackPanel>
+                            <local:ContentControlTree MouseDoubleClick="ContentControl_MouseDoubleClick"
+                                           UserData="{Binding Name}" >
+                                <StackPanel Orientation="Horizontal" >
+                                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="{Binding Image}" />
+                                    <TextBlock Text="  " />
+                                    <TextBlock Text="{Binding Name}"  />
+                                </StackPanel>
+                            </local:ContentControlTree>
                         </DataTemplate>
                     </TreeView.Resources>
                 </TreeView>
             </Grid>
         </Expander>
-        
+        <TabControl Grid.Row="1" Name="tabView">
 
-
-
+        </TabControl>
     </Grid>
 
 </UserControl>

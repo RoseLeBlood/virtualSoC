@@ -18,8 +18,8 @@ namespace vmstudio.Views
         }
         public string Text
         {
-            get;//get { return m_pItem.Open(); }
-            set;//set { m_pItem.Save(value);  }
+            get;
+            set;
         }
 
         public string Image
@@ -45,7 +45,9 @@ namespace vmstudio.Views
 
         public WorkgroupFile(SourceFile item)
         {
+           
             m_pItem = item;
+            
             Text = item.Open();
         }
         public void Save()

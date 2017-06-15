@@ -34,9 +34,6 @@ namespace vmstudio.Views
             lst.Add(new Workgroup(new Daten.WorkSpace("test", "test")));
             trWorkspace.ItemsSource = lst;
 
-
-           // Daten.SourceFile file = Daten.CurrentWorkspace.Instance.Current.getFile("main.asm");
-           // if (file != null) txtSource.Text = file.Open();
         }
 
         private void cmdNewFile_Click(object sender, RoutedEventArgs e)
@@ -51,9 +48,12 @@ namespace vmstudio.Views
 
         private void cmdSaveFile_Click(object sender, RoutedEventArgs e)
         {
-            m_grFile.Save();
-            (Application.Current.MainWindow as MetroWindow).ShowMessageAsync("virtual SoC Studio 2018 ",
-                string.Format("File {0} saved", m_grFile.Name));
+            EditorSourceView view = tabView.SelectedContent as EditorSourceView;
+            if (view != null)
+            {
+                view.Save();
+                
+            }
         }
 
         private void cmdBuild_Click(object sender, RoutedEventArgs e)
@@ -61,52 +61,53 @@ namespace vmstudio.Views
 
         }
 
-        private void txtSource_TextChanged(object sender, EventArgs e)
-        {
-            m_grFile.Text = txtSource.Text;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void cmdUndo_Click(object sender, RoutedEventArgs e)
         {
-
+            EditorSourceView view = tabView.SelectedContent as EditorSourceView;
+            if(view != null)
+            {
+                view.txtSource.Undo();
+            }
         }
 
         private void cmdRedo_Click(object sender, RoutedEventArgs e)
         {
+            EditorSourceView view = tabView.SelectedContent as EditorSourceView;
+            if (view != null)
+            {
+                view.txtSource.Redo();
 
+            }
         }
 
         private void cmdCopy_Click(object sender, RoutedEventArgs e)
         {
-
+            EditorSourceView view = tabView.SelectedContent as EditorSourceView;
+            if (view != null)
+            {
+                view.txtSource.Copy();
+            }
         }
 
         private void cmdPaste_Click(object sender, RoutedEventArgs e)
         {
-
+            EditorSourceView view = tabView.SelectedContent as EditorSourceView;
+            if (view != null)
+            {
+                view.txtSource.Paste();
+            }
         }
 
         private void cmdCut_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void cmdNewFile_Click_1(object sender, RoutedEventArgs e)
-        {
-
+            EditorSourceView view = tabView.SelectedContent as EditorSourceView;
+            if (view != null)
+            {
+                view.txtSource.Cut();
+            }
         }
 
         private void cmdAddFile_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void cmdBuild_Click_1(object sender, RoutedEventArgs e)
         {
 
         }
@@ -117,8 +118,41 @@ namespace vmstudio.Views
            if(trWorkspace.SelectedItem is WorkgroupFile)
             {
                 m_grFile = trWorkspace.SelectedItem as WorkgroupFile;
-                //MessageBox.Show(m_grFile.Text);
-                txtSource.Text = m_grFile.Text;
+            }
+        }
+
+        private void ContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            
+            if (sender is ContentControlTree)
+            {
+                string text = (sender as ContentControlTree).UserData;
+                string name = text.Replace(".", "0");
+                
+
+                foreach (var item in this.tabView.Items)
+                {
+                    if((item as TabItem).Name == name)
+                    {
+                        tabView.SelectedItem = item;
+                        return;
+                    }
+                }
+                
+                {
+                    MetroTabItem item = new MetroTabItem();
+                    item.Header = text;
+                    item.Name = name;
+                    item.CloseButtonEnabled = true;
+                    
+                    item.Background = new SolidColorBrush( (Color)ColorConverter.ConvertFromString("#FF444444"));
+                    EditorSourceView view = new EditorSourceView(m_grFile);
+                    item.Content = view;
+
+                    this.tabView.SelectedIndex =
+                        tabView.Items.Add(item);
+                }
+
             }
         }
     }
