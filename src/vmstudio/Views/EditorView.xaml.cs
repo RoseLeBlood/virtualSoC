@@ -1,6 +1,7 @@
-﻿using Dragablz;
+﻿
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,20 +26,34 @@ namespace vmstudio.Views
     /// </summary>
     public partial class EditorView : UserControl
     {
-        private WorkgroupFile m_grFile = null;
+        private Workgroup m_current = null;
 
         public EditorView()
         {
             InitializeComponent();
+
+            m_current = new Workgroup(new Daten.WorkSpace("test", "test"));
+
             List<Workgroup> lst = new List<Workgroup>();
-            lst.Add(new Workgroup(new Daten.WorkSpace("test", "test")));
+            lst.Add(m_current);
             trWorkspace.ItemsSource = lst;
 
         }
 
         private void cmdNewFile_Click(object sender, RoutedEventArgs e)
         {
+            NewFileDialog dialog = new NewFileDialog();
+            dialog.ShowDialog();
 
+            if(dialog.Success)
+            {  
+                m_current.AddSourceFile(dialog.FileName, "");
+            }
+            
+            
+            List<Workgroup> lst = new List<Workgroup>();
+            lst.Add(m_current);
+            trWorkspace.ItemsSource = lst;
         }
 
         private void cmdOpenWork_Click(object sender, RoutedEventArgs e)
@@ -114,16 +129,20 @@ namespace vmstudio.Views
 
         private void trWorkspace_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
-            if (trWorkspace.SelectedItem == null) return;
-           if(trWorkspace.SelectedItem is WorkgroupFile)
-            {
-                m_grFile = trWorkspace.SelectedItem as WorkgroupFile;
-            }
+           
+          
         }
 
         private void ContentControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            
+            WorkgroupFile file = null;
+            if (trWorkspace.SelectedItem is WorkgroupFile)
+            {
+                file = trWorkspace.SelectedItem as WorkgroupFile;
+            }
+            else
+                return;
+
             if (sender is ContentControlTree)
             {
                 string text = (sender as ContentControlTree).UserData;
@@ -146,13 +165,45 @@ namespace vmstudio.Views
                     item.CloseButtonEnabled = true;
                     
                     item.Background = new SolidColorBrush( (Color)ColorConverter.ConvertFromString("#FF444444"));
-                    EditorSourceView view = new EditorSourceView(m_grFile);
+                    EditorSourceView view = new EditorSourceView(file);
                     item.Content = view;
 
                     this.tabView.SelectedIndex =
                         tabView.Items.Add(item);
                 }
 
+            }
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (trWorkspace.SelectedItem == null)
+                return;
+            WorkgroupFile file = trWorkspace.SelectedItem as WorkgroupFile;
+            if (file == null) return;
+
+
+            foreach (var item in this.tabView.Items)
+            {
+                if ((item as TabItem).Name == file.Name.Replace(".","0"))
+                {
+                    tabView.SelectedItem = item;
+                    return;
+                }
+            }
+
+            {
+                MetroTabItem item = new MetroTabItem();
+                item.Header = file.Name;
+                item.Name = file.Name.Replace(".","0");
+                item.CloseButtonEnabled = true;
+
+                item.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF444444"));
+                EditorSourceView view = new EditorSourceView(file);
+                item.Content = view;
+
+                this.tabView.SelectedIndex =
+                    tabView.Items.Add(item);
             }
         }
     }

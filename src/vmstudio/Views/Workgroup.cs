@@ -8,60 +8,17 @@ using vmstudio.Daten;
 
 namespace vmstudio.Views
 {
-    public class WorkgroupFile
-    {
-        private SourceFile m_pItem;
-
-        public string Name
-        {
-            get { return m_pItem.Name; }
-        }
-        public string Text
-        {
-            get;
-            set;
-        }
-
-        public string Image
-        {
-            get
-            {
-                switch (m_pItem.Type)
-                {
-                    case SourceFileTyp.include:
-                        break;
-                    case SourceFileTyp.source:
-                        break;
-                    case SourceFileTyp.textfile:
-                        break;
-                    case SourceFileTyp.other:
-                        break;
-                    default:
-                        break;
-                }
-                return "";
-            }
-        }
-
-        public WorkgroupFile(SourceFile item)
-        {
-           
-            m_pItem = item;
-            
-            Text = item.Open();
-        }
-        public void Save()
-        {
-            m_pItem.Save(Text);
-        }
-    }
+    
     public class Workgroup
     {
+        private WorkSpace m_space;
+
         private ObservableCollection<WorkgroupFile> m_fileSource;
         public ObservableCollection<WorkgroupFile> FileSources { get { return m_fileSource; } set { m_fileSource = value; } }
 
         public string Name { get; set; }
         public string Image { get; set; }
+        public WorkSpace WorkSpace { get { return m_space; } internal set { m_space = value; } }
 
         public Workgroup()
         {
@@ -73,10 +30,39 @@ namespace vmstudio.Views
         {
             m_fileSource = new ObservableCollection<WorkgroupFile>();
             Name = space.Name;
+            m_space = space;
             foreach (var item in space.Files)
             {
                 m_fileSource.Add(new WorkgroupFile(item));
             }
+        }
+
+        internal void Save()
+        {
+            m_space.Save();
+        }
+        internal Workgroup Reload()
+        {
+            m_fileSource.Clear();
+
+            foreach (var item in m_space.Files)
+            {
+                m_fileSource.Add(new WorkgroupFile(item));
+            }
+
+            return this;
+        }
+        internal Workgroup AddSourceFile(string name, string text)
+        {
+            m_space.AddNewFile(name + ".asm", SourceFileTyp.source, text, false);
+            Save();
+            return Reload();
+        }
+        internal Workgroup AddIncludeFile(string name, string text)
+        {
+            m_space.AddNewFile(name + ".inc", SourceFileTyp.include, text, false);
+            Save();
+            return Reload();
         }
     }
 }

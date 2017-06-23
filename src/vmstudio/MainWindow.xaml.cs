@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace vmstudio
 {
@@ -24,7 +25,7 @@ namespace vmstudio
     /// </summary>
     public partial class MainWindow : MetroWindow
     {
-      
+        DispatcherTimer m_timer;
 
         public MainWindow()
         {
@@ -36,7 +37,21 @@ namespace vmstudio
             
 
             InitializeComponent();
+            m_timer = new DispatcherTimer();
+            m_timer.Tick += new EventHandler(uhrzeit_timertick);
+            m_timer.Interval = new TimeSpan(0, 0, 1);
+            m_timer.Start();
         }
+        private void uhrzeit_timertick(object sender, EventArgs e)
+        {
+            string time = DateTime.Now.ToString("HH:mm");
+
+            CommandManager.InvalidateRequerySuggested();
+            lblclock.Text = time;
+
+            m_timer.Start();
+        }
+
 
         private void cmdSettings_Click(object sender, RoutedEventArgs e)
         {

@@ -39,7 +39,7 @@
                                Text="{Binding Glyph}" />
                     <TextBlock Grid.Column="1"
                                VerticalAlignment="Center"
-                               FontSize="16"
+                               FontSize="12"
                                Foreground="White"
                                Text="{Binding Label}" />
                 </Grid>
@@ -52,7 +52,7 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0"
-                               FontSize="16"
+                               FontSize="12"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center"
                                FontFamily="Segoe MDL2 Assets"
@@ -89,12 +89,6 @@
             <!--  Items  -->
             <Control:HamburgerMenu.ItemsSource>
                 <Control:HamburgerMenuItemCollection>
-                    <Control:HamburgerMenuGlyphItem Glyph="&#xE80F;"
-                                                     Label="Home">
-                        <Control:HamburgerMenuGlyphItem.Tag>
-                            <TextBlock/>
-                        </Control:HamburgerMenuGlyphItem.Tag>
-                    </Control:HamburgerMenuGlyphItem>
 
                     <Control:HamburgerMenuGlyphItem Glyph="&#59151;"
                                                      Label="Sourcecode">
@@ -148,10 +142,13 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="44"/>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="151"/>
-                <ColumnDefinition Width="39"/>
+                <ColumnDefinition Width="114"/>
+                <ColumnDefinition Width="76"/>
             </Grid.ColumnDefinitions>
-            <Label Content="22:21 Uhr" Grid.Column="3"  />
+            <TextBlock Background="Transparent" 
+                       IsHitTestVisible="False"
+                       Text="22:21 Uhr"
+                       Grid.Column="3" Name="lblclock" VerticalAlignment="Center" HorizontalAlignment="Center" Height="16" Margin="13,8" Width="50"   />
             <ProgressBar Grid.Column="2" x:Name="prgStatus" Height="Auto" Margin="0,11"/>
         </Grid>
         <Expander Header="Console" Grid.Row="1"  >

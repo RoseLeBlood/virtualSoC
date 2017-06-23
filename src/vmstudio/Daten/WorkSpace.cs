@@ -23,17 +23,22 @@ namespace vmstudio.Daten
     {
         public string Name { get; set; }
         public string Path { get; set; }
-        public SourceFileTyp Type { get; set; }
+        public bool IsMain { get; set; }
 
+        public SourceFileTyp Type { get; set; }
+        public List<string> FileLog { get; set; }
 
         public SourceFile()
         {
-
+            FileLog = new List<string>();
         }
-        public SourceFile(string strName, string strPath)
+        public SourceFile(string strName, string strPath, bool ismain)
         {
+            FileLog = new List<string>();
             Name = strName;
             Path = strPath;
+            IsMain = ismain;
+            FileLog.Add(string.Format("[{0}] File Created", DateTime.Now.ToString()));
         }
         public string Open()
         {
@@ -41,6 +46,10 @@ namespace vmstudio.Daten
         }
         public void Save(string strText)
         {
+            var old = Open();
+            var time = string.Format("[{0}] Save file old content: {1}", DateTime.Now.ToString(), old);
+            FileLog.Add(time);
+
             using (FileStream st = new FileStream(Path + "/" + Name, FileMode.OpenOrCreate, FileAccess.ReadWrite))
             {
                 using (StreamWriter writter = new StreamWriter(st))
@@ -58,6 +67,7 @@ namespace vmstudio.Daten
         public List<string> IncludePath { get; set; }
         public List<SourceFile> Files { get; set; }
         public WorkSpaceSettings Settings { get; set; }
+        public List<string> WorkspaceLog { get; set; }
 
         public WorkSpace() { }
         public WorkSpace(string strName, string strPath)
@@ -66,6 +76,7 @@ namespace vmstudio.Daten
             IncludePath = new List<string>();
             Files = new List<SourceFile>();
             Settings = new WorkSpaceSettings();
+            WorkspaceLog = new List<string>();
 
             var includepath = System.IO.Path.Combine(Path, "include");
             System.IO.Directory.CreateDirectory(includepath);
@@ -73,8 +84,8 @@ namespace vmstudio.Daten
             try
             {
                 IncludePath.Add(includepath);
-                Files.Add(new SourceFile("system.inc", includepath));
-                Files.Add(new SourceFile("main.asm", Path));
+                Files.Add(new SourceFile("system.inc", includepath, false));
+                Files.Add(new SourceFile("main.asm", Path, true));
 
                 File.Copy("system.inc", System.IO.Path.Combine(includepath, "system.inc"));
                 File.Copy("main.asm", System.IO.Path.Combine(Path, "main.asm"));
@@ -85,7 +96,53 @@ namespace vmstudio.Daten
             }
             Save();
         }
+        public SourceFile AddFile(string name, string filename, SourceFileTyp type, bool main)
+        {
+            var _path = System.IO.Path.Combine(Path, "include");
 
+            switch (type)
+            {
+                case SourceFileTyp.include:
+                    _path = System.IO.Path.Combine(Path, "include"); break;
+                case SourceFileTyp.source:
+                    break;
+                case SourceFileTyp.textfile:
+                    _path = System.IO.Path.Combine(Path, "etc"); break;
+                case SourceFileTyp.other:
+                    _path = System.IO.Path.Combine(Path, "share"); break;
+                default:
+                    break;
+            }
+            SourceFile file = new SourceFile(name, _path, main);
+            File.Copy(filename, System.IO.Path.Combine(Path, System.IO.Path.GetFileName(filename)));
+            Files.Add(file);
+            return file;
+        }
+        public SourceFile AddNewFile(string name, SourceFileTyp type, string text, bool main)
+        {
+            var path = System.IO.Path.Combine(Path, "include");
+
+            switch (type)
+            {
+                case SourceFileTyp.include:
+                    path = System.IO.Path.Combine(Path, "include"); break;
+                case SourceFileTyp.source:
+                    break;
+                case SourceFileTyp.textfile:
+                    path = System.IO.Path.Combine(Path, "etc"); break;
+                case SourceFileTyp.other:
+                    path = System.IO.Path.Combine(Path, "share"); break;                  
+                default:
+                    break;
+            }
+
+            File.WriteAllText(System.IO.Path.Combine(path, name), text);
+           
+            SourceFile file = new SourceFile(name, path, main);
+            Files.Add(file);
+
+            return file;
+        }
         public void Save()
         {
             XmlSerializer xm = new XmlSerializer(typeof(WorkSpace));
@@ -112,7 +169,19 @@ namespace vmstudio.Daten
             {
                 if(item.Name == name)
                 {
-                    file = item;
+                    file = item; break;
+                }
+            }
+            return file;
+        }
+        public SourceFile getMainFile()
+        {
+            SourceFile file = null;
+            foreach (var item in Files)
+            {
+                if (item.IsMain)
+                {
+                    file = item; break;
                 }
             }
             return file;
