@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<WorkSpace xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>test</Name>
+  <Path>test</Path>
+  <IncludePath>
+    <string>test\include</string>
+  </IncludePath>
+  <Files>
+    <SourceFile>
+      <Name>system.inc</Name>
+      <Path>test\include</Path>
+      <IsMain>false</IsMain>
+      <Type>include</Type>
+      <FileLog>
+        <string>[21.07.2017 17:27:26] File Created</string>
+      </FileLog>
+    </SourceFile>
+    <SourceFile>
+      <Name>main.asm</Name>
+      <Path>test</Path>
+      <IsMain>true</IsMain>
+      <Type>source</Type>
+      <FileLog>
+        <string>[21.07.2017 17:27:26] File Created</string>
+      </FileLog>
+    </SourceFile>
+  </Files>
+  <Settings>
+    <NumberOfCores>2</NumberOfCores>
+    <MemorySize>512M</MemorySize>
+    <FPU>true</FPU>
+    <Framebuffer>true</Framebuffer>
+  </Settings>
+  <WorkspaceLog />
+</WorkSpace>>

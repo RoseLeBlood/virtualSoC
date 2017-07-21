@@ -32,12 +32,13 @@ namespace vmstudio.Daten
         {
             FileLog = new List<string>();
         }
-        public SourceFile(string strName, string strPath, bool ismain)
+        public SourceFile(string strName, string strPath, bool ismain, SourceFileTyp type)
         {
             FileLog = new List<string>();
             Name = strName;
             Path = strPath;
             IsMain = ismain;
+            Type = type;
             FileLog.Add(string.Format("[{0}] File Created", DateTime.Now.ToString()));
         }
         public string Open()
@@ -84,8 +85,8 @@ namespace vmstudio.Daten
             try
             {
                 IncludePath.Add(includepath);
-                Files.Add(new SourceFile("system.inc", includepath, false));
-                Files.Add(new SourceFile("main.asm", Path, true));
+                Files.Add(new SourceFile("system.inc", includepath, false, SourceFileTyp.include));
+                Files.Add(new SourceFile("main.asm", Path, true, SourceFileTyp.source));
 
                 File.Copy("system.inc", System.IO.Path.Combine(includepath, "system.inc"));
                 File.Copy("main.asm", System.IO.Path.Combine(Path, "main.asm"));
@@ -113,7 +114,7 @@ namespace vmstudio.Daten
                 default:
                     break;
             }
-            SourceFile file = new SourceFile(name, _path, main);
+            SourceFile file = new SourceFile(name, _path, main, type);
             File.Copy(filename, System.IO.Path.Combine(Path, System.IO.Path.GetFileName(filename)));
             Files.Add(file);
             return file;
@@ -138,7 +139,7 @@ namespace vmstudio.Daten
 
             File.WriteAllText(System.IO.Path.Combine(path, name), text);
            
-            SourceFile file = new SourceFile(name, path, main);
+            SourceFile file = new SourceFile(name, path, main, type);
             Files.Add(file);
 
             return file;
@@ -185,6 +186,22 @@ namespace vmstudio.Daten
                 }
             }
             return file;
+        }
+
+        internal string getSourceCode()
+        {
+            string text = "";
+            foreach (var item in Files)
+            {
+                if (item.IsMain) continue;
+                else if(item.Type == SourceFileTyp.source)
+                {
+                    text += item.Open() + "\n";
+                }
+            }
+            text += getMainFile().Open();
+
+            return text;
         }
     }
 

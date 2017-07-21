@@ -28,13 +28,13 @@ namespace vmstudio.Views
                 switch (m_pItem.Type)
                 {
                     case SourceFileTyp.include:
-                        break;
+                        return Char.ConvertFromUtf32(0xE82D);//
                     case SourceFileTyp.source:
-                        break;
+                        return Char.ConvertFromUtf32(0xE70B);//
                     case SourceFileTyp.textfile:
-                        break;
+                        return Char.ConvertFromUtf32(0xE8BD);//
                     case SourceFileTyp.other:
-                        break;
+                        return Char.ConvertFromUtf32(0xE18A);//
                     default:
                         break;
                 }

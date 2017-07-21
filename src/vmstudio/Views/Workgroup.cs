@@ -64,5 +64,15 @@ namespace vmstudio.Views
             Save();
             return Reload();
         }
+        internal string getSource()
+        {
+            foreach (var item in m_fileSource)
+            {
+                item.Save();
+            }
+            m_space.Save();
+
+            return m_space.getSourceCode();
+        }
     }
 }

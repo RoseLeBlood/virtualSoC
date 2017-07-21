@@ -107,7 +107,7 @@
                     <Control:HamburgerMenuGlyphItem Glyph="&#59155;"
                                                      Label="Settings">
                         <Control:HamburgerMenuGlyphItem.Tag>
-                            <TextBlock />
+                            <views:settingsview />
                         </Control:HamburgerMenuGlyphItem.Tag>
                     </Control:HamburgerMenuGlyphItem>
                 </Control:HamburgerMenuItemCollection>

@@ -98,6 +98,9 @@
     <Compile Include="Views\NewFileDialog.xaml.cs">
       <DependentUpon>NewFileDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\settingsview.xaml.cs">
+      <DependentUpon>settingsview.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Workgroup.cs" />
     <Compile Include="Views\WorkgroupFile.cs" />
     <Compile Include="Views\WorkspaceListViewItem.cs" />
@@ -130,6 +133,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NewFileDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\settingsview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
