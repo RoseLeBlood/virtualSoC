@@ -4,7 +4,7 @@ virtual Chip with own instruction set and IDE with Compiler and Debugger (viSoC 
 ## viSoC Studio 2018
 IDE for the virtual Chip 
 
-image:: images/viSoCStudio2018.png
+image:: https://raw.githubusercontent.com/RoseLeBlood/virtualSoC/master/images/viSoCStudio2018.png
   :height: 100px
   :width: 200 px
   :scale: 50 %
