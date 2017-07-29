@@ -1,5 +1,13 @@
 # virtualSoC
-virtual Chip with own instruction set
+virtual Chip with own instruction set and IDE with Compiler and Debugger (viSoC Studio 2018)
+
+## viSoC Studio 2018
+IDE for the virtual Chip 
+
+image:: images/viSoCStudio2018.png
+  :height: 100px
+  :width: 200 px
+  :scale: 50 %
 
 ## Current using Mnemonic
 * NOP: No operating - NOP

@@ -152,9 +152,14 @@
             <ProgressBar Grid.Column="2" x:Name="prgStatus" Height="Auto" Margin="0,11"/>
         </Grid>
         <Expander Header="Console" Grid.Row="1"  >
-            <Grid Background="#FFE5E5E5">
-                <RichTextBox Height="80" x:Name="csLog" Background="Black" Foreground="LawnGreen" 
-                             IsHitTestVisible="False"/>
+            <Grid Background="Black">
+                
+                    <TextBox Height="80" x:Name="csLog"  FontSize="12" Background="Black" 
+                             Foreground="LightGray"  FontFamily="Consolas" 
+                             IsReadOnly="True" HorizontalScrollBarVisibility="Auto" 
+                             VerticalScrollBarVisibility="Auto" 
+                             BorderThickness="0" ScrollViewer.CanContentScroll="True" />
+                
             </Grid>
         </Expander>
 

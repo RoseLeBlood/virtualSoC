@@ -42,13 +42,18 @@ namespace vmstudio.Views
             m_grFile.Text = txtSource.Text;
         }
 
-        internal void Save()
+        internal void Save(bool info = true)
         {
             m_grFile.Text = txtSource.Text;
             m_grFile.Save();
 
-            (Application.Current.MainWindow as MetroWindow).ShowMessageAsync("virtual SoC Studio 2018 ",
-                string.Format("File {0} saved", m_grFile.Name));
+            if (info)
+            {
+                Debug.viConsole.Info(string.Format("File {0} saved", m_grFile.Name));
+
+                (Application.Current.MainWindow as MetroWindow).ShowMessageAsync("virtual SoC Studio 2018 ",
+                  string.Format("File {0} saved", m_grFile.Name));
+            }
         }
     }
 }

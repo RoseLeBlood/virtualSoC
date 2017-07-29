@@ -73,6 +73,20 @@ namespace vmstudio.Views
 
         private void cmdBuild_Click(object sender, RoutedEventArgs e)
         {
+            foreach(var item in tabView.Items)
+            {
+                EditorSourceView view = item as EditorSourceView;
+                if (view != null) view.Save(false);
+            }
+            string text = m_current.getSource();
+
+            asm.Compiler comp = new asm.Compiler();
+
+            string[] lst = m_current.WorkSpace.IncludePath.ToArray();
+           // byte[] data = comp.Compile(text, lst);
+            (Application.Current.MainWindow as MetroWindow).ShowMessageAsync("virtual SoC Studio 2018 ",
+               string.Format("{0}", text));
+
 
         }
 

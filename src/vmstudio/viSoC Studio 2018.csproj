@@ -77,13 +77,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Assembler\Compiler.cs" />
     <Compile Include="CurrentWorkspace.cs" />
+    <Compile Include="Daten\DebugWritter.cs" />
     <Compile Include="Daten\WorkSpace.cs">
       <SubType>Workspace</SubType>
     </Compile>
     <Compile Include="Daten\WorkSpaceSettings.cs">
       <SubType>Workspace</SubType>
     </Compile>
+    <Compile Include="Debug\viConsole.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="Views\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
