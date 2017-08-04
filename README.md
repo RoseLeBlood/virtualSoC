@@ -3,8 +3,9 @@ virtual Chip with own instruction set and IDE with Compiler and Debugger (viSoC 
 
 ## viSoC Studio 2018
 IDE for the virtual Chip 
-
+Demo PreRelease https://github.com/RoseLeBlood/virtualSoC/releases 
 ![Screenshot]( https://raw.githubusercontent.com/RoseLeBlood/virtualSoC/master/images/viSoCStudio2018.png)
+
 
 ## Current using Mnemonic
 * NOP: No operating - NOP
