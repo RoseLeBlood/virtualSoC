@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,38 +8,25 @@ using vmasm;
 
 namespace vmstudio.asm
 {
-    class Compiler
+    class PreProcess
     {
-        Assembler m_asm;
-
-        
-        internal byte[] Compile(string input, string[] include)
+        public static void Process(ref Handler hdl)
         {
-            m_asm = new Assembler();
-            m_asm.l = PreProcess(input, include);
-            byte[] data = m_asm.Comp();
+            string[] text = hdl.SourceCode;
 
-            return data;
-        }
-        private static string[] PreProcess(string input, string[] include)
-        {
-            //System.IO.File.WriteAllText(".output.tmp", System.IO.File.ReadAllText (input));
-            string[] text = System.IO.File.ReadAllLines(input);
-            for (int i = 0; i < text.Length; i++)
+            for (int i = 0; i < hdl.SourceCode.Length; i++)
             {
                 string item = text[i];
                 if (CheakLineOfInclude(item))
                 {
-                    string _incText = GetFileFromPaths(GetSubstringByString('\'', item), include);
+                    string _incText = GetFileFromPaths(GetSubstringByString('\'', item), hdl.IncludePaths);
 
                     text[i] = _incText;
                 }
             }
             System.IO.File.WriteAllLines(".comp.tml", text);
-            string[] l = System.IO.File.ReadAllLines(".comp.tml");
+            hdl.PreCompiledSourceCode = System.IO.File.ReadAllLines(".comp.tml");
             System.IO.File.Delete(".comp.tml");
-
-            return l;
         }
         private static bool CheakLineOfInclude(string li)
         {

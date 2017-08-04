@@ -1,0 +1,8 @@
+D:\annas\Documents\GitHub\virtualSoC\bin\Debug\main.asm
+D:\annas\Documents\GitHub\virtualSoC\bin\Debug\system.inc
+D:\annas\Documents\GitHub\virtualSoC\bin\Debug\vmasm.exe.config
+D:\annas\Documents\GitHub\virtualSoC\bin\Debug\vmasm.exe
+D:\annas\Documents\GitHub\virtualSoC\bin\Debug\vmasm.pdb
+D:\annas\Documents\GitHub\virtualSoC\src\vmasm\obj\x86\Debug\vmasm.csprojResolveAssemblyReference.cache
+D:\annas\Documents\GitHub\virtualSoC\src\vmasm\obj\x86\Debug\vmasm.exe
+D:\annas\Documents\GitHub\virtualSoC\src\vmasm\obj\x86\Debug\vmasm.pdb

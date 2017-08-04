@@ -69,7 +69,7 @@ namespace vmasm
 			Console.WriteLine ("Input File: {0} -> output: {1}", input, output);
 
 			Assembler asm = new Assembler ();
-			asm.l = PreProcess (input);
+			asm.PreCompiled = PreProcess (input);
 			byte[] data = asm.Comp ();
 
 			ModuleOutputFactory.WriteToFile (data, output, cmd.GetValue<string> ("t"));

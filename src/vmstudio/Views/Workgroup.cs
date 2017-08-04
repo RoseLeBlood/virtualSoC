@@ -64,7 +64,7 @@ namespace vmstudio.Views
             Save();
             return Reload();
         }
-        internal string getSource()
+        internal string[] getSource()
         {
             foreach (var item in m_fileSource)
             {
@@ -72,7 +72,12 @@ namespace vmstudio.Views
             }
             m_space.Save();
 
-            return m_space.getSourceCode();
+            System.IO.File.WriteAllText(".temp", m_space.getSourceCode());
+
+            string[] text = System.IO.File.ReadAllLines(".temp");
+            System.IO.File.Delete(".temp");
+            return text;
+
         }
     }
 }

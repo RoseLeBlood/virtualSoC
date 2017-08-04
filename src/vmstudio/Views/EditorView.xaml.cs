@@ -5,6 +5,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -32,8 +33,8 @@ namespace vmstudio.Views
         {
             InitializeComponent();
 
-            m_current = new Workgroup(new Daten.WorkSpace("test", "test"));
-
+            m_current = new Workgroup(new Daten.WorkSpace("test",
+                 System.AppDomain.CurrentDomain.BaseDirectory + "test"));
             List<Workgroup> lst = new List<Workgroup>();
             lst.Add(m_current);
             trWorkspace.ItemsSource = lst;
@@ -73,19 +74,18 @@ namespace vmstudio.Views
 
         private void cmdBuild_Click(object sender, RoutedEventArgs e)
         {
-            foreach(var item in tabView.Items)
+            foreach (var item in tabView.Items)
             {
                 EditorSourceView view = item as EditorSourceView;
                 if (view != null) view.Save(false);
             }
-            string text = m_current.getSource();
 
-            asm.Compiler comp = new asm.Compiler();
+            asm.Handler m_pHandler = new asm.Handler(m_current.WorkSpace.IncludePath.ToArray(),
+                        m_current.getSource());
+            asm.PreProcess.Process(ref m_pHandler);
+            
 
-            string[] lst = m_current.WorkSpace.IncludePath.ToArray();
-           // byte[] data = comp.Compile(text, lst);
-            (Application.Current.MainWindow as MetroWindow).ShowMessageAsync("virtual SoC Studio 2018 ",
-               string.Format("{0}", text));
+            
 
 
         }

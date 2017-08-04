@@ -36,7 +36,7 @@ namespace vmasm
 		DefinesDef m_pDefines;
 
 		string[] m_r;
-		public  string[] l {
+		public  string[] PreCompiled {
 			get { return m_r; }
 			set {
 				m_r = new string[value.Length];
@@ -48,6 +48,11 @@ namespace vmasm
         {
             get { return m_pInstruction.ToString(); }
         }
+        public byte[] Comp(string[] source)
+        {
+            PreCompiled = source;
+            return Comp();
+        }
 		public  byte[] Comp()
 		{
 			m_pLabels = new System.Collections.Generic.Dictionary<string, int> ();
@@ -56,8 +61,8 @@ namespace vmasm
 			//string[] l = System.IO.File.ReadAllLines (inPutFile);
 			var writer = new BinaryWriter (Stream);
 			{
-				for (int i = 0; i < l.Length; i++) {
-					string l0 = l [i];
+				for (int i = 0; i < PreCompiled.Length; i++) {
+					string l0 = PreCompiled [i];
 					string l1 = l0.Split (';') [0].Trim();
 
 					if (l1 == string.Empty)
