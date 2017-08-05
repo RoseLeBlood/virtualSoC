@@ -9,74 +9,43 @@ using System.Xml.Serialization;
 
 namespace vmstudio.Daten
 {
-    public enum SourceFileTyp
-    {
-        include,
-        source,
-        textfile,
-        other
-    }
-    [Serializable]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("Workspace")]
-    public class SourceFile
-    {
-        public string Name { get; set; }
-        public string Path { get; set; }
-        public bool IsMain { get; set; }
-
-        public SourceFileTyp Type { get; set; }
-        public List<string> FileLog { get; set; }
-
-        public SourceFile()
-        {
-            FileLog = new List<string>();
-        }
-        public SourceFile(string strName, string strPath, bool ismain, SourceFileTyp type)
-        {
-            FileLog = new List<string>();
-            Name = strName;
-            Path = strPath;
-            IsMain = ismain;
-            Type = type;
-            FileLog.Add(string.Format("[{0}] File Created", DateTime.Now.ToString()));
-        }
-        public string Open()
-        {
-            return File.ReadAllText(Path + "/" + Name);
-        }
-        public void Save(string strText)
-        {
-            var old = Open();
-            var time = string.Format("[{0}] Save file old content: {1}", DateTime.Now.ToString(), old);
-            FileLog.Add(time);
-
-            using (FileStream st = new FileStream(Path + "/" + Name, FileMode.OpenOrCreate, FileAccess.ReadWrite))
-            {
-                using (StreamWriter writter = new StreamWriter(st))
-                    writter.Write(strText);
-            }
-        }
-    }
+   
+   
     [Serializable]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("Workspace")]
     public class WorkSpace
     {
+        private const string VERSION = "0.8.11";
+        private const string ExtTension = ".vik";
+
         public string Name { get; set; }
         public string Path { get; set; }
+        public string ConfigVersion { get; set; }
+        public string CurrentWorkSpaceSettings { get; set; }
+
+        public WorkSpaceSettings[] Settings { get; set; }
+
         public List<string> IncludePath { get; set; }
         public List<SourceFile> Files { get; set; }
-        public WorkSpaceSettings Settings { get; set; }
+
         public List<string> WorkspaceLog { get; set; }
 
         public WorkSpace() { }
         public WorkSpace(string strName, string strPath)
         {
+            ConfigVersion = VERSION;
+
             Name = strName; Path = strPath;
             IncludePath = new List<string>();
             Files = new List<SourceFile>();
-            Settings = new WorkSpaceSettings();
+            Settings = new WorkSpaceSettings[]
+            {
+                new WorkSpaceSettings("Debug", 2, false, true, WorkSpaceOuput.RawFile),
+                new WorkSpaceSettings("Release", 2, false, true, WorkSpaceOuput.ZipedFile)
+            };
+            CurrentWorkSpaceSettings = "Debug";
+
             WorkspaceLog = new List<string>();
 
             var includepath = System.IO.Path.Combine(Path, "include");
@@ -147,7 +116,7 @@ namespace vmstudio.Daten
         public void Save()
         {
             XmlSerializer xm = new XmlSerializer(typeof(WorkSpace));
-            using (var sa = new FileStream(Path + "\\" + Name, FileMode.OpenOrCreate, FileAccess.Write))
+            using (var sa = new FileStream(System.IO.Path.Combine(Path, Name + ExtTension), FileMode.OpenOrCreate, FileAccess.Write))
             {
                 xm.Serialize(sa, this);
             }
@@ -202,6 +171,18 @@ namespace vmstudio.Daten
             text += getMainFile().Open();
 
             return text;
+        }
+
+        internal WorkSpaceSettings getCurrentSettings()
+        {
+            WorkSpaceSettings settings = null;
+
+            foreach (var item in Settings)
+            {
+                if (item.ConfigName == CurrentWorkSpaceSettings)
+                    settings = item;
+            }
+            return settings;
         }
     }
 

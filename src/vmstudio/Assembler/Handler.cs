@@ -4,26 +4,30 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using vmstudio.Views;
 
 namespace vmstudio.asm
 {
     struct Handler
     {
+        public Workgroup Workspace;
+
         public string[] IncludePaths;
         public string[] SourceCode;
         public string[] PreCompiledSourceCode;
 
-        public MemoryStream Binary;
+        public Stream Binary;
 
-        internal Handler(string[] include, string[] source)
+        internal Handler(Workgroup space)
         {
-            IncludePaths = new string[include.Length];
-            SourceCode = new string[source.Length];
-            PreCompiledSourceCode = null;
-            Binary = new MemoryStream();
+            Workspace = space;
+            IncludePaths = space.WorkSpace.IncludePath.ToArray();
+            SourceCode = space.getSource();
 
-            source.CopyTo(SourceCode, 0);
-            include.CopyTo(IncludePaths, 0);
+            PreCompiledSourceCode = null;
+            Binary = null;
+
+            
         }
 
 #if DEBUG

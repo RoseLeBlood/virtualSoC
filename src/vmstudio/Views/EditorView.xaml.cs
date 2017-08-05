@@ -5,6 +5,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace vmstudio.Views
     public partial class EditorView : UserControl
     {
         private Workgroup m_current = null;
+        private asm.Handler m_pHandler;
 
         public EditorView()
         {
@@ -74,16 +76,24 @@ namespace vmstudio.Views
 
         private void cmdBuild_Click(object sender, RoutedEventArgs e)
         {
+            this.IsEnabled = false;
+
+            Console.WriteLine("Start build ...");
+
             foreach (var item in tabView.Items)
             {
                 EditorSourceView view = item as EditorSourceView;
                 if (view != null) view.Save(false);
             }
 
-            asm.Handler m_pHandler = new asm.Handler(m_current.WorkSpace.IncludePath.ToArray(),
-                        m_current.getSource());
-            asm.PreProcess.Process(ref m_pHandler);
-            
+            m_pHandler = new asm.Handler(m_current);
+
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.WorkerReportsProgress = true;
+            worker.DoWork += worker_DoWork;
+            worker.ProgressChanged += worker_ProgressChanged;
+            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
+            worker.RunWorkerAsync(m_pHandler);
 
             
 

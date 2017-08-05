@@ -34,7 +34,7 @@ namespace vmasm
 		Dictionary<string, int> m_pLabels = new Dictionary<string, int>();
         Dictionary<string, int> m_pVariablen = new Dictionary<string, int>(); // name - speicher addrese
 		DefinesDef m_pDefines;
-
+        bool m_bConsoleOutput = true; 
 		string[] m_r;
 		public  string[] PreCompiled {
 			get { return m_r; }
@@ -48,14 +48,16 @@ namespace vmasm
         {
             get { return m_pInstruction.ToString(); }
         }
-        public byte[] Comp(string[] source)
+        public byte[] Comp(string[] source, bool info)
         {
             PreCompiled = source;
-            return Comp();
+            return Comp(info);
         }
-		public  byte[] Comp()
+		public  byte[] Comp(bool info = false)
 		{
-			m_pLabels = new System.Collections.Generic.Dictionary<string, int> ();
+            m_bConsoleOutput = info;
+
+            m_pLabels = new System.Collections.Generic.Dictionary<string, int> ();
 			m_pDefines = new DefinesDef();
 			MemoryStream Stream = new MemoryStream ();
 			//string[] l = System.IO.File.ReadAllLines (inPutFile);
@@ -73,7 +75,8 @@ namespace vmasm
 
 					if (l1.ToUpper ().Contains ("ORG")) {
 						int Org = this.ParseNumber(l1.Split (' ')[1] );
-						Console.WriteLine ("[ORG] {0}", Org);
+                        if(m_bConsoleOutput)
+						    Console.WriteLine ("[ORG] {0}", Org);
 						writer.BaseStream.Seek (Org, SeekOrigin.Begin);
 						continue;
 					} else if (l1.Contains (":")) {
@@ -137,8 +140,9 @@ namespace vmasm
                 ComVar(data.ToArray(), writer);
             }
             m_pVariablen.Add("%"+va[1], Pos);
-            Console.WriteLine("\tVariable Add {0} pos {1} {2}", va[1], Pos, 
-                ((int)writer.BaseStream.Position - start));
+            if (m_bConsoleOutput)
+                Console.WriteLine("\tVariable Add {0} pos {1} {2}", va[1], Pos,
+                    ((int)writer.BaseStream.Position - start));
         }
 
         private void CompLabel(string l1, BinaryWriter writer)
@@ -164,12 +168,14 @@ namespace vmasm
 				m_pLabels.Add ("." + label, Pos);
 
 			}
-			Console.WriteLine ("[Label] {0}  {1}", label, Pos);
+            if(m_bConsoleOutput)
+			    Console.WriteLine ("[Label] {0}  {1}", label, Pos);
 		}
 		private bool CompLine(string line, BinaryWriter stream)
 		{
 			string[] l = line.Split (' ');
-			Console.Write ("{0}: ", stream.BaseStream.Position);
+            if(m_bConsoleOutput)
+			    Console.Write ("{0}: ", stream.BaseStream.Position);
 
 			if (l.Length == 1)
 				return CompOpp (OpID (l [0]), stream);
@@ -188,34 +194,40 @@ namespace vmasm
             stream.Write(data.Length.ToBytes());  // Size
             //5
             
-            Console.Write("[Var] {0} [", data.Length);
+            if(m_bConsoleOutput)
+                Console.Write("[Var] {0} [", data.Length);
 
             foreach (byte item in data)
             {
                 stream.Write(item); // schreibe daten
-                Console.Write(item);
+                if(m_bConsoleOutput)
+                    Console.Write(item);
             }
-            Console.WriteLine("]");
+            if(m_bConsoleOutput)
+                Console.WriteLine("]");
             
             return true;
         }
 		private bool CompOpp(int op, BinaryWriter stream)
 		{
 			stream.Write (op.ToBytes());
-			Console.WriteLine ("[Inst 1] {0} ({1}) ", op, stream.BaseStream.Position);
+            if(m_bConsoleOutput)
+			    Console.WriteLine ("[Inst 1] {0} ({1}) ", op, stream.BaseStream.Position);
 			return true;
 		}
 		private bool CompOpp(int op, string p1, BinaryWriter stream)
 		{
 
 			stream.Write (op.ToBytes (), 0, 4);
-			Console.Write ("[Inst 1] {0} ({1}) ", op, stream.BaseStream.Position);
+            if(m_bConsoleOutput)
+			    Console.Write ("[Inst 1] {0} ({1}) ", op, stream.BaseStream.Position);
 			if (m_pInstruction [op].OpCode == "JMP") {
 				ComOppJmp (p1, stream);
 			} else {
 				ParamTest (p1, stream);
 			}
-			Console.WriteLine ();
+            if(m_bConsoleOutput)
+			    Console.WriteLine ();
 			return true;
 		}
 		private void ComOppJmp(string p1, BinaryWriter stream)
@@ -232,7 +244,8 @@ namespace vmasm
 			}
 
 			stream.Write (poss.ToBytes());
-			Console.Write ("{1} {0}", poss, p.ToString());
+            if(m_bConsoleOutput)
+			    Console.Write ("{1} {0}", poss, p.ToString());
 
 		}
 		private int getLabelPos(string name)
@@ -255,21 +268,23 @@ namespace vmasm
         private bool CompOpp(int op, string p1, string p2, BinaryWriter stream)
 		{
 			stream.Write (op.ToBytes (), 0, 4);
-			Console.Write ("[Inst 2] {0} ({1}) ", op, stream.BaseStream.Position);
+            if(m_bConsoleOutput)
+			    Console.Write ("[Inst 2] {0} ({1}) ", op, stream.BaseStream.Position);
 			ParamTest (p1, stream);
 			ParamTest (p2, stream);
-			Console.WriteLine ();
+            if(m_bConsoleOutput)
+			    Console.WriteLine ();
 			return true;
 		}
 
 		private bool CompOpp(int op, string p1, string p2, string p3, BinaryWriter stream)
 		{
 			stream.Write (op.ToBytes (), 0, 4);
-			Console.Write ("[Inst 3] {0} ({1}) ", op, stream.BaseStream.Position);
+			if(m_bConsoleOutput) Console.Write ("[Inst 3] {0} ({1}) ", op, stream.BaseStream.Position);
 			ParamTest (p1, stream);
 			ParamTest (p2, stream);
 			ParamTest (p3, stream);
-			Console.WriteLine ();
+			if(m_bConsoleOutput) Console.WriteLine ();
 			return true;
 		}
 
@@ -293,25 +308,25 @@ namespace vmasm
 
 			if (p1.Contains ("#")) {
 				stream.Write ((byte)InstructionParam2.Value);
-				Console.Write ("{0} ", InstructionParam2.Value);
+				if(m_bConsoleOutput) Console.Write ("{0} ", InstructionParam2.Value);
 				p1 = p1.Replace ("#", "");
 			} else if (m_pRegisters.Contains (p1.ToUpper())) {
 				stream.Write ((byte)InstructionParam2.Register);
-				Console.Write ("{1} {0} ", m_pRegisters.IndexOf(p1), InstructionParam2.Register);
+				if(m_bConsoleOutput) Console.Write ("{1} {0} ", m_pRegisters.IndexOf(p1), InstructionParam2.Register);
 				stream.Write(m_pRegisters.IndexOf(p1).ToBytes(), 0, 4);
 				return;
 			} else if (p1.Contains ("@")) {
 				stream.Write ((byte)InstructionParam2.Pointer);
-				Console.Write ("{0} ", InstructionParam2.Pointer);
+				if(m_bConsoleOutput ) Console.Write ("{0} ", InstructionParam2.Pointer);
 				p1 = p1.Replace ("@", "");
 			} else if (p1.Contains (".")) {
 				stream.Write ((byte)InstructionParam2.Lable);
 				//p1 = p1.Replace (".", "");
-				Console.Write ("{0} {1}", InstructionParam2.Lable, getLabelPos(p1));
+				if(m_bConsoleOutput) Console.Write ("{0} {1}", InstructionParam2.Lable, getLabelPos(p1));
 				isLable = true;
 			} else if (p1.Contains ("%"))
             {
-                Console.Write("{0} {1}", InstructionParam2.Variable, getVarablePos(p1));
+               if(m_bConsoleOutput)  Console.Write("{0} {1}", InstructionParam2.Variable, getVarablePos(p1));
                 isVariable = true;
             }
 
@@ -322,7 +337,7 @@ namespace vmasm
             }
             else if (!isLable) {
                 int p = ParseNumber(p1);
-                Console.Write("{0} ", p);
+                if(m_bConsoleOutput) Console.Write("{0} ", p);
                 stream.Write(p.ToBytes(), 0, 4);
                 return;
             }
