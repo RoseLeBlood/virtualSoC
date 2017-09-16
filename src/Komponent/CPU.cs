@@ -8,13 +8,19 @@ namespace Vcsos.Komponent
 {
     public class CPU : vmKomponente
     {
-        protected Stack m_pCacheStack; // L1 IPC  
+        protected IpcStack m_pCacheStack; // L1 IPC  
         private List<Core> m_lstCores;
         private int m_iCurCore;
+        private int m_iIpcStackPointer;
 
-        public Stack Ipc
+        public IpcStack Ipc
         {
             get { return m_pCacheStack; }
+        }
+        internal int IpcStackPointer
+        {
+            get { return m_iIpcStackPointer; }
+            set { m_iIpcStackPointer = value; }
         }
         public int CurrentCoreID
         {
@@ -35,13 +41,14 @@ namespace Vcsos.Komponent
             get { return m_lstCores[index]; }
         }
 
-        public CPU(int coreNumbers) : base("Referenz CPU", "Anna-Sophia Schroeck")
+        public CPU(int coreNumbers, int ipCStackSize) : base("Referenz CPU", "Anna-Sophia Schroeck")
         {
             m_lstCores = new List<Core>();
 
             for (int i = 0; i < coreNumbers; i++)
-                m_lstCores.Add(new Core(i, true));
-            m_pCacheStack = new Stack(512, 240, "ProzessorCache (512)");
+                m_lstCores.Add(new Core(i, false));
+            m_pCacheStack = new IpcStack(ipCStackSize, 240,
+                String.Format("IpCStack ({0} bytes)", ipCStackSize) );
             m_iCurCore = 0;
         }
         

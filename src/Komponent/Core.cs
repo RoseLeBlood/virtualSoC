@@ -44,6 +44,7 @@ namespace Vcsos.Komponent
 		public bool Running
         {
             get { return m_bStarted; }
+            set { m_bStarted = value;  }
         }
 
         

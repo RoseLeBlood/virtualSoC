@@ -81,6 +81,8 @@ namespace Vcsos.mm
             m_pOperators.Add(new vmdec());
             m_pOperators.Add(new vmsto());
             m_pOperators.Add(new vminv());
+            m_pOperators.Add(new vmcsc());
+            m_pOperators.Add(new vmcsp());
             m_pOperators.Add(new vmvariable());
         }
 
